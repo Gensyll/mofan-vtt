@@ -22,9 +22,7 @@
   "packFolders": [],
   "documentTypes": {
     "Actor": {
-      "hero": { "htmlFields": ["background.biography"] },
-      "villain": { "htmlFields": ["background.biography"] },
-      "pawn": {}
+      "character": { "htmlFields": ["background.biography"] }
     },
     "Item": {
       "weapon": {},
