@@ -1,0 +1,28 @@
+{
+    "Actor": {
+        "types": ["character", "npc"],
+        "htmlFields": ["biography"],
+        "templates": {
+            "base": {
+                "health": {
+                    "value": 10,
+                    "max": 10
+                },
+                "biography": ""
+            }
+        },
+        "character": {
+            "templates": ["base"],
+            "foo": "",
+            "bar": {
+                "value": ""
+            }
+        },
+        "npc": {
+            "templates": ["base"]
+        }
+    },
+    "Item": {
+
+    }
+}
