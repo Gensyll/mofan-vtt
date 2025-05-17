@@ -11,13 +11,15 @@
     "name": "Gensyll",
     "url": "https://github.com/gensyll"
   }],
-  "esmodules": ["mysystem.mjs"],
+  "esmodules": ["mofan-vtt.mjs"],
   "styles": ["styles/system-styles.css"],
   "languages": [{
     "lang": "en",
     "name": "English",
     "path": "lang/en.json"
   }],
+  "packs": [],
+  "packFolders": [],
   "documentTypes": {
     "Actor": {
       "hero": { "htmlFields": ["background.biography"] },
