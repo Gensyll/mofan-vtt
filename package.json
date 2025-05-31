@@ -1,0 +1,16 @@
+{
+  "name": "mofan-vtt",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "createSymlinks": "node ./tools/create-symlinks.mjs"
+  },
+  "author": "gensyll",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "mofan-vtt": "file:"
+  }
+}
