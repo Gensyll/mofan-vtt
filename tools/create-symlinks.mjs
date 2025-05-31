@@ -1,3 +1,7 @@
+/*
+Creates a symlink for Foundry libraries to leverage intellisense 
+*/
+
 import * as fs from "fs";
 import yaml from "js-yaml";
 import path from "path";
