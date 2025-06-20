@@ -1,3 +1,0 @@
-#The full file path to your Foundry VTT installation.
-#Leverages the external library for Intellisense support
-installPath: ""

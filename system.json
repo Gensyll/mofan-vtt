@@ -1,43 +1,91 @@
 {
   "id": "mofan-vtt",
-  "title": "Modern Fantasy TTRPG",
-  "description": "Logan's system",
-  "version": "1.0.0",
-  "compatibility": {
-    "minimum": 12,
-    "verified": 12
-  },
-  "authors": [{
-    "name": "Gensyll",
-    "url": "https://github.com/gensyll"
-  }],
-  "esmodules": ["mofan-vtt.mjs"],
-  "styles": ["styles/system-styles.css"],
-  "languages": [{
-    "lang": "en",
-    "name": "English",
-    "path": "lang/en.json"
-  }],
-  "packs": [],
-  "packFolders": [],
+  "title": "MoFan",
+  "description": "The MoFan system for FoundryVTT!",
+  "authors": [
+    {
+      "name": "Gensyll",
+      "url": "https://github.com/gensyll"
+    },
+    {
+      "name": "Asacolips",
+      "discord": "asacolips"
+    },
+    {
+      "name": "Lee Talman",
+      "discord": ".pizzaWizard"
+    },
+    {
+      "name": "Joseph M.",
+      "url": "https://joseph-meehan.carrd.co/",
+      "discord": "chaosos"
+    }
+  ],
   "documentTypes": {
     "Actor": {
-      "character": { "htmlFields": ["background.biography"] }
+        "character": {
+            "htmlFields": ["biography"]
+        },
+        "npc": {
+            "htmlFields": ["biography"]
+        }
     },
     "Item": {
-      "weapon": {},
-      "spell": {}
+        "feature": {
+            "htmlFields": ["description"]
+        },
+        "gear": {
+            "htmlFields": ["description"]
+        },
+        "spell": {
+            "htmlFields": ["description"]
+        }
     }
   },
-  "socket": false,
-  "initiative": "1d10",
-  "grid": {
-    "distance": 1,
-    "units": "u"
+  "flags": {
+    "hotReload": {
+      "extensions": ["css", "html", "hbs", "json"],
+      "paths": ["css", "lang", "templates"]
+    }
   },
-  "primaryTokenAttribute": "resources.health",
-  "secondaryTokenAttribute": "resources.power",
-  "url": "https://your/hosted/system/repo/",
-  "manifest": "https://your/hosted/system/repo/system.json",
-  "download": "https://your/packaged/download/archive.zip"
+  "url": "Replace this with a link to your public repository",
+  "license": "LICENSE.txt",
+  "readme": "README.md",
+  "bugs": "Replace this with a link to file issues or tickets",
+  "changelog": "CHANGELOG.md",
+  "media": [
+    {
+      "type": "setup",
+      "url": "systems/mofan-vtt/assets/anvil-impact.png",
+      "thumbnail": "systems/mofan-vtt/assets/anvil-impact.png"
+    }
+  ],
+  "version": "3.0.0",
+  "compatibility": {
+    "minimum": "12.328",
+    "verified": "12.328"
+  },
+  "esmodules": ["module/mofan-vtt.mjs"],
+  "styles": ["css/mofan-vtt.css"],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "packs": [],
+  "packFolders": [],
+  "socket": false,
+  "manifest": "Replace this with a link to the /latest release system.json so people can receive updates after they've installed the system",
+  "download": "This must link to a .zip file of the current version",
+  "background": "systems/mofan-vtt/assets/anvil-impact.png",
+  "grid": {
+    "type": 1,
+    "distance": 5,
+    "units": "ft",
+    "diagonals": 0
+  },
+  "primaryTokenAttribute": "health",
+  "secondaryTokenAttribute": "power"
 }
