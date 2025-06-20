@@ -8,14 +8,14 @@ MOFAN.abilities = {
   awr: 'MOFAN.Ability.Awr.long',
   cha: 'MOFAN.Ability.Cha.long',
   dex: 'MOFAN.Ability.Dex.long',
-  frt: 'MOFAN.Ability.Frt.long',
-  knw: 'MOFAN.Ability.Knw.long'
+  for: 'MOFAN.Ability.For.long',
+  kno: 'MOFAN.Ability.Kno.long',
 };
 
 MOFAN.abilityAbbreviations = {
   awr: 'MOFAN.Ability.Awr.abbr',
   cha: 'MOFAN.Ability.Cha.abbr',
   dex: 'MOFAN.Ability.Dex.abbr',
-  frt: 'MOFAN.Ability.Frt.abbr',
-  knw: 'MOFAN.Ability.Knw.abbr',
+  for: 'MOFAN.Ability.For.abbr',
+  kno: 'MOFAN.Ability.Kno.abbr',
 };

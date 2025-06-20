@@ -4,8 +4,11 @@
       "Awr": { "long": "Awareness", "abbr": "awr" },
       "Cha": { "long": "Charisma", "abbr": "cha" },
       "Dex": { "long": "Dexterity", "abbr": "dex" },
-      "Frt": { "long": "Fortitude", "abbr": "frt" },
-      "Knw": { "long": "Knowledge", "abbr": "knw" }
+      "For": { "long": "Fortitude", "abbr": "for" },
+      "Kno": { "long": "Knowledge", "abbr": "kno" }
+    },
+    "Skill": {
+      "Arcana": { "long": "Arcana", "abbr": "arc" }
     },
     "SheetLabels": {
       "Actor": "Mofan Actor Sheet",

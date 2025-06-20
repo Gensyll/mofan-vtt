@@ -33,7 +33,7 @@ export default class MofanGear extends MofanItemBase {
       }),
       diceSize: new fields.StringField({ initial: 'd10' }),
       diceBonus: new fields.StringField({
-        initial: '+@frt.mod+ceil(@lvl / 2)',
+        initial: '+@for.mod+ceil(@lvl / 2)',
       }),
     });
 

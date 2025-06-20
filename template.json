@@ -34,10 +34,10 @@
         "dex": {
           "value": 10
         },
-        "frt": {
+        "for": {
           "value": 10
         },
-        "knw": {
+        "kno": {
           "value": 10
         }
       }
@@ -59,7 +59,7 @@
       "templates": ["base"],
       "quantity": 1,
       "weight": 0,
-      "formula": "d10 + @frt.mod + ceil(@lvl / 2)"
+      "formula": "d10 + @for.mod + ceil(@lvl / 2)"
     },
     "feature": {
       "templates": ["base"]
