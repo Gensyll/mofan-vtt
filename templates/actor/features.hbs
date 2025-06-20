@@ -12,12 +12,14 @@
       <div class='abilities flexcol'>
         {{#each system.abilities as |ability key|}}
           <div class='ability flexrow flex-group-center'>
+            {{#with (lookup @root.config.abilities key)}}
             <label
-              class='resource-label rollable flexlarge align-left'
-              data-action='roll'
-              data-roll='d10+@abilities.{{key}}.mod'
-              data-label='{{localize (lookup @root.config.abilities key)}}'
-            >{{localize (lookup @root.config.abilities key)}}</label>
+              class="resource-label rollable flexlarge align-left"
+              data-action="roll"
+              data-roll="d10+@abilities.{{key}}.mod"
+              data-label="{{localize label}}"
+            >{{localize label}}</label>
+            {{/with}}
             <input
               type='text'
               name='system.abilities.{{key}}.value'
@@ -26,10 +28,12 @@
               data-dtype='Number'
             />
             <span
-              class='ability-mod rollable'
-              data-action='roll'
-              data-roll='d10+@abilities.{{key}}.mod'
-              data-label='{{localize (lookup @root.config.abilities key)}}'
+              class="ability-mod rollable"
+              data-action="roll"
+              data-roll="d10+@abilities.{{key}}.mod"
+            {{#with (lookup @root.config.abilities key)}}
+              data-label="{{localize label}}"
+            {{/with}}
             >{{numberFormat ability.mod decimals=0 sign=true}}</span>
           </div>
         {{/each}}

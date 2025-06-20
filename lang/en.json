@@ -8,7 +8,16 @@
       "Kno": { "long": "Knowledge", "abbr": "kno" }
     },
     "Skill": {
-      "Arcana": { "long": "Arcana", "abbr": "arc" }
+      "Arcana": { "long": "Arcana", "abbr": "arc" },
+      "Athletics": { "long": "Athletics", "abbr": "ath" },
+      "Deception": { "long": "Deception", "abbr": "dec" },
+      "Drive": { "long": "Drive", "abbr": "drv" },
+      "Empathy": { "long": "Empathy", "abbr": "emp" },
+      "Investigate": { "long": "Investigate", "abbr": "inv" },
+      "Persuade": { "long": "Persuade", "abbr": "per" },
+      "Tactics": { "long": "Tactics", "abbr": "tac" },
+      "Technology": { "long": "Technology", "abbr": "tec" },
+      "Thievery": { "long": "Thievery", "abbr": "thv" }
     },
     "SheetLabels": {
       "Actor": "Mofan Actor Sheet",

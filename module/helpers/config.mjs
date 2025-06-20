@@ -3,19 +3,34 @@ export const MOFAN = {};
 /**
  * The set of Ability Scores used within the system.
  * @type {Object}
+ * @property {string} label             Localized label
+ * @property {string} abbreviation      Localized abbreviation
+ * 
  */
+
 MOFAN.abilities = {
-  awr: 'MOFAN.Ability.Awr.long',
-  cha: 'MOFAN.Ability.Cha.long',
-  dex: 'MOFAN.Ability.Dex.long',
-  for: 'MOFAN.Ability.For.long',
-  kno: 'MOFAN.Ability.Kno.long',
+  awr: {
+    label: 'MOFAN.Ability.Awr.long', 
+    abbreviation: 'MOFAN.Ability.Awr.abbr',
+  },
+  cha: {
+    label: 'MOFAN.Ability.Cha.long',
+    abbreviation: 'MOFAN.Ability.Cha.abbr',
+  },
+  dex: {
+    label: 'MOFAN.Ability.Dex.long',
+    abbreviation: 'MOFAN.Ability.Dex.abbr',
+  },
+  for: {
+    label: 'MOFAN.Ability.For.long',
+    abbreviation: 'MOFAN.Ability.For.abbr',
+  },
+  kno: {
+    label: 'MOFAN.Ability.Kno.long',
+    abbreviation: 'MOFAN.Ability.Kno.abbr',
+  },
 };
 
-MOFAN.abilityAbbreviations = {
-  awr: 'MOFAN.Ability.Awr.abbr',
-  cha: 'MOFAN.Ability.Cha.abbr',
-  dex: 'MOFAN.Ability.Dex.abbr',
-  for: 'MOFAN.Ability.For.abbr',
-  kno: 'MOFAN.Ability.Kno.abbr',
-};
+MOFAN.skills = {
+
+}

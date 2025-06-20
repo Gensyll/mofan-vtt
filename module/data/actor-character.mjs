@@ -42,7 +42,7 @@ export default class MofanCharacter extends MofanActorBase {
       this.abilities[key].mod = this.abilities[key].value
       // Handle ability label localization.
       this.abilities[key].label =
-        game.i18n.localize(CONFIG.MOFAN.abilities[key]) ?? key;
+        game.i18n.localize(CONFIG.MOFAN.abilities[key].label.long) ?? key;
     }
   }
 
