@@ -13,7 +13,7 @@
       "Deception": { "long": "Deception", "abbr": "dec" },
       "Driving": { "long": "Driving", "abbr": "drv" },
       "Empathy": { "long": "Empathy", "abbr": "emp" },
-      "Investigate": { "long": "Investigate", "abbr": "inv" },
+      "Investigation": { "long": "Investigation", "abbr": "inv" },
       "Persuation": { "long": "Persuation", "abbr": "per" },
       "Tactics": { "long": "Tactics", "abbr": "tac" },
       "Technology": { "long": "Technology", "abbr": "tec" },
