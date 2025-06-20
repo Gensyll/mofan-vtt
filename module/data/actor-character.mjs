@@ -32,6 +32,20 @@ export default class MofanCharacter extends MofanActorBase {
       }, {})
     );
 
+    //Iterate over skill names and create a new SchemaField for each.
+    schema.skills = new fields.SchemaField(
+      Objects.keys(CONFIG.MOFAN.skills).reduce((obj, skill) => {
+        obj[skill] = new fields.SchemaField({
+          value: new fields.NumberField({
+            ...requiredInteger,
+            initial: 0,
+            min: 0,
+          }),
+        });
+        return obj;
+      }, {})
+    );
+
     return schema;
   }
 
