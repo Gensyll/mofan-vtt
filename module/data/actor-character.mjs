@@ -23,8 +23,9 @@ export default class MofanCharacter extends MofanActorBase {
         obj[ability] = new fields.SchemaField({
           value: new fields.NumberField({
             ...requiredInteger,
-            initial: 10,
-            min: 0,
+            initial: 0,
+            min: -5,
+            max: 5,
           }),
         });
         return obj;
@@ -37,11 +38,8 @@ export default class MofanCharacter extends MofanActorBase {
   prepareDerivedData() {
     // Loop through ability scores, and add their modifiers to our sheet output.
     for (const key in this.abilities) {
-      //TODO: refactor D20 rules
-      // Calculate the modifier using d20 rules.
-      this.abilities[key].mod = Math.floor(
-        (this.abilities[key].value - 10) / 2
-      );
+      // Calculate the modifier according to Mofan rules (score = modifier)
+      this.abilities[key].mod = this.abilities[key].value
       // Handle ability label localization.
       this.abilities[key].label =
         game.i18n.localize(CONFIG.MOFAN.abilities[key]) ?? key;
