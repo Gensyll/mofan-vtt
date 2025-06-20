@@ -44,8 +44,9 @@ export class MofanActor extends Actor {
 
         // Loop through ability scores, and add their modifiers to our sheet output.
         for (let [key, ability] of Object.entries(systemData.abilities)) {
-        // Calculate the modifier using d20 rules.
-        ability.mod = Math.floor((ability.value - 10) / 2);
+            //TODO: refactor D20 rules
+            // Calculate the modifier using d20 rules.
+            ability.mod = Math.floor((ability.value - 10) / 2);
         }
     }
 
@@ -78,7 +79,7 @@ export class MofanActor extends Actor {
         if (this.type !== 'character') return;
 
         // Copy the ability scores to the top level, so that rolls can use
-        // formulas like `@str.mod + 4`.
+        // formulas like `@frt.mod + 4`.
         if (data.abilities) {
         for (let [k, v] of Object.entries(data.abilities)) {
             data[k] = foundry.utils.deepClone(v);

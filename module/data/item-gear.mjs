@@ -23,6 +23,7 @@ export default class MofanGear extends MofanItemBase {
       min: 0,
     });
 
+    //TODO: refactor D20 rules
     // Break down roll formula into three independent fields
     schema.roll = new fields.SchemaField({
       diceNum: new fields.NumberField({
@@ -30,9 +31,9 @@ export default class MofanGear extends MofanItemBase {
         initial: 1,
         min: 1,
       }),
-      diceSize: new fields.StringField({ initial: 'd20' }),
+      diceSize: new fields.StringField({ initial: 'd10' }),
       diceBonus: new fields.StringField({
-        initial: '+@str.mod+ceil(@lvl / 2)',
+        initial: '+@frt.mod+ceil(@lvl / 2)',
       }),
     });
 

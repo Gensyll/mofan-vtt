@@ -1,12 +1,11 @@
 {
   "MOFAN": {
     "Ability": {
-      "Str": { "long": "Strength", "abbr": "str" },
-      "Con": { "long": "Constitution", "abbr": "con" },
+      "Awr": { "long": "Awareness", "abbr": "awr" },
+      "Cha": { "long": "Charisma", "abbr": "cha" },
       "Dex": { "long": "Dexterity", "abbr": "dex" },
-      "Int": { "long": "Intelligence", "abbr": "int" },
-      "Wis": { "long": "Wisdom", "abbr": "wis" },
-      "Cha": { "long": "Charisma", "abbr": "cha" }
+      "Frt": { "long": "Fortitude", "abbr": "frt" },
+      "Knw": { "long": "Knowledge", "abbr": "knw" }
     },
     "SheetLabels": {
       "Actor": "Mofan Actor Sheet",

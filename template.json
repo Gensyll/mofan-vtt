@@ -25,22 +25,19 @@
         }
       },
       "abilities": {
-        "str": {
+        "awr": {
+          "value": 10
+        },
+        "cha": {
           "value": 10
         },
         "dex": {
           "value": 10
         },
-        "con": {
+        "frt": {
           "value": 10
         },
-        "int": {
-          "value": 10
-        },
-        "wis": {
-          "value": 10
-        },
-        "cha": {
+        "knw": {
           "value": 10
         }
       }
@@ -62,7 +59,7 @@
       "templates": ["base"],
       "quantity": 1,
       "weight": 0,
-      "formula": "d20 + @str.mod + ceil(@lvl / 2)"
+      "formula": "d10 + @frt.mod + ceil(@lvl / 2)"
     },
     "feature": {
       "templates": ["base"]

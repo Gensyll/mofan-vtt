@@ -5,19 +5,17 @@ export const MOFAN = {};
  * @type {Object}
  */
 MOFAN.abilities = {
-  str: 'MOFAN.Ability.Str.long',
-  dex: 'MOFAN.Ability.Dex.long',
-  con: 'MOFAN.Ability.Con.long',
-  int: 'MOFAN.Ability.Int.long',
-  wis: 'MOFAN.Ability.Wis.long',
+  awr: 'MOFAN.Ability.Awr.long',
   cha: 'MOFAN.Ability.Cha.long',
+  dex: 'MOFAN.Ability.Dex.long',
+  frt: 'MOFAN.Ability.Frt.long',
+  knw: 'MOFAN.Ability.Knw.long'
 };
 
 MOFAN.abilityAbbreviations = {
-  str: 'MOFAN.Ability.Str.abbr',
-  dex: 'MOFAN.Ability.Dex.abbr',
-  con: 'MOFAN.Ability.Con.abbr',
-  int: 'MOFAN.Ability.Int.abbr',
-  wis: 'MOFAN.Ability.Wis.abbr',
+  awr: 'MOFAN.Ability.Awr.abbr',
   cha: 'MOFAN.Ability.Cha.abbr',
+  dex: 'MOFAN.Ability.Dex.abbr',
+  frt: 'MOFAN.Ability.Frt.abbr',
+  knw: 'MOFAN.Ability.Knw.abbr',
 };
