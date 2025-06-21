@@ -83,7 +83,7 @@
   "grid": {
     "type": 1,
     "distance": 5,
-    "units": "ft",
+    "units": "u",
     "diagonals": 0
   },
   "primaryTokenAttribute": "health",
