@@ -30,6 +30,27 @@ globalThis.mofanvtt = {
   models,
 };
 
+/**
+ * Define a set of template paths to pre-load. Pre-loaded templates are compiled and cached for fast access when
+ * rendering. These paths will also be available as Handlebars partials by using the file name
+ * (e.g. "mofan-vtt.actor-stat-bar").
+ * @returns {Promise}
+ */
+async function preloadHandlebarsTemplates(){
+  const partials = [
+    //Actor sheet partials
+    "systems/mofan-vtt/templates/actor/partials/actor-stat-bar.hbs",
+  ];
+
+  const paths = {};
+  for(const path of partials){
+    paths[path.replace(".hbs", ".html")] = path;
+    paths[`mofan-vtt.${path.split("/").pop().replace(".hbs", "")}`] = path;
+  }
+
+  return loadTemplates(paths);
+}
+
 Hooks.once('init', function () {
   // Add custom constants for configuration.
   CONFIG.MOFAN = MOFAN;
@@ -76,6 +97,9 @@ Hooks.once('init', function () {
     makeDefault: true,
     label: 'MOFAN.SheetLabels.Item',
   });
+
+  //Preload Handlebars partials
+  preloadHandlebarsTemplates();
 });
 
 /* -------------------------------------------- */
