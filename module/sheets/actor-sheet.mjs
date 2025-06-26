@@ -19,7 +19,7 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
     classes: ['mofan-vtt', 'actor'],
     position: {
       width: 600,
-      height: 600,
+      height: 650,
     },
     actions: {
       onEditImage: this._onEditImage,

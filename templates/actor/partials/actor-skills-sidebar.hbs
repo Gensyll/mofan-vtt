@@ -1,0 +1,30 @@
+{{!Skill div segment for character sheet features side bar}}
+<div class='abilities flexcol'>
+        {{#each system.skills as |skill key|}}
+          <div class='ability flexrow flex-group-center'>
+            {{#with (lookup @root.config.skills key)}}
+            <label
+              class="resource-label rollable flexlarge align-left"
+              data-action="roll"
+              data-roll="d10+@skills.{{key}}.mod"
+              data-label="{{localize label}}"
+            >{{localize label}}</label>
+            {{/with}}
+            <input
+              type='text'
+              name='system.skills.{{key}}.value'
+              value='{{ability.value}}'
+              class="ability-score"
+              data-dtype='Number'
+            />
+            <span
+              class="ability-mod rollable"
+              data-action="roll"
+              data-roll="d10+@skills.{{key}}.mod"
+            {{#with (lookup @root.config.skills key)}}
+              data-label="{{localize label}}"
+            {{/with}}
+            >{{numberFormat skill.mod decimals=0 sign=true}}</span>
+          </div>
+        {{/each}}
+      </div>

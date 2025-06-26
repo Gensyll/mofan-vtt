@@ -9,35 +9,7 @@
       {{! The grid classes are defined in scss/global/_grid.scss. To use,
           use both the "grid" and "grid-Ncol" class where "N" can be any number
           from 1 to 12 and will create that number of columns.  }}
-      <div class='abilities flexcol'>
-        {{#each system.abilities as |ability key|}}
-          <div class='ability flexrow flex-group-center'>
-            {{#with (lookup @root.config.abilities key)}}
-            <label
-              class="resource-label rollable flexlarge align-left"
-              data-action="roll"
-              data-roll="d10+@abilities.{{key}}.mod"
-              data-label="{{localize label}}"
-            >{{localize label}}</label>
-            {{/with}}
-            <input
-              type='text'
-              name='system.abilities.{{key}}.value'
-              value='{{ability.value}}'
-              class="ability-score"
-              data-type='Number'
-            />
-            <span
-              class="ability-mod rollable"
-              data-action="roll"
-              data-roll="d10+@abilities.{{key}}.mod"
-            {{#with (lookup @root.config.abilities key)}}
-              data-label="{{localize label}}"
-            {{/with}}
-            >{{numberFormat ability.mod decimals=0 sign=true}}</span>
-          </div>
-        {{/each}}
-      </div>
+      {{> "mofan-vtt.actor-skills-sidebar"}}
     </aside>
 
     {{! For the main features list, span the right two columns }}

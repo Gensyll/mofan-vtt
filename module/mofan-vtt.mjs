@@ -40,6 +40,7 @@ async function preloadHandlebarsTemplates(){
   const partials = [
     //Actor sheet partials
     "systems/mofan-vtt/templates/actor/partials/actor-stat-bar.hbs",
+    "systems/mofan-vtt/templates/actor/partials/actor-skills-sidebar.hbs",
   ];
 
   const paths = {};
