@@ -397,7 +397,7 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
 
     // Handle rolls that supply the formula directly.
     if (dataset.roll) {
-      let label = dataset.label ? `[Base stat] ${dataset.label}` : '';
+      let label = dataset.label ? `[rolling] ${dataset.label}` : '';
       let roll = new Roll(dataset.roll, this.actor.getRollData());
       await roll.toMessage({
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
