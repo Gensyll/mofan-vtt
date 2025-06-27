@@ -1,16 +1,18 @@
 {
   "name": "mofan-vtt",
-  "version": "1.0.0",
-  "main": "index.js",
+  "version": "3.0.0",
+  "description": "CSS compiler for the Mofan system",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "createSymlinks": "node ./tools/create-symlinks.mjs"
+    "build": "sass src/scss/mofan-vtt.scss css/mofan-vtt.css --style=expanded --no-source-map",
+    "watch": "sass src/scss/mofan-vtt.scss css/mofan-vtt.css --style=expanded --source-map --watch"
   },
-  "author": "gensyll",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "js-yaml": "^4.1.0",
-    "mofan-vtt": "file:"
+  "browserslist": [
+    "last 3 versions"
+  ],
+  "author": "Asacolips",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "sass": "^1.53.0"
   }
 }

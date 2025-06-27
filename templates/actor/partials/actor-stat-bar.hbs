@@ -1,0 +1,22 @@
+{{!Stat bar segment for character sheet header}}
+<div class="abilities grid grid-5col">
+    {{#each system.abilities as |ability key|}}
+        <div class="ability flexrow flex-group-center">
+            {{#with (lookup @root.config.abilities key)}}
+            <label
+                class="resource-label rollable flexlarge align-center"
+                data-action="roll"
+                data-roll="d10+@abilities.{{key}}.mod"
+                data-label="{{localize label}}"
+            >{{localize label}}</label>
+            {{/with}}
+            <input
+                type='text'
+                name='system.abilities.{{key}}.value'
+                value='{{ability.value}}'
+                class="ability-score"
+                data-dtype='Number'
+            />
+        </div>
+    {{/each}}
+</div>

@@ -1,0 +1,102 @@
+{
+  "MOFAN": {
+    "Ability": {
+      "Awr": { "long": "Awareness", "abbr": "awr" },
+      "Cha": { "long": "Charisma", "abbr": "cha" },
+      "Dex": { "long": "Dexterity", "abbr": "dex" },
+      "For": { "long": "Fortitude", "abbr": "for" },
+      "Kno": { "long": "Knowledge", "abbr": "kno" }
+    },
+    "Skill": {
+      "Arcana": { "long": "Arcana", "abbr": "arc" },
+      "Athletics": { "long": "Athletics", "abbr": "ath" },
+      "Deception": { "long": "Deception", "abbr": "dec" },
+      "Driving": { "long": "Driving", "abbr": "drv" },
+      "Empathy": { "long": "Empathy", "abbr": "emp" },
+      "Investigation": { "long": "Investigation", "abbr": "inv" },
+      "Persuation": { "long": "Persuation", "abbr": "per" },
+      "Tactics": { "long": "Tactics", "abbr": "tac" },
+      "Technology": { "long": "Technology", "abbr": "tec" },
+      "Thievery": { "long": "Thievery", "abbr": "thv" }
+    },
+    "SheetLabels": {
+      "Actor": "Mofan Actor Sheet",
+      "Item": "Mofan Item Sheet"
+    },
+    "Actor": {
+      "Tabs": {
+        "Biography": "Biography",
+        "Features": "Features",
+        "Gear": "Gear",
+        "Spells": "Spells",
+        "Effects": "Effects"
+      },
+      "base": {
+        "FIELDS": {
+          "biography": {"label": "Biography"},
+          "health": {
+            "value": {"label": "Health"},
+            "max": {"label": "Maximum Health"}
+          },
+          "power": {
+            "value": {"label": "Power"},
+            "max": {"label": "Maximum Power"}
+          }
+        }
+      },
+      "Character": {
+        "FIELDS": {
+          "attributes.level.value": {"label": "Level"}
+        }
+      },
+      "NPC": {
+        "FIELDS": {
+          "cr": {"label": "CR"}
+        },
+        "xp": {"label": "XP"}
+      }
+    },
+    "Item": {
+      "Tabs": {
+        "Attributes": "Attributes",
+        "Description": "Description",
+        "Effects": "Effects"
+      },
+      "Gear": {
+        "FIELDS": {
+          "rollFormula": {"label": "Roll Formula"},
+          "numDice": {"label": "Number of Dice"},
+          "dieSize": {"label": "Die Size"},
+          "rollMod": {"label": "Roll Modifier"},
+          "quantity": {"label": "Quantity"},
+          "weight": {"label": "Weight"}
+        }
+      },
+      "Spell": {
+        "FIELDS": {
+          "level": {"label": "Spell Level"}
+        },
+        "SpellLVL": "Level {level} Spells",
+        "AddLVL": "Add LVL {level}"
+      }
+    },
+    "Effect": {
+      "Source": "Source",
+      "Toggle": "Toggle Effect",
+      "Temporary": "Temporary Effects",
+      "Passive": "Passive Effects",
+      "Inactive": "Inactive Effects"
+    }
+  },
+  "TYPES": {
+    "Actor": {
+      "character": "Character",
+      "npc": "NPC"
+    },
+    "Item": {
+      "gear": "Gear",
+      "feature": "Feature",
+      "spell": "Spell"
+    }
+  }
+}

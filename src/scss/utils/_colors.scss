@@ -1,0 +1,29 @@
+:root {
+  --mofan-vtt-c-dark: #191813;
+  --mofan-vtt-c-faint: #c9c7b8;
+  --mofan-vtt-c-beige: #b5b3a4;
+  --mofan-vtt-c-tan: #444444;
+  --mofan-vtt-c-white: #ffffff;
+  --mofan-vtt-c-black: #000000;
+  --mofan-vtt-c-groove: #eeede0;
+}
+
+.theme-dark {
+  --mofan-vtt-c-dark: #c9c7b8;
+  --mofan-vtt-c-faint: #191813;
+  --mofan-vtt-c-beige: #444444;
+  --mofan-vtt-c-tan: #b5b3a4;
+  --mofan-vtt-c-white: #000000;
+  --mofan-vtt-c-black: #ffffff;
+  --mofan-vtt-c-groove: #11121f;
+}
+
+$c-white: var(--mofan-vtt-c-white);
+$c-black: var(--mofan-vtt-c-black);
+
+$c-dark: var(--mofan-vtt-c-dark);
+$c-faint: var(--mofan-vtt-c-faint);
+$c-beige: var(--mofan-vtt-c-beige);
+$c-tan: var(--mofan-vtt-c-tan);
+
+$c-groove: var(--mofan-vtt-c-groove);
