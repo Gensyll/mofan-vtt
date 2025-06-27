@@ -58,6 +58,15 @@ export default class MofanCharacter extends MofanActorBase {
       this.abilities[key].label =
         game.i18n.localize(CONFIG.MOFAN.abilities[key].label.long) ?? key;
     }
+
+    // Loop through the skill scores, and add the training modifiers to our sheet output.
+    for (const key in this.skills) {
+      //TODO: Calculate the modifier according to Mofan rules
+      this.skills[key].mod = this.skills[key].value
+      // Handle skill label localization.
+      this.skills[key].label =
+        game.i18n.localize(CONFIG.MOFAN.skills[key].label.long) ?? key;
+    }
   }
 
   getRollData() {
@@ -67,6 +76,14 @@ export default class MofanCharacter extends MofanActorBase {
     // formulas like `@dex.mod + 4`.
     if (this.abilities) {
       for (let [k, v] of Object.entries(this.abilities)) {
+        data[k] = foundry.utils.deepClone(v);
+      }
+    }
+
+    // Copy the skill scores to the top level, so that rolls can use
+    // formulas like `@arc.mod + 4`.
+    if (this.skills) {
+      for (let [k, v] of Object.entries(this.skills)) {
         data[k] = foundry.utils.deepClone(v);
       }
     }
