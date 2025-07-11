@@ -39,7 +39,7 @@ export default class MofanCharacter extends MofanActorBase {
           value: new fields.NumberField({
             ...requiredInteger,
             initial: 0,
-            min: 0,
+            min: -15,
           }),
         });
         return obj;
