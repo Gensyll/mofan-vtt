@@ -77,7 +77,7 @@
   "packs": [],
   "packFolders": [],
   "socket": false,
-  "manifest": "https://github.com/Gensyll/mofan-vtt/blob/master/system.json",
+  "manifest": "https://github.com/Gensyll/mofan-vtt/master/system.json",
   "download": "https://github.com/Gensyll/mofan-vtt/archive/refs/heads/master.zip",
   "background": "systems/mofan-vtt/assets/anvil-impact.png",
   "grid": {
