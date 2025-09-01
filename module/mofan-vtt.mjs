@@ -61,6 +61,7 @@ const config$items = {
   gear: models.MofanGear,
   feature: models.MofanFeature,
   spell: models.MofanSpell,
+  loot: models.MofanLoot,
 };
 
 Hooks.once('init', function () {
