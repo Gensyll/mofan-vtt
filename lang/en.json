@@ -57,6 +57,7 @@
       }
     },
     "Item": {
+      "price": {"label": "Price"},
       "Tabs": {
         "Attributes": "Attributes",
         "Description": "Description",
@@ -65,8 +66,8 @@
       "Gear": {
         "FIELDS": {
           "rollFormula": {"label": "Roll Formula"},
-          "numDice": {"label": "Number of Dice"},
-          "dieSize": {"label": "Die Size"},
+          "numDice": {"label": "Die Count"},
+          "dieSize": {"label": "Die Type"},
           "rollMod": {"label": "Roll Modifier"},
           "quantity": {"label": "Quantity"},
           "weight": {"label": "Weight"}
@@ -78,6 +79,13 @@
         },
         "SpellLVL": "Level {level} Spells",
         "AddLVL": "Add LVL {level}"
+      },
+      "Loot": {
+        "FIELDS": {
+          "quantity": {"label": "Quantity"},
+          "weight": {"label": "Weight"},
+          "size": {"label": "Size"}
+        }
       }
     },
     "Effect": {
@@ -96,7 +104,8 @@
     "Item": {
       "gear": "Gear",
       "feature": "Feature",
-      "spell": "Spell"
+      "spell": "Spell",
+      "loot": "Loot"
     }
   }
 }

@@ -60,7 +60,7 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
       template: 'systems/mofan-vtt/templates/item/attribute-parts/spell.hbs',
     },
     attributesLoot: {
-      template: 'systems/mofan-vtt/templates/item/loot.hbs',
+      template: 'systems/mofan-vtt/templates/item/attribute-parts/loot.hbs',
     },
     effects: {
       template: 'systems/mofan-vtt/templates/item/effects.hbs',

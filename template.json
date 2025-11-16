@@ -48,7 +48,7 @@
     }
   },
   "Item": {
-    "types": ["gear", "feature", "spell"],
+    "types": ["gear", "feature", "spell", "loot"],
     "htmlFields": ["description"],
     "templates": {
       "base": {

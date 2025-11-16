@@ -1,6 +1,6 @@
 import MofanItemBase from './base-item.mjs';
 
-export default class MofanItemLoot extends MofanItemBase {
+export default class MofanLoot extends MofanItemBase {
     static LOCALIZATION_PREFIXES = [
         'MOFAN.Item.base',
         'MOFAN.Item.Loot',

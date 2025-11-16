@@ -116,6 +116,10 @@ Hooks.once('init', function () {
 Handlebars.registerHelper('toLowerCase', function (str) {
   return str.toLowerCase();
 });
+//OR Functions for Handlebars
+Handlebars.registerHelper('or', function(...args) {
+    return Array.prototype.slice.call(arguments, 0, -1).some(Boolean);
+  });
 
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
