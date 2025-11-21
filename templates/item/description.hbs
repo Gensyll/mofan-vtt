@@ -34,6 +34,16 @@
                       {{selectOptions sizeOptions selected=system.size}}
                     </select>
                   </div>
+                  <div class="resource">
+                    <label class="resource-label">{{localize 'MOFAN.Item.FIELDS.price.label'}} (NAD)</label>
+                    <input 
+                      type="number" 
+                      name="system.price" 
+                      value="{{system.price}}" 
+                      data-dtype="Number"
+                      step="1"
+                    />
+                  </div>
                 </div>
               {{/if}}
             </div>
