@@ -115,11 +115,11 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
     };
 
     context.sizeOptions = {
-      tiny: "Tiny",
-      small: "Small",
-      medium: "Medium",
-      large: "Large",
-      huge: "Huge"
+      tiny: game.i18n.localize("MOFAN.Item.FIELDS.size.tiny"),
+      small: game.i18n.localize("MOFAN.Item.FIELDS.size.small"),
+      medium: game.i18n.localize("MOFAN.Item.FIELDS.size.medium"),
+      large: game.i18n.localize("MOFAN.Item.FIELDS.size.large"),
+      huge: game.i18n.localize("MOFAN.Item.FIELDS.size.huge")
     };
 
     return context;
