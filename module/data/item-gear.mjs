@@ -22,6 +22,11 @@ export default class MofanGear extends MofanItemBase {
       initial: 0,
       min: 0,
     });
+    schema.size = new fields.StringField({
+      required: true,
+      initial: "small",
+      choices: ["tiny","small","medium","large","huge"]
+    });
 
     //TODO: refactor D20 rules
     // Break down roll formula into three independent fields

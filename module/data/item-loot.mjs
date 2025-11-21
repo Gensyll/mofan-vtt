@@ -23,6 +23,12 @@ export default class MofanLoot extends MofanItemBase {
             min: 0,
         });
 
+        schema.size = new fields.StringField({
+            required: true,
+            initial: "small",
+            choices: ["tiny","small","medium","large","huge"]
+        });
+
         /*schema.roll = new fields.SchemaField({
             diceNum: new fields.NumberField({
                 ...requiredInteger,

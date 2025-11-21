@@ -9,9 +9,9 @@
             <div class="grid-span-1">
               {{! If tangible item, give us quantitative values }}
               {{#if (or (eq item.type 'gear') (eq item.type 'loot'))}}
-                <div class='flexrow flex-group-center'>
+                <div class='flexcol flex-group-center'>
                   <div class='resource'>
-                    <label class='resource-label'>{{localize 'MOFAN.Item.Gear.FIELDS.quantity.label'}}</label>
+                    <label class='resource-label'>{{localize 'MOFAN.Item.FIELDS.quantity.label'}}</label>
                     <input
                       type='text'
                       name='system.quantity'
@@ -20,13 +20,19 @@
                     />
                   </div>
                   <div class='resource'>
-                    <label class='resource-label'>{{localize 'MOFAN.Item.Gear.FIELDS.weight.label'}}</label>
+                    <label class='resource-label'>{{localize 'MOFAN.Item.FIELDS.weight.label'}}</label>
                     <input
                       type='text'
                       name='system.weight'
                       value='{{system.weight}}'
                       data-dtype='Number'
                     />
+                  </div>
+                  <div class="resource">
+                    <label class="resource-label">{{localize 'MOFAN.Item.FIELDS.size.label'}}</label>
+                    <select name="system.size">
+                      {{selectOptions sizeOptions selected=system.size localize=false}}
+                    </select>
                   </div>
                 </div>
               {{/if}}

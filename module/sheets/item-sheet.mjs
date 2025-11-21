@@ -114,6 +114,14 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
       systemFields: this.document.system.schema.fields,
     };
 
+    context.sizeOptions = {
+      tiny: "Tiny",
+      small: "Small",
+      medium: "Medium",
+      large: "Large",
+      huge: "Huge"
+    };
+
     return context;
   }
 

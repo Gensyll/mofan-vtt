@@ -57,7 +57,19 @@
       }
     },
     "Item": {
-      "price": {"label": "Price"},
+      "FIELDS": {
+        "quantity": {"label": "Quantity"},
+        "weight": {"label": "Weight"},
+        "size": {
+            "label": "Size",
+            "tiny": "Tiny",
+            "small": "Small",
+            "medium": "Medium",
+            "large": "Large",
+            "huge": "Huge"
+          },
+        "price": {"label": "Price"}
+      },
       "Tabs": {
         "Attributes": "Attributes",
         "Description": "Description",
@@ -68,9 +80,7 @@
           "rollFormula": {"label": "Roll Formula"},
           "numDice": {"label": "Die Count"},
           "dieSize": {"label": "Die Type"},
-          "rollMod": {"label": "Roll Modifier"},
-          "quantity": {"label": "Quantity"},
-          "weight": {"label": "Weight"}
+          "rollMod": {"label": "Roll Modifier"}
         }
       },
       "Spell": {
@@ -82,9 +92,6 @@
       },
       "Loot": {
         "FIELDS": {
-          "quantity": {"label": "Quantity"},
-          "weight": {"label": "Weight"},
-          "size": {"label": "Size"}
         }
       }
     },
