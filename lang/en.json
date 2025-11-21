@@ -68,7 +68,10 @@
             "large": "Large",
             "huge": "Huge"
           },
-        "price": {"label": "Price"}
+        "price": {
+          "label": "Price",
+          "denomination": "NAD"
+        }
       },
       "Tabs": {
         "Attributes": "Attributes",
