@@ -71,6 +71,10 @@
         "price": {
           "label": "Price",
           "denomination": "NAD"
+        },
+        "craft": {
+          "craftable": "Craftable",
+          "notCraftable": "Not Craftable"
         }
       },
       "Tabs": {

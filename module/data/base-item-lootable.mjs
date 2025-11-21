@@ -32,6 +32,10 @@ export default class MofanItemLootable extends MofanItemBase {
             initial: 0,
             nullable: false
         });
+        schema.isCraftable = new fields.BooleanField({
+            required: true,
+            initial: true
+        });
 
         return schema;
     }

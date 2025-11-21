@@ -10,5 +10,17 @@
     <div class='document-name'>
       <input name='name' type='text' value='{{item.name}}' placeholder='Name' />
     </div>
+    <div class="resources grid grid-3col">
+      <div class="resource flex-group-left">
+        <label for="system.isCraftable.value" class="resource-label">
+          <input type="checkbox" name="system.isCraftable" {{#if system.isCraftable}}checked{{/if}}/>
+          {{#if system.isCraftable}}
+            {{{localize 'MOFAN.Item.FIELDS.craft.craftable'}}}
+          {{else}}
+            {{{localize 'MOFAN.Item.FIELDS.craft.notCraftable'}}}
+          {{/if}}
+        </label>
+      </div>
+    </div>
   </div>
 </header>
