@@ -16,7 +16,7 @@ export default class MofanItemLootable extends MofanItemBase {
             initial: 1,
             min: 1,
         });
-            schema.weight = new fields.NumberField({
+        schema.weight = new fields.NumberField({
             required: true,
             nullable: false,
             initial: 0,
