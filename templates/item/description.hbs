@@ -4,11 +4,58 @@
   data-group='primary'
   data-tab='description'
 >
-  {{! Editors must receive enriched text data from getData to properly handle rolls, UUID links, etc. }}
-  {{#if editable}} 
-    <prose-mirror name="system.description" data-document-u-u-i-d="{{item.uuid}}" value="{{system.description}}" collaborate="true" toggled="true">
-      {{{enrichedDescription}}}
-    </prose-mirror>
-  {{else}} {{{enrichedDescription}}}
-  {{/if}}
+    <div class="description">
+        <div class='grid grid-5col'>
+            <div class="grid-span-1">
+              {{! If tangible item, give us quantitative values }}
+              {{#if (or (eq item.type 'gear') (eq item.type 'loot'))}}
+                <div class='flexcol flex-group-center'>
+                  <div class='resource'>
+                    <label class='resource-label'>{{localize 'MOFAN.Item.FIELDS.quantity.label'}}</label>
+                    <input
+                      type='text'
+                      name='system.quantity'
+                      value='{{system.quantity}}'
+                      data-dtype='Number'
+                    />
+                  </div>
+                  <div class='resource'>
+                    <label class='resource-label'>{{localize 'MOFAN.Item.FIELDS.weight.label'}}</label>
+                    <input
+                      type='text'
+                      name='system.weight'
+                      value='{{system.weight}}'
+                      data-dtype='Number'
+                    />
+                  </div>
+                  <div class="resource">
+                    <label class="resource-label">{{localize 'MOFAN.Item.FIELDS.size.label'}}</label>
+                    <select name="system.size">
+                      {{selectOptions sizeOptions selected=system.size}}
+                    </select>
+                  </div>
+                  <div class="resource">
+                    <label class="resource-label">{{localize 'MOFAN.Item.FIELDS.price.label'}} ({{localize 'MOFAN.Item.FIELDS.price.denomination'}})</label>
+                    <input 
+                      type="number" 
+                      name="system.price" 
+                      value="{{system.price}}" 
+                      data-dtype="Number"
+                      step="1"
+                    />
+                  </div>
+                </div>
+              {{/if}}
+            </div>
+            <div class="grid-span-4">
+              {{! Editors must receive enriched text data from getData to properly handle rolls, UUID links, etc. }}
+              {{#if editable}} 
+                <prose-mirror name="system.description" data-document-u-u-i-d="{{item.uuid}}" value="{{system.description}}" collaborate="true" toggled="true">
+                  {{{enrichedDescription}}}
+                </prose-mirror>
+              {{else}} {{{enrichedDescription}}}
+              {{/if}}
+            </div>
+        </div>
+    </div>
 </section>

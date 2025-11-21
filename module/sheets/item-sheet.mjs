@@ -17,6 +17,10 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
   /** @override */
   static DEFAULT_OPTIONS = {
     classes: ['mofan-vtt', 'item'],
+    position: {
+      width: 550,
+      height: 450,
+    },
     actions: {
       onEditImage: this._onEditImage,
       viewDoc: this._viewEffect,
@@ -55,6 +59,9 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
     attributesSpell: {
       template: 'systems/mofan-vtt/templates/item/attribute-parts/spell.hbs',
     },
+    attributesLoot: {
+      template: 'systems/mofan-vtt/templates/item/attribute-parts/loot.hbs',
+    },
     effects: {
       template: 'systems/mofan-vtt/templates/item/effects.hbs',
     },
@@ -77,6 +84,9 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
         break;
       case 'spell':
         options.parts.push('attributesSpell');
+        break;
+      case 'loot':
+        options.parts.push('attributesLoot');
         break;
     }
   }
@@ -104,6 +114,14 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
       systemFields: this.document.system.schema.fields,
     };
 
+    context.sizeOptions = {
+      tiny: game.i18n.localize("MOFAN.Item.FIELDS.size.tiny"),
+      small: game.i18n.localize("MOFAN.Item.FIELDS.size.small"),
+      medium: game.i18n.localize("MOFAN.Item.FIELDS.size.medium"),
+      large: game.i18n.localize("MOFAN.Item.FIELDS.size.large"),
+      huge: game.i18n.localize("MOFAN.Item.FIELDS.size.huge")
+    };
+
     return context;
   }
 
@@ -113,6 +131,7 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
       case 'attributesFeature':
       case 'attributesGear':
       case 'attributesSpell':
+      case 'attributesLoot':
         // Necessary for preserving active tab on re-render
         context.tab = context.tabs[partId];
         break;
@@ -174,6 +193,7 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
         case 'attributesFeature':
         case 'attributesGear':
         case 'attributesSpell':
+        case 'attributesLoot':
           tab.id = 'attributes';
           tab.label += 'Attributes';
           break;

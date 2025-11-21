@@ -52,6 +52,18 @@ async function preloadHandlebarsTemplates(){
   return loadTemplates(paths);
 }
 
+const config$actors = {
+  character: models.MofanCharacter,
+  npc: models.MofanNPC,
+};
+
+const config$items = {
+  gear: models.MofanGear,
+  feature: models.MofanFeature,
+  spell: models.MofanSpell,
+  loot: models.MofanLoot,
+};
+
 Hooks.once('init', function () {
   // Add custom constants for configuration.
   CONFIG.MOFAN = MOFAN;
@@ -71,16 +83,9 @@ Hooks.once('init', function () {
   // Note that you don't need to declare a DataModel
   // for the base actor/item classes - they are included
   // with the Character/NPC as part of super.defineSchema()
-  CONFIG.Actor.dataModels = {
-    character: models.MofanCharacter,
-    npc: models.MofanNPC,
-  };
+  CONFIG.Actor.dataModels = config$actors;
   CONFIG.Item.documentClass = MofanItem;
-  CONFIG.Item.dataModels = {
-    gear: models.MofanGear,
-    feature: models.MofanFeature,
-    spell: models.MofanSpell,
-  };
+  CONFIG.Item.dataModels = config$items;
 
   // Active Effects are never copied to the Actor,
   // but will still apply to the Actor from within the Item
@@ -111,6 +116,10 @@ Hooks.once('init', function () {
 Handlebars.registerHelper('toLowerCase', function (str) {
   return str.toLowerCase();
 });
+//OR Functions for Handlebars
+Handlebars.registerHelper('or', function(...args) {
+    return Array.prototype.slice.call(arguments, 0, -1).some(Boolean);
+  });
 
 /* -------------------------------------------- */
 /*  Ready Hook                                  */

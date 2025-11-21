@@ -26,6 +26,9 @@
         },
         "spell": {
             "htmlFields": ["description"]
+        },
+        "loot": {
+            "htmlFields": ["description"]
         }
     }
   },
@@ -47,7 +50,7 @@
       "thumbnail": "systems/mofan-vtt/assets/anvil-impact.png"
     }
   ],
-  "version": "3.0.0",
+  "version": "3.1.0",
   "compatibility": {
     "minimum": "12.328",
     "verified": "12.328"
