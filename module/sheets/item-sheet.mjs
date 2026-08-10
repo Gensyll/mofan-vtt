@@ -1,3 +1,4 @@
+import MofanItemLootable from '../data/base-item-lootable.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 
 const { api, sheets } = foundry.applications;
@@ -74,21 +75,8 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
     options.parts = ['header', 'tabs', 'description'];
     // Don't show the other tabs if only limited view
     if (this.document.limited) return;
-    // Control which parts show based on document subtype
-    switch (this.document.type) {
-      case 'feature':
-        options.parts.push('attributesFeature', 'effects');
-        break;
-      case 'gear':
-        options.parts.push('attributesGear');
-        break;
-      case 'spell':
-        options.parts.push('attributesSpell');
-        break;
-      case 'loot':
-        options.parts.push('attributesLoot');
-        break;
-    }
+    const Model = CONFIG.Item.dataModels[this.document.type];
+    if (Model?.SHEET_PARTS?.length) options.parts.push(...Model.SHEET_PARTS);
   }
 
   /* -------------------------------------------- */
@@ -112,6 +100,7 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
       // Necessary for formInput and formFields helpers
       fields: this.document.schema.fields,
       systemFields: this.document.system.schema.fields,
+      isLootable: this.document.system instanceof MofanItemLootable,
     };
 
     context.sizeOptions = {

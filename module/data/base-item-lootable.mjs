@@ -5,6 +5,9 @@ export default class MofanItemLootable extends MofanItemBase {
         'MOFAN.Item.base',
         'MOFAN.Item.Lootable',
     ];
+
+    /** @type {string[]} */
+    static SHEET_PARTS = ['attributesLoot'];
     
     static defineSchema() {
         const fields = foundry.data.fields;

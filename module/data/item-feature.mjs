@@ -5,4 +5,7 @@ export default class MofanFeature extends MofanItemBase {
     'MOFAN.Item.base',
     'MOFAN.Item.Feature',
   ];
+
+  /** @type {string[]} */
+  static SHEET_PARTS = ['attributesFeature', 'effects'];
 }

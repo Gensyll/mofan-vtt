@@ -6,6 +6,9 @@ export default class MofanSpell extends MofanItemBase {
     'MOFAN.Item.Spell',
   ];
 
+  /** @type {string[]} */
+  static SHEET_PARTS = ['attributesSpell'];
+
   static defineSchema() {
     const fields = foundry.data.fields;
     const schema = super.defineSchema();

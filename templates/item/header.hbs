@@ -10,6 +10,7 @@
     <div class='document-name'>
       <input name='name' type='text' value='{{item.name}}' placeholder='Name' />
     </div>
+    {{#if isLootable}}
     <div class="resources grid grid-3col">
       <div class="resource flex-group-left">
         <label for="system.isCraftable.value" class="resource-label">
@@ -22,5 +23,6 @@
         </label>
       </div>
     </div>
+    {{/if}}
   </div>
 </header>

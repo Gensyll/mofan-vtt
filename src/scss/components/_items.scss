@@ -81,6 +81,41 @@
         background-size: 30px;
         border: none;
         margin-right: 5px;
+
+        .rollable {
+          cursor: pointer;
+          display: block;
+          position: relative;
+          width: 24px;
+          height: 24px;
+          border-radius: 2px;
+          line-height: 0;
+
+          img {
+            display: block;
+            width: 24px;
+            height: 24px;
+          }
+
+          &::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background: url("../assets/icons/dice/d10.svg") center / contain
+              no-repeat;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.15s ease;
+          }
+
+          &:hover,
+          &:focus-visible {
+            &::after {
+              opacity: 0.6;
+            }
+          }
+        }
       }
     }
   }
@@ -118,4 +153,29 @@
   
   flex: 0 0 200px;
   padding: 0 8px;
+}
+
+.inventory-section {
+  margin-bottom: 12px;
+
+  .inventory-section-header {
+    margin: 0 0 4px;
+  }
+
+  .inventory-section-title {
+    margin: 0;
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .inventory-section-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 4px;
+    padding-right: 2px;
+
+    .item-create {
+      font-size: 12px;
+    }
+  }
 }

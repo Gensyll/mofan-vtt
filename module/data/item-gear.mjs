@@ -6,6 +6,9 @@ export default class MofanGear extends MofanItemLootable {
     'MOFAN.Item.Gear',
   ];
 
+  /** @type {string[]} */
+  static SHEET_PARTS = ['attributesGear'];
+
   static defineSchema() {
     const fields = foundry.data.fields;
     const requiredInteger = { required: true, nullable: false, integer: true };
