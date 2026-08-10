@@ -1,3 +1,4 @@
+import MofanItemLootable from '../data/base-item-lootable.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 
 const { api, sheets } = foundry.applications;
@@ -51,8 +52,8 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
     biography: {
       template: 'systems/mofan-vtt/templates/actor/biography.hbs',
     },
-    gear: {
-      template: 'systems/mofan-vtt/templates/actor/gear.hbs',
+    inventory: {
+      template: 'systems/mofan-vtt/templates/actor/inventory.hbs',
     },
     spells: {
       template: 'systems/mofan-vtt/templates/actor/spells.hbs',
@@ -72,10 +73,10 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
     // Control which parts show based on document subtype
     switch (this.document.type) {
       case 'character':
-        options.parts.push('gear', 'spells', 'effects');
+        options.parts.push('inventory', 'spells', 'effects');
         break;
       case 'npc':
-        options.parts.push('gear', 'effects');
+        options.parts.push('inventory', 'effects');
         break;
     }
     // Add biography at the end of the nav pane
@@ -116,7 +117,7 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
     switch (partId) {
       case 'features':
       case 'spells':
-      case 'gear':
+      case 'inventory':
         context.tab = context.tabs[partId];
         break;
       case 'biography':
@@ -182,9 +183,9 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
           tab.id = 'features';
           tab.label += 'Features';
           break;
-        case 'gear':
-          tab.id = 'gear';
-          tab.label += 'Gear';
+        case 'inventory':
+          tab.id = 'inventory';
+          tab.label += 'Inventory';
           break;
         case 'spells':
           tab.id = 'spells';
@@ -207,11 +208,6 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
    * @param {object} context The context object to mutate
    */
   _prepareItems(context) {
-    // Initialize containers.
-    // You can just use `this.document.itemTypes` instead
-    // if you don't need to subdivide a given type like
-    // this sheet does with spells
-    const gear = [];
     const features = [];
     const spells = {
       0: [],
@@ -226,18 +222,17 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
       9: [],
     };
 
-    // Iterate through items, allocating to containers
+    const sectionsByType = Object.fromEntries(
+      CONFIG.MOFAN.lootableInventoryTypes.map((type) => [type, []])
+    );
+
     for (let i of this.document.items) {
-      // Append to gear.
-      if (i.type === 'gear') {
-        gear.push(i);
-      }
-      // Append to features.
-      else if (i.type === 'feature') {
+      if (i.system instanceof MofanItemLootable) {
+        const bucket = sectionsByType[i.type];
+        if (bucket) bucket.push(i);
+      } else if (i.type === 'feature') {
         features.push(i);
-      }
-      // Append to spells.
-      else if (i.type === 'spell') {
+      } else if (i.type === 'spell') {
         if (i.system.spellLevel != undefined) {
           spells[i.system.spellLevel].push(i);
         }
@@ -248,8 +243,15 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
       s.sort((a, b) => (a.sort || 0) - (b.sort || 0));
     }
 
-    // Sort then assign
-    context.gear = gear.sort((a, b) => (a.sort || 0) - (b.sort || 0));
+    context.inventorySections = CONFIG.MOFAN.lootableInventoryTypes.map(
+      (type) => ({
+        type,
+        label: game.i18n.localize(`TYPES.Item.${type}`),
+        items: (sectionsByType[type] ?? []).sort(
+          (a, b) => (a.sort || 0) - (b.sort || 0)
+        ),
+      })
+    );
     context.features = features.sort((a, b) => (a.sort || 0) - (b.sort || 0));
     context.spells = spells;
   }

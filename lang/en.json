@@ -27,7 +27,7 @@
       "Tabs": {
         "Biography": "Biography",
         "Features": "Features",
-        "Gear": "Gear",
+        "Inventory": "Inventory",
         "Spells": "Spells",
         "Effects": "Effects"
       },
@@ -71,6 +71,10 @@
         "price": {
           "label": "Price",
           "denomination": "NAD"
+        },
+        "craft": {
+          "craftable": "Craftable",
+          "notCraftable": "Not Craftable"
         }
       },
       "Tabs": {

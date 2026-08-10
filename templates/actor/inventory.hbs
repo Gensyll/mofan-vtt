@@ -1,0 +1,78 @@
+{{! Inventory Tab }}
+<section
+  class='tab inventory {{tab.cssClass}}'
+  data-group='primary'
+  data-tab='inventory'
+>
+  {{#each inventorySections as |section|}}
+    <div class='inventory-section'>
+      <div class='inventory-section-header'>
+        <h4 class='inventory-section-title'>{{section.label}}</h4>
+      </div>
+      <ol class='items-list'>
+        <li class='item flexrow items-header'>
+          <div class='item-name'>{{localize 'Name'}}</div>
+          <div class='item-prop item-weight'>{{localize 'MOFAN.Item.FIELDS.weight.label'}}</div>
+          <div class='item-prop item-quantity'>{{localize 'MOFAN.Item.FIELDS.quantity.label'}}</div>
+          <div class='item-controls'></div>
+        </li>
+        {{#each section.items as |item|}}
+          <li
+            class='item flexrow'
+            data-item-id='{{item._id}}'
+            data-drag='true'
+            data-document-class='Item'
+          >
+            <div class='item-name'>
+              <div class='item-image'>
+                <a class='rollable' data-roll-type='item' data-action='roll'>
+                  <img
+                    src='{{item.img}}'
+                    title='{{item.name}}'
+                    width='24'
+                    height='24'
+                  />
+                </a>
+              </div>
+              <div>{{item.name}}</div>
+            </div>
+            <div class='item-prop item-weight'>{{item.system.weight}}</div>
+            <div class='item-prop item-quantity'>{{item.system.quantity}}</div>
+            <div class='item-controls'>
+              <a
+                class='item-control item-edit'
+                title='{{localize "DOCUMENT.Update" type='Item'}}'
+                data-action='viewDoc'
+              >
+                <i class='fas fa-edit'></i>
+              </a>
+              {{#if @root.editable}}
+                <a
+                  class='item-control item-delete'
+                  title='{{localize "DOCUMENT.Delete" type='Item'}}'
+                  data-action='deleteDoc'
+                >
+                  <i class='fas fa-trash'></i>
+                </a>
+              {{/if}}
+            </div>
+          </li>
+        {{/each}}
+      </ol>
+      {{#if @root.editable}}
+        <div class='inventory-section-footer'>
+          <a
+            class='item-control item-create'
+            title='{{localize "DOCUMENT.Create" type='Item'}}'
+            data-action='createDoc'
+            data-document-class='Item'
+            data-type='{{section.type}}'
+          >
+            <i class='fas fa-plus'></i>
+            {{localize 'DOCUMENT.New' type='item'}}
+          </a>
+        </div>
+      {{/if}}
+    </div>
+  {{/each}}
+</section>

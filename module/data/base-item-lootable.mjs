@@ -5,6 +5,9 @@ export default class MofanItemLootable extends MofanItemBase {
         'MOFAN.Item.base',
         'MOFAN.Item.Lootable',
     ];
+
+    /** @type {string[]} */
+    static SHEET_PARTS = ['attributesLoot'];
     
     static defineSchema() {
         const fields = foundry.data.fields;
@@ -31,6 +34,10 @@ export default class MofanItemLootable extends MofanItemBase {
             required: true,
             initial: 0,
             nullable: false
+        });
+        schema.isCraftable = new fields.BooleanField({
+            required: true,
+            initial: true
         });
 
         return schema;

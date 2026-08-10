@@ -103,4 +103,10 @@ MOFAN.skills = {
     parent_ability1: MOFAN.abilities.dex,
     parent_ability2: MOFAN.abilities.awr,
   },
-}
+};
+
+/**
+ * Item types (document.type) that extend MofanItemLootable, in display order on the actor Inventory tab.
+ * @type {string[]}
+ */
+MOFAN.lootableInventoryTypes = ['gear', 'loot'];

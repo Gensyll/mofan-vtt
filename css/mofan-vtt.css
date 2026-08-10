@@ -348,6 +348,34 @@
   border: none;
   margin-right: 5px;
 }
+.mofan-vtt .items-list .item .item-name .item-image .rollable {
+  cursor: pointer;
+  display: block;
+  position: relative;
+  width: 24px;
+  height: 24px;
+  border-radius: 2px;
+  line-height: 0;
+}
+.mofan-vtt .items-list .item .item-name .item-image .rollable img {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+.mofan-vtt .items-list .item .item-name .item-image .rollable::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: url("../assets/icons/dice/d10.svg") center / contain no-repeat;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+.mofan-vtt .items-list .item .item-name .item-image .rollable:hover::after,
+.mofan-vtt .items-list .item .item-name .item-image .rollable:focus-visible::after {
+  opacity: 0.6;
+}
 .mofan-vtt .items-list .item-prop {
   text-align: center;
   border-left: 1px solid #c9c7b8;
@@ -374,6 +402,26 @@
 .mofan-vtt .item-formula {
   flex: 0 0 200px;
   padding: 0 8px;
+}
+.mofan-vtt .inventory-section {
+  margin-bottom: 12px;
+}
+.mofan-vtt .inventory-section .inventory-section-header {
+  margin: 0 0 4px;
+}
+.mofan-vtt .inventory-section .inventory-section-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: bold;
+}
+.mofan-vtt .inventory-section .inventory-section-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 4px;
+  padding-right: 2px;
+}
+.mofan-vtt .inventory-section .inventory-section-footer .item-create {
+  font-size: 12px;
 }
 .mofan-vtt .effects-header {
   height: 28px;
