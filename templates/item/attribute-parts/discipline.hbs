@@ -1,0 +1,79 @@
+{{! Discipline Attributes Tab }}
+<section
+  class='tab attributes {{tab.cssClass}}'
+  data-group='primary'
+  data-tab='attributes'
+>
+  <div class='resource'>
+    <label class='resource-label'>{{localize 'MOFAN.Item.Discipline.FIELDS.healthScaling.label'}}</label>
+    <input
+      type='number'
+      name='system.healthScaling'
+      value='{{system.healthScaling}}'
+      data-dtype='Number'
+      min='0'
+      {{#unless editable}}disabled{{/unless}}
+    />
+  </div>
+
+  <fieldset class='trait-list'>
+    <legend>{{localize 'MOFAN.Item.Discipline.FIELDS.traits.label'}}</legend>
+    <div class='trait-grid'>
+      {{#each traitOptions as |trait|}}
+        <label class='trait-option' title='{{trait.description}}'>
+          <input
+            type='checkbox'
+            data-trait-checkbox='true'
+            value='{{trait.key}}'
+            {{checked trait.selected}}
+            {{#unless @root.editable}}disabled{{/unless}}
+          />
+          <span>{{trait.label}}</span>
+        </label>
+      {{/each}}
+    </div>
+  </fieldset>
+
+  <fieldset class='prerequisites-drop' data-drop-zone='prerequisites'>
+    <legend>{{localize 'MOFAN.Item.Discipline.FIELDS.prerequisites.label'}}</legend>
+    <p class='hint'>{{localize 'MOFAN.Item.Discipline.PrerequisitesDrop'}}</p>
+    <ol class='items-list prerequisite-list'>
+      {{#each prerequisites as |prereq index|}}
+        <li class='item flexrow prerequisite' data-prereq-index='{{index}}'>
+          <div class='item-name'>
+            <a data-action='openPrerequisite' data-uuid='{{prereq.uuid}}'>
+              {{prereq.name}}
+            </a>
+          </div>
+          <div class='item-prop'>
+            <label>
+              {{localize 'MOFAN.Item.Discipline.PrerequisiteLevel'}}
+              <input
+                type='number'
+                name='system.prerequisites.{{index}}.level'
+                value='{{prereq.level}}'
+                data-dtype='Number'
+                min='1'
+                {{#unless @root.editable}}disabled{{/unless}}
+              />
+            </label>
+            <input type='hidden' name='system.prerequisites.{{index}}.uuid' value='{{prereq.uuid}}' />
+            <input type='hidden' name='system.prerequisites.{{index}}.name' value='{{prereq.name}}' />
+          </div>
+          <div class='item-controls'>
+            {{#if @root.editable}}
+              <a
+                class='item-control'
+                data-action='removePrerequisite'
+                data-prereq-index='{{index}}'
+                title='{{localize "MOFAN.Item.Discipline.RemovePrerequisite"}}'
+              >
+                <i class='fas fa-trash'></i>
+              </a>
+            {{/if}}
+          </div>
+        </li>
+      {{/each}}
+    </ol>
+  </fieldset>
+</section>

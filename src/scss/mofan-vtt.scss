@@ -18,4 +18,10 @@
   @import 'components/resource';
   @import 'components/items';
   @import 'components/effects';
+
+  // Item sheets use a fixed Application height; allow the body to scroll
+  // when Attributes content (e.g. prerequisites) grows past that height.
+  &.item .window-content {
+    overflow-y: auto;
+  }
 }

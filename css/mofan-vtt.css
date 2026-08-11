@@ -224,6 +224,9 @@
 }
 
 /* Styles limited to mofan-vtt sheets */
+.mofan-vtt.item .window-content {
+  overflow-y: auto;
+}
 .mofan-vtt .item-form {
   font-family: "Roboto", sans-serif;
 }
@@ -534,4 +537,43 @@
 }
 .mofan-vtt .effects .item .effect-controls {
   border: none;
+}
+.mofan-vtt .trait-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px 8px;
+}
+.mofan-vtt .trait-option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+.mofan-vtt .prerequisites-drop,
+.mofan-vtt .parent-discipline-drop {
+  margin-top: 8px;
+}
+.mofan-vtt .prerequisite-list .item-prop input[type=number] {
+  width: 3.5rem;
+}
+.mofan-vtt .discipline-section-header {
+  margin: 8px 0 4px;
+  border-bottom: 1px solid #c9c7b8;
+}
+.mofan-vtt .discipline-points {
+  margin-bottom: 8px;
+}
+.mofan-vtt .discipline-level-controls {
+  flex: 0 0 90px;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+}
+.mofan-vtt .nested-feature {
+  padding-left: 1.5rem;
+  background: rgba(0, 0, 0, 0.02);
+}
+.mofan-vtt .parent-discipline-row {
+  align-items: center;
+  gap: 8px;
 }

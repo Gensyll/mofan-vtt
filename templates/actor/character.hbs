@@ -1,0 +1,158 @@
+{{! Character Tab }}
+<section
+  class='tab character {{tab.cssClass}}'
+  data-group='primary'
+  data-tab='character'
+>
+  <section class='grid grid-3col'>
+    <aside class='sidebar'>
+      {{> "mofan-vtt.actor-skills-sidebar"}}
+    </aside>
+
+    <section class='main grid-span-2'>
+      {{#if isCharacter}}
+        <div class='discipline-points resource flex-group-center'>
+          <label class='resource-label'>{{localize 'MOFAN.Actor.DisciplinePoints.Label'}}</label>
+          <div class='resource-content flexrow flex-center flex-between'>
+            <span title='{{localize "MOFAN.Actor.DisciplinePoints.Available"}}'>
+              {{disciplinePoints.available}}
+            </span>
+            <span>/</span>
+            <span title='{{localize "MOFAN.Actor.DisciplinePoints.Total"}}'>
+              {{disciplinePoints.total}}
+            </span>
+            <span class='hint'>
+              ({{localize 'MOFAN.Actor.DisciplinePoints.Spent'}}: {{disciplinePoints.spent}})
+            </span>
+          </div>
+        </div>
+      {{/if}}
+
+      <h3 class='discipline-section-header'>{{localize 'MOFAN.Actor.Disciplines'}}</h3>
+      <ol class='items-list disciplines-list'>
+        <li class='item flexrow items-header'>
+          <div class='item-name'>{{localize 'Name'}}</div>
+          <div class='item-prop'>{{localize 'MOFAN.Item.Discipline.FIELDS.level.label'}}</div>
+          <div class='item-controls'>
+            {{#if @root.editable}}
+              <a
+                class='item-control item-create'
+                title='Create item'
+                data-action='createDoc'
+                data-document-class='Item'
+                data-type='discipline'
+              >
+                <i class='fas fa-plus'></i>
+                {{localize 'DOCUMENT.New' type='discipline'}}
+              </a>
+            {{/if}}
+          </div>
+        </li>
+        {{#each disciplines as |discipline|}}
+          <li
+            class='item discipline flexrow'
+            data-item-id='{{discipline._id}}'
+            data-drag='true'
+            data-document-class='Item'
+          >
+            <div class='item-name'>
+              <div class='item-image'>
+                <a class='rollable' data-roll-type='item' data-action='roll'>
+                  <img
+                    src='{{discipline.img}}'
+                    title='{{discipline.name}}'
+                    width='24'
+                    height='24'
+                  />
+                </a>
+              </div>
+              <div>{{discipline.name}}</div>
+            </div>
+            <div class='item-prop discipline-level-controls flexrow'>
+              {{#if @root.editable}}
+                <a
+                  class='item-control'
+                  data-action='decreaseDisciplineLevel'
+                  title='{{localize "MOFAN.Discipline.DecreaseLevel"}}'
+                >
+                  <i class='fas fa-minus'></i>
+                </a>
+              {{/if}}
+              <span>{{discipline.system.level}}</span>
+              {{#if @root.editable}}
+                <a
+                  class='item-control'
+                  data-action='increaseDisciplineLevel'
+                  title='{{localize "MOFAN.Discipline.IncreaseLevel"}}'
+                >
+                  <i class='fas fa-plus'></i>
+                </a>
+              {{/if}}
+            </div>
+            <div class='item-controls'>
+              <a
+                class='item-control item-edit'
+                title='{{localize "DOCUMENT.Update" type="discipline"}}'
+                data-action='viewDoc'
+              >
+                <i class='fas fa-edit'></i>
+              </a>
+              {{#if @root.editable}}
+                <a
+                  class='item-control item-delete'
+                  title='{{localize "DOCUMENT.Delete" type="discipline"}}'
+                  data-action='deleteDoc'
+                >
+                  <i class='fas fa-trash'></i>
+                </a>
+              {{/if}}
+            </div>
+          </li>
+          {{#each discipline.features as |feature|}}
+            <li
+              class='item feature nested-feature flexrow'
+              data-item-id='{{feature._id}}'
+              data-drag='true'
+              data-document-class='Item'
+            >
+              <div class='item-name'>
+                <div class='item-image'>
+                  <a class='rollable' data-roll-type='item' data-action='roll'>
+                    <img
+                      src='{{feature.img}}'
+                      title='{{feature.name}}'
+                      width='24'
+                      height='24'
+                    />
+                  </a>
+                </div>
+                <div>{{feature.name}}</div>
+              </div>
+              <div class='item-prop'>
+                AP {{feature.system.apCost}}
+              </div>
+              <div class='item-controls'>
+                <a
+                  class='item-control item-edit'
+                  title='{{localize "DOCUMENT.Update" type="feature"}}'
+                  data-action='viewDoc'
+                >
+                  <i class='fas fa-edit'></i>
+                </a>
+                {{#if @root.editable}}
+                  <a
+                    class='item-control item-delete'
+                    title='{{localize "DOCUMENT.Delete" type="feature"}}'
+                    data-action='deleteDoc'
+                  >
+                    <i class='fas fa-trash'></i>
+                  </a>
+                {{/if}}
+              </div>
+            </li>
+          {{/each}}
+        {{/each}}
+      </ol>
+    </section>
+  </section>
+</section>

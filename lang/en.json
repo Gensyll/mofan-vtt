@@ -26,11 +26,21 @@
     "Actor": {
       "Tabs": {
         "Biography": "Biography",
+        "Character": "Character",
         "Features": "Features",
         "Inventory": "Inventory",
         "Spells": "Spells",
         "Effects": "Effects"
       },
+      "Disciplines": "Disciplines",
+      "DisciplinePoints": {
+        "Label": "Discipline Points",
+        "Total": "Total",
+        "Spent": "Spent",
+        "Available": "Available"
+      },
+      "HealthEffectiveMax": "Effective Max",
+      "HealthDisciplineBonus": "Discipline Bonus",
       "base": {
         "FIELDS": {
           "biography": {"label": "Biography"},
@@ -82,6 +92,29 @@
         "Description": "Description",
         "Effects": "Effects"
       },
+      "Discipline": {
+        "FIELDS": {
+          "traits": {"label": "Traits"},
+          "healthScaling": {"label": "Health Scaling"},
+          "prerequisites": {"label": "Prerequisites"},
+          "level": {"label": "Level"},
+          "sourceUuid": {"label": "Source UUID"}
+        },
+        "PrerequisitesDrop": "Drop a Discipline here to add a prerequisite",
+        "PrerequisiteLevel": "Required Level",
+        "RemovePrerequisite": "Remove prerequisite"
+      },
+      "Feature": {
+        "FIELDS": {
+          "parentDiscipline": {"label": "Parent Discipline"},
+          "traits": {"label": "Traits"},
+          "apCost": {"label": "AP Cost"},
+          "unlockLevel": {"label": "Unlock Level"},
+          "sourceUuid": {"label": "Source UUID"}
+        },
+        "ParentDrop": "Drop a Discipline here to set the parent",
+        "ClearParent": "Clear parent discipline"
+      },
       "Gear": {
         "FIELDS": {
           "rollFormula": {"label": "Roll Formula"},
@@ -102,6 +135,134 @@
         }
       }
     },
+    "Discipline": {
+      "SpendDPTitle": "Spend Discipline Point",
+      "SpendDPContent": "Spend 1 Discipline Point to take or advance <strong>{name}</strong>?",
+      "RefundDPTitle": "Refund Discipline Point",
+      "RefundDPContent": "Reduce <strong>{name}</strong> by 1 level and refund 1 Discipline Point?",
+      "DeleteAtZeroTitle": "Remove Discipline",
+      "DeleteAtZeroContent": "<strong>{name}</strong> is at level 0. Remove it from this actor?",
+      "NoDP": "Not enough Discipline Points available.",
+      "PrereqFailed": "Prerequisites not met: {list}",
+      "PrereqEntry": "{name} (Level {level})",
+      "InvalidPrereqDrop": "Only Discipline items can be prerequisites.",
+      "InvalidParentDrop": "Only Discipline items can be set as a Feature parent.",
+      "IncreaseLevel": "Increase discipline level",
+      "DecreaseLevel": "Decrease discipline level"
+    },
+    "Feature": {
+      "SpendAPTitle": "Spend Action Points",
+      "SpendAPContent": "Spend {cost} Action Point(s) to use <strong>{name}</strong>?",
+      "InsufficientAP": "Not enough Action Points (need {cost}, have {current})."
+    },
+    "DisciplineTrait": {
+      "basic": {
+        "label": "Basic",
+        "description": "This discipline is a foundational training path that other disciplines may build upon."
+      },
+      "advanced": {
+        "label": "Advanced",
+        "description": "This discipline requires one or more other disciplines to be taken in order to spec into it."
+      },
+      "combat": {
+        "label": "Combat",
+        "description": "This discipline has majority of its features for combat."
+      },
+      "defensive": {
+        "label": "Defensive",
+        "description": "This discipline has some features that provide additional Armour or Reactions that increase defence."
+      },
+      "divine": {
+        "label": "Divine",
+        "description": "This discipline is related to the Angels in some way."
+      },
+      "inherent": {
+        "label": "Inherent",
+        "description": "This discipline grants innate, inherent abilities that are usually harder to counter."
+      },
+      "magic": {
+        "label": "Magic",
+        "description": "This discipline has one or more features related to magic."
+      },
+      "marksmanship": {
+        "label": "Marksmanship",
+        "description": "This discipline grants some ranged Features."
+      },
+      "martial": {
+        "label": "Martial",
+        "description": "This discipline grants some melee Features."
+      },
+      "preparation": {
+        "label": "Preparation",
+        "description": "This discipline has some Features that prepare things for combat, exploration, etc."
+      },
+      "skilled": {
+        "label": "Skilled",
+        "description": "This discipline relies heavily upon one of the 10 Skills."
+      }
+    },
+    "FeatureTrait": {
+      "combat": {
+        "label": "Combat",
+        "description": "This Feature can only be used in combat."
+      },
+      "cooperate": {
+        "label": "Cooperate",
+        "description": "This Feature requires a target to be either cooperative or an ally to help with the feature."
+      },
+      "defensive": {
+        "label": "Defensive",
+        "description": "This Feature involves active defence."
+      },
+      "detect": {
+        "label": "Detect",
+        "description": "This Feature can identify or locate an object or creature."
+      },
+      "healing": {
+        "label": "Healing",
+        "description": "This Feature can cause a creature to recover Hit Points or recover from a Condition."
+      },
+      "magic": {
+        "label": "Magic",
+        "description": "This Feature uses some magical ability."
+      },
+      "manipulate": {
+        "label": "Manipulate",
+        "description": "This Feature can increase or decrease a circumstance bonus, or change the Action Point cost of a Feature."
+      },
+      "melee": {
+        "label": "Melee",
+        "description": "This Feature can only be used with Melee weapons."
+      },
+      "movement": {
+        "label": "Movement",
+        "description": "This Feature increases or decreases only the movement speed of a creature, object, or vehicle."
+      },
+      "psionic": {
+        "label": "Psionic",
+        "description": "This Feature uses the mental ability of the user."
+      },
+      "preparation": {
+        "label": "Preparation",
+        "description": "This Feature requires either multiple Actions or preparation before combat to be utilized."
+      },
+      "ranged": {
+        "label": "Ranged",
+        "description": "This Feature can only be used with Ranged weapons."
+      },
+      "resist": {
+        "label": "Resist",
+        "description": "This Feature involves passive defence."
+      },
+      "tactical": {
+        "label": "Tactical",
+        "description": "This Feature can only be used when certain parameters involving positioning have been met."
+      },
+      "technology": {
+        "label": "Technology",
+        "description": "Requires above Basic training in the skill or weapon to use the Feature."
+      }
+    },
     "Effect": {
       "Source": "Source",
       "Toggle": "Toggle Effect",
@@ -118,6 +279,7 @@
     "Item": {
       "gear": "Gear",
       "feature": "Feature",
+      "discipline": "Discipline",
       "spell": "Spell",
       "loot": "Loot"
     }

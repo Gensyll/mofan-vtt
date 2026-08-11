@@ -48,7 +48,7 @@
     }
   },
   "Item": {
-    "types": ["gear", "feature", "spell", "loot"],
+    "types": ["gear", "feature", "discipline", "spell", "loot"],
     "htmlFields": ["description"],
     "templates": {
       "base": {
@@ -62,6 +62,9 @@
       "formula": "d10 + @for.mod + ceil(@lvl / 2)"
     },
     "feature": {
+      "templates": ["base"]
+    },
+    "discipline": {
       "templates": ["base"]
     },
     "spell": {

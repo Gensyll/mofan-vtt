@@ -30,12 +30,59 @@ export class MofanItem extends Item {
   }
 
   /**
+   * Spend AP for feature use when owned by an actor.
+   * @returns {Promise<boolean>} true if the roll/use may continue
+   */
+  async _spendFeatureActionPoints() {
+    if (this.type !== 'feature' || !this.actor) return true;
+    const cost = Number(this.system.apCost) || 0;
+    if (cost <= 0) return true;
+
+    const current = Number(this.actor.system.power?.value) || 0;
+    if (current < cost) {
+      ui.notifications.warn(
+        game.i18n.format('MOFAN.Feature.InsufficientAP', {
+          cost,
+          current,
+        })
+      );
+      return false;
+    }
+
+    let confirmed = true;
+    const content = game.i18n.format('MOFAN.Feature.SpendAPContent', {
+      cost,
+      name: this.name,
+    });
+    const title = game.i18n.localize('MOFAN.Feature.SpendAPTitle');
+    if (foundry.applications?.api?.DialogV2?.confirm) {
+      confirmed = await foundry.applications.api.DialogV2.confirm({
+        window: { title },
+        content: `<p>${content}</p>`,
+      });
+    } else {
+      confirmed = await Dialog.confirm({
+        title,
+        content: `<p>${content}</p>`,
+      });
+    }
+    if (!confirmed) return false;
+
+    await this.actor.update({
+      'system.power.value': Math.max(0, current - cost),
+    });
+    return true;
+  }
+
+  /**
    * Handle clickable rolls.
    * @param {Event} event   The originating click event
    * @private
    */
   async roll(event) {
     const item = this;
+
+    if (!(await this._spendFeatureActionPoints())) return;
 
     // Initialize chat data.
     const speaker = ChatMessage.getSpeaker({ actor: this.actor });

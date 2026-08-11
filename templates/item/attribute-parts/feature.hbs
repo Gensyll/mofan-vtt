@@ -1,8 +1,73 @@
-{{! Attributes Tab }}
+{{! Feature Attributes Tab }}
 <section
   class='tab attributes {{tab.cssClass}}'
   data-group='primary'
   data-tab='attributes'
 >
-  {{! As you add new fields, add them in here! }}
+  <fieldset class='parent-discipline-drop' data-drop-zone='parentDiscipline'>
+    <legend>{{localize 'MOFAN.Item.Feature.FIELDS.parentDiscipline.label'}}</legend>
+    <p class='hint'>{{localize 'MOFAN.Item.Feature.ParentDrop'}}</p>
+    <div class='flexrow parent-discipline-row'>
+      {{#if parentDiscipline}}
+        <a data-action='openParentDiscipline' data-uuid='{{parentDiscipline.uuid}}'>
+          {{parentDiscipline.name}}
+        </a>
+      {{else}}
+        <span class='hint'>—</span>
+      {{/if}}
+      {{#if editable}}
+        <a
+          class='item-control'
+          data-action='clearParentDiscipline'
+          title='{{localize "MOFAN.Item.Feature.ClearParent"}}'
+        >
+          <i class='fas fa-times'></i>
+        </a>
+      {{/if}}
+    </div>
+    <input type='hidden' name='system.parentDiscipline' value='{{system.parentDiscipline}}' />
+  </fieldset>
+
+  <div class='resources grid grid-2col'>
+    <div class='resource'>
+      <label class='resource-label'>{{localize 'MOFAN.Item.Feature.FIELDS.apCost.label'}}</label>
+      <input
+        type='number'
+        name='system.apCost'
+        value='{{system.apCost}}'
+        data-dtype='Number'
+        min='0'
+        {{#unless editable}}disabled{{/unless}}
+      />
+    </div>
+    <div class='resource'>
+      <label class='resource-label'>{{localize 'MOFAN.Item.Feature.FIELDS.unlockLevel.label'}}</label>
+      <input
+        type='number'
+        name='system.unlockLevel'
+        value='{{system.unlockLevel}}'
+        data-dtype='Number'
+        min='1'
+        {{#unless editable}}disabled{{/unless}}
+      />
+    </div>
+  </div>
+
+  <fieldset class='trait-list'>
+    <legend>{{localize 'MOFAN.Item.Feature.FIELDS.traits.label'}}</legend>
+    <div class='trait-grid'>
+      {{#each traitOptions as |trait|}}
+        <label class='trait-option' title='{{trait.description}}'>
+          <input
+            type='checkbox'
+            data-trait-checkbox='true'
+            value='{{trait.key}}'
+            {{checked trait.selected}}
+            {{#unless @root.editable}}disabled{{/unless}}
+          />
+          <span>{{trait.label}}</span>
+        </label>
+      {{/each}}
+    </div>
+  </fieldset>
 </section>

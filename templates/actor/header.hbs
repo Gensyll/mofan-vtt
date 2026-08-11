@@ -41,10 +41,17 @@
           <input
             type='text'
             name='system.health.max'
-            value='{{system.health.max}}'
+            value='{{healthMaxBase}}'
             data-dtype='Number'
+            title='{{localize "MOFAN.Actor.base.FIELDS.health.max.label"}}'
           />
         </div>
+        {{#if healthDisciplineBonus}}
+          <div class='hint'>
+            {{localize 'MOFAN.Actor.HealthEffectiveMax'}}: {{system.health.max}}
+            (+{{healthDisciplineBonus}} {{localize 'MOFAN.Actor.HealthDisciplineBonus'}})
+          </div>
+        {{/if}}
       </div>
 
       <div class='resource flex-group-center'>
