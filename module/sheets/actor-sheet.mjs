@@ -589,13 +589,6 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
         ui.notifications.warn(game.i18n.localize('MOFAN.Discipline.NoDP'));
         return;
       }
-      const confirmed = await this._confirm(
-        game.i18n.localize('MOFAN.Discipline.SpendDPTitle'),
-        game.i18n.format('MOFAN.Discipline.SpendDPContent', {
-          name: discipline.name,
-        })
-      );
-      if (!confirmed) return;
     }
 
     if (delta < 0 && this.actor.type === 'character') {

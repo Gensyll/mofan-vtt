@@ -4,11 +4,12 @@
 
 .sheet-header {
   flex: 0 auto;
-  overflow: hidden;
+  overflow: visible;
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: flex-start;
+  align-items: flex-start;
   margin-bottom: 10px;
 
   .profile-img {
@@ -19,6 +20,11 @@
 
   .header-fields {
     flex: 1;
+    min-width: 0;
+  }
+
+  .abilities {
+    margin-top: 4px;
   }
 }
 

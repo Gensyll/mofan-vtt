@@ -4,36 +4,6 @@
   data-group='primary'
   data-tab='attributes'
 >
-  <div class='resource'>
-    <label class='resource-label'>{{localize 'MOFAN.Item.Discipline.FIELDS.healthScaling.label'}}</label>
-    <input
-      type='number'
-      name='system.healthScaling'
-      value='{{system.healthScaling}}'
-      data-dtype='Number'
-      min='0'
-      {{#unless editable}}disabled{{/unless}}
-    />
-  </div>
-
-  <fieldset class='trait-list'>
-    <legend>{{localize 'MOFAN.Item.Discipline.FIELDS.traits.label'}}</legend>
-    <div class='trait-grid'>
-      {{#each traitOptions as |trait|}}
-        <label class='trait-option' title='{{trait.description}}'>
-          <input
-            type='checkbox'
-            data-trait-checkbox='true'
-            value='{{trait.key}}'
-            {{checked trait.selected}}
-            {{#unless @root.editable}}disabled{{/unless}}
-          />
-          <span>{{trait.label}}</span>
-        </label>
-      {{/each}}
-    </div>
-  </fieldset>
-
   <fieldset class='prerequisites-drop' data-drop-zone='prerequisites'>
     <legend>{{localize 'MOFAN.Item.Discipline.FIELDS.prerequisites.label'}}</legend>
     <p class='hint'>{{localize 'MOFAN.Item.Discipline.PrerequisitesDrop'}}</p>
@@ -75,5 +45,36 @@
         </li>
       {{/each}}
     </ol>
+  </fieldset>
+
+  <div class='resource health-scaling-resource'>
+    <label class='resource-label'>{{localize 'MOFAN.Item.Discipline.FIELDS.healthScaling.label'}}</label>
+    <input
+      class='health-scaling-input'
+      type='number'
+      name='system.healthScaling'
+      value='{{system.healthScaling}}'
+      data-dtype='Number'
+      min='0'
+      {{#unless editable}}disabled{{/unless}}
+    />
+  </div>
+
+  <fieldset class='trait-list'>
+    <legend>{{localize 'MOFAN.Item.Discipline.FIELDS.traits.label'}}</legend>
+    <div class='trait-grid'>
+      {{#each traitOptions as |trait|}}
+        <label class='trait-option' title='{{trait.description}}'>
+          <input
+            type='checkbox'
+            data-trait-checkbox='true'
+            value='{{trait.key}}'
+            {{checked trait.selected}}
+            {{#unless @root.editable}}disabled{{/unless}}
+          />
+          <span>{{trait.label}}</span>
+        </label>
+      {{/each}}
+    </div>
   </fieldset>
 </section>

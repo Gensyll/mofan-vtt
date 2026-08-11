@@ -2,6 +2,108 @@
   font-weight: bold;
 }
 
+.resource-content {
+  justify-content: center;
+  gap: 2px;
+}
+
+.resource-pair,
+.resource-single {
+  justify-content: center;
+  gap: 2px;
+
+  > * {
+    flex: 0 0 auto;
+  }
+}
+
+.resource-value {
+  flex: 0 0 2.5rem;
+  width: 2.5rem;
+  max-width: 2.5rem;
+  text-align: center;
+}
+
+.level-input {
+  flex: 0 0 3.5rem;
+  width: 3.5rem;
+  max-width: 3.5rem;
+}
+
+.header-resources {
+  margin: 4px 0;
+  gap: 8px;
+
+  &.grid,
+  &.grid-2col {
+    margin: 4px 0;
+  }
+}
+
+.header-resources-right {
+  margin: 0;
+  gap: 8px;
+  align-items: start;
+  grid-column: span 1 / span 1;
+
+  &.grid,
+  &.grid-2col {
+    margin: 0;
+    grid-column: span 1 / span 1;
+  }
+}
+
+.health-resource {
+  min-width: 0;
+}
+
+.health-triple {
+  justify-content: center;
+  align-items: flex-end;
+  flex-wrap: nowrap;
+  gap: 4px;
+  width: auto;
+  margin: 0 auto;
+
+  > * {
+    flex: 0 0 auto;
+  }
+}
+
+.health-field {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+
+  .resource-label {
+    font-size: 11px;
+    line-height: 1.1;
+    margin: 0;
+    text-align: center;
+  }
+
+  // In a column flex, flex-basis affects HEIGHT — set width only.
+  .resource-value {
+    flex: 0 0 auto;
+    width: 3.25rem;
+    max-width: 3.25rem;
+  }
+}
+
+.health-eff-max {
+  font-weight: bold;
+  text-align: center;
+}
+
+.health-discipline-bonus {
+  margin-top: 2px;
+  font-size: 11px;
+  line-height: 1.2;
+  text-align: center;
+  white-space: nowrap;
+}
+
 .ability {
   margin-bottom: 2px;
 }
@@ -9,4 +111,22 @@
 .ability-score,
 .ability-mod {
   flex: 0 0 44px;
+}
+
+.sheet-header {
+  .resource-label {
+    text-align: center;
+  }
+
+  .abilities .ability {
+    justify-content: center;
+
+    .resource-label {
+      flex: 0 0 auto;
+    }
+
+    .ability-score {
+      text-align: center;
+    }
+  }
 }

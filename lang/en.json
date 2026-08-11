@@ -36,11 +36,15 @@
       "DisciplinePoints": {
         "Label": "Discipline Points",
         "Total": "Total",
-        "Spent": "Spent",
+        "Spent": "spent",
         "Available": "Available"
       },
+      "HealthCurrent": "Curr",
+      "HealthMax": "Max",
       "HealthEffectiveMax": "Effective Max",
-      "HealthDisciplineBonus": "Discipline Bonus",
+      "HealthBase": "Base",
+      "HealthDisciplineBonus": "Discipline HP Bonus",
+      "HealthDisciplineBonusAbbr": "DB",
       "base": {
         "FIELDS": {
           "biography": {"label": "Biography"},
@@ -51,7 +55,8 @@
           "power": {
             "value": {"label": "Action Points"},
             "max": {"label": "Action Point Maximum"}
-          }
+          },
+          "species": {"label": "Species"}
         }
       },
       "Character": {

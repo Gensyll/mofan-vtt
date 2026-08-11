@@ -10,43 +10,25 @@
     </aside>
 
     <section class='main grid-span-2'>
-      {{#if isCharacter}}
-        <div class='discipline-points resource flex-group-center'>
-          <label class='resource-label'>{{localize 'MOFAN.Actor.DisciplinePoints.Label'}}</label>
-          <div class='resource-content flexrow flex-center flex-between'>
-            <span title='{{localize "MOFAN.Actor.DisciplinePoints.Available"}}'>
-              {{disciplinePoints.available}}
-            </span>
+      <div class='discipline-section-heading'>
+        <h3 class='discipline-section-header'>{{localize 'MOFAN.Actor.Disciplines'}}</h3>
+        {{#if isCharacter}}
+          <div class='discipline-points'>
+            <span class='discipline-points-label'>{{localize 'MOFAN.Actor.DisciplinePoints.Label'}}:</span>
+            <span title='{{localize "MOFAN.Actor.DisciplinePoints.Available"}}'>{{disciplinePoints.available}}</span>
             <span>/</span>
-            <span title='{{localize "MOFAN.Actor.DisciplinePoints.Total"}}'>
-              {{disciplinePoints.total}}
-            </span>
+            <span title='{{localize "MOFAN.Actor.DisciplinePoints.Total"}}'>{{disciplinePoints.total}}</span>
             <span class='hint'>
-              ({{localize 'MOFAN.Actor.DisciplinePoints.Spent'}}: {{disciplinePoints.spent}})
+              ({{disciplinePoints.spent}} {{localize 'MOFAN.Actor.DisciplinePoints.Spent'}})
             </span>
           </div>
-        </div>
-      {{/if}}
-
-      <h3 class='discipline-section-header'>{{localize 'MOFAN.Actor.Disciplines'}}</h3>
+        {{/if}}
+      </div>
       <ol class='items-list disciplines-list'>
         <li class='item flexrow items-header'>
           <div class='item-name'>{{localize 'Name'}}</div>
           <div class='item-prop'>{{localize 'MOFAN.Item.Discipline.FIELDS.level.label'}}</div>
-          <div class='item-controls'>
-            {{#if @root.editable}}
-              <a
-                class='item-control item-create'
-                title='Create item'
-                data-action='createDoc'
-                data-document-class='Item'
-                data-type='discipline'
-              >
-                <i class='fas fa-plus'></i>
-                {{localize 'DOCUMENT.New' type='discipline'}}
-              </a>
-            {{/if}}
-          </div>
+          <div class='item-controls'></div>
         </li>
         {{#each disciplines as |discipline|}}
           <li
@@ -153,6 +135,20 @@
           {{/each}}
         {{/each}}
       </ol>
+      {{#if @root.editable}}
+        <div class='discipline-section-footer'>
+          <a
+            class='item-control item-create'
+            title='{{localize "DOCUMENT.Create" type="discipline"}}'
+            data-action='createDoc'
+            data-document-class='Item'
+            data-type='discipline'
+          >
+            <i class='fas fa-plus'></i>
+            {{localize 'DOCUMENT.New' type='discipline'}}
+          </a>
+        </div>
+      {{/if}}
     </section>
   </section>
 </section>

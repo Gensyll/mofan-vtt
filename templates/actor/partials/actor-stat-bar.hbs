@@ -4,7 +4,7 @@
         <div class="ability flexrow flex-group-center">
             {{#with (lookup @root.config.abilities key)}}
             <label
-                class="resource-label rollable flexlarge align-center"
+                class="resource-label rollable align-center"
                 data-action="roll"
                 data-roll="d10+@abilities.{{key}}.mod"
                 data-label="{{localize label}}"
