@@ -28,6 +28,10 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
       createDoc: this._createEffect,
       deleteDoc: this._deleteEffect,
       toggleEffect: this._toggleEffect,
+      openPrerequisite: this._openUuidDocument,
+      openParentDiscipline: this._openUuidDocument,
+      removePrerequisite: this._removePrerequisite,
+      clearParentDiscipline: this._clearParentDiscipline,
     },
     form: {
       submitOnChange: true,
@@ -53,6 +57,10 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
     attributesFeature: {
       template:
         'systems/mofan-vtt/templates/item/attribute-parts/feature.hbs',
+    },
+    attributesDiscipline: {
+      template:
+        'systems/mofan-vtt/templates/item/attribute-parts/discipline.hbs',
     },
     attributesGear: {
       template: 'systems/mofan-vtt/templates/item/attribute-parts/gear.hbs',
@@ -111,13 +119,59 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
       huge: game.i18n.localize("MOFAN.Item.FIELDS.size.huge")
     };
 
+    if (this.item.type === 'discipline') {
+      context.traitOptions = this._prepareTraitOptions(
+        CONFIG.MOFAN.disciplineTraits,
+        this.item.system.traits
+      );
+      context.prerequisites = this.item.system.prerequisites ?? [];
+    } else if (this.item.type === 'feature') {
+      context.traitOptions = this._prepareTraitOptions(
+        CONFIG.MOFAN.featureTraits,
+        this.item.system.traits
+      );
+      context.parentDiscipline = await this._resolveParentDiscipline();
+    }
+
     return context;
+  }
+
+  /**
+   * @param {object} traitConfig
+   * @param {Set<string>|string[]} selected
+   * @returns {Array<{key: string, label: string, description: string, selected: boolean}>}
+   */
+  _prepareTraitOptions(traitConfig, selected) {
+    const selectedSet =
+      selected instanceof Set ? selected : new Set(selected ?? []);
+    return Object.entries(traitConfig).map(([key, data]) => ({
+      key,
+      label: game.i18n.localize(data.label),
+      description: game.i18n.localize(data.description),
+      selected: selectedSet.has(key),
+    }));
+  }
+
+  /**
+   * @returns {Promise<{uuid: string, name: string}|null>}
+   */
+  async _resolveParentDiscipline() {
+    const uuid = this.item.system.parentDiscipline;
+    if (!uuid) return null;
+    try {
+      const doc = await fromUuid(uuid);
+      if (!doc) return { uuid, name: uuid };
+      return { uuid, name: doc.name };
+    } catch (err) {
+      return { uuid, name: uuid };
+    }
   }
 
   /** @override */
   async _preparePartContext(partId, context) {
     switch (partId) {
       case 'attributesFeature':
+      case 'attributesDiscipline':
       case 'attributesGear':
       case 'attributesSpell':
       case 'attributesLoot':
@@ -180,6 +234,7 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
           tab.label += 'Description';
           break;
         case 'attributesFeature':
+        case 'attributesDiscipline':
         case 'attributesGear':
         case 'attributesSpell':
         case 'attributesLoot':
@@ -316,6 +371,76 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
   static async _toggleEffect(event, target) {
     const effect = this._getEffect(target);
     await effect.update({ disabled: !effect.disabled });
+  }
+
+  /**
+   * Open a document sheet from a stored UUID.
+   *
+   * @this MofanItemSheet
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target
+   */
+  static async _openUuidDocument(event, target) {
+    const uuid = target.dataset.uuid;
+    if (!uuid) return;
+    const doc = await fromUuid(uuid);
+    doc?.sheet?.render(true);
+  }
+
+  /**
+   * Remove a prerequisite entry by index.
+   *
+   * @this MofanItemSheet
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target
+   */
+  static async _removePrerequisite(event, target) {
+    if (!this.isEditable) return;
+    const index = Number(target.dataset.prereqIndex);
+    if (Number.isNaN(index)) return;
+    const prerequisites = foundry.utils.deepClone(
+      this.item.system.prerequisites ?? []
+    );
+    prerequisites.splice(index, 1);
+    await this.item.update({ 'system.prerequisites': prerequisites });
+  }
+
+  /**
+   * Clear the feature parent discipline link.
+   *
+   * @this MofanItemSheet
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target
+   */
+  static async _clearParentDiscipline(event, target) {
+    if (!this.isEditable) return;
+    await this.item.update({ 'system.parentDiscipline': '' });
+  }
+
+  /**
+   * Sanitize trait checkboxes before DocumentSheetV2 validates submit data.
+   * Trait checkboxes are nameless (data-trait-checkbox) so we inject the
+   * selected values into FormDataExtended. Must use the flat key
+   * `system.traits` — nested setProperty(system.traits) creates a `system`
+   * object that clobbers sibling flat keys like `system.apCost` on expand.
+   * @override
+   */
+  _prepareSubmitData(event, form, formData) {
+    if (['discipline', 'feature'].includes(this.document.type)) {
+      const traits = Array.from(
+        form.querySelectorAll(
+          'input[type="checkbox"][data-trait-checkbox]:checked'
+        )
+      )
+        .map((el) => el.value)
+        .filter((value) => typeof value === 'string' && value.length > 0);
+
+      // FormDataExtended stores dotted keys. Never create nested object.system
+      // here or expandObject will drop system.apCost / system.unlockLevel.
+      if (formData.object?.system) delete formData.object.system;
+      formData.object['system.traits'] = traits;
+    }
+    return super._prepareSubmitData(event, form, formData);
   }
 
   /** Helper Functions */
@@ -495,6 +620,42 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
    */
   async _onDropItem(event, data) {
     if (!this.item.isOwner) return false;
+    const dropped = await Item.implementation.fromDropData(data);
+    if (!dropped) return false;
+
+    if (this.item.type === 'discipline') {
+      if (dropped.type !== 'discipline') {
+        ui.notifications.warn(
+          game.i18n.localize('MOFAN.Discipline.InvalidPrereqDrop')
+        );
+        return false;
+      }
+      if (dropped.uuid === this.item.uuid) return false;
+      const prerequisites = foundry.utils.deepClone(
+        this.item.system.prerequisites ?? []
+      );
+      if (prerequisites.some((p) => p.uuid === dropped.uuid)) return false;
+      prerequisites.push({
+        uuid: dropped.uuid,
+        name: dropped.name,
+        level: 1,
+      });
+      await this.item.update({ 'system.prerequisites': prerequisites });
+      return true;
+    }
+
+    if (this.item.type === 'feature') {
+      if (dropped.type !== 'discipline') {
+        ui.notifications.warn(
+          game.i18n.localize('MOFAN.Discipline.InvalidParentDrop')
+        );
+        return false;
+      }
+      await this.item.update({ 'system.parentDiscipline': dropped.uuid });
+      return true;
+    }
+
+    return false;
   }
 
   /* -------------------------------------------- */

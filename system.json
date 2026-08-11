@@ -21,6 +21,9 @@
         "feature": {
             "htmlFields": ["description"]
         },
+        "discipline": {
+            "htmlFields": ["description"]
+        },
         "gear": {
             "htmlFields": ["description"]
         },

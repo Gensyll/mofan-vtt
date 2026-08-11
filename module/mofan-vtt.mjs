@@ -60,6 +60,7 @@ const config$actors = {
 const config$items = {
   gear: models.MofanGear,
   feature: models.MofanFeature,
+  discipline: models.MofanDiscipline,
   spell: models.MofanSpell,
   loot: models.MofanLoot,
 };
@@ -120,6 +121,9 @@ Handlebars.registerHelper('toLowerCase', function (str) {
 Handlebars.registerHelper('or', function(...args) {
     return Array.prototype.slice.call(arguments, 0, -1).some(Boolean);
   });
+Handlebars.registerHelper('eq', function (a, b) {
+  return a === b;
+});
 
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
