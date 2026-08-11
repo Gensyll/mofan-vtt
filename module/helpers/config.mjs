@@ -5,12 +5,12 @@ export const MOFAN = {};
  * @type {Object}
  * @property {string} label             Localized label
  * @property {string} abbreviation      Localized abbreviation
- * 
+ *
  */
 
 MOFAN.abilities = {
   awr: {
-    label: 'MOFAN.Ability.Awr.long', 
+    label: 'MOFAN.Ability.Awr.long',
     abbreviation: 'MOFAN.Ability.Awr.abbr',
   },
   cha: {
@@ -31,7 +31,6 @@ MOFAN.abilities = {
   },
 };
 
-
 /**
  * The set of Skill Scores used within the system.
  * @type {Object}
@@ -39,7 +38,7 @@ MOFAN.abilities = {
  * @property {string} abbreviation      Localized abbreviation
  * @property {string} parent_ability1   The primary ability score for the skill
  * @property {string} parent_ability2   The secondary ability score for the skill
- * 
+ *
  */
 
 MOFAN.skills = {
@@ -110,3 +109,121 @@ MOFAN.skills = {
  * @type {string[]}
  */
 MOFAN.lootableInventoryTypes = ['gear', 'loot'];
+
+/**
+ * Discipline trait/property definitions.
+ * @type {Object<string, {label: string, description: string}>}
+ */
+MOFAN.disciplineTraits = {
+  basic: {
+    label: 'MOFAN.DisciplineTrait.basic.label',
+    description: 'MOFAN.DisciplineTrait.basic.description',
+  },
+  advanced: {
+    label: 'MOFAN.DisciplineTrait.advanced.label',
+    description: 'MOFAN.DisciplineTrait.advanced.description',
+  },
+  combat: {
+    label: 'MOFAN.DisciplineTrait.combat.label',
+    description: 'MOFAN.DisciplineTrait.combat.description',
+  },
+  defensive: {
+    label: 'MOFAN.DisciplineTrait.defensive.label',
+    description: 'MOFAN.DisciplineTrait.defensive.description',
+  },
+  divine: {
+    label: 'MOFAN.DisciplineTrait.divine.label',
+    description: 'MOFAN.DisciplineTrait.divine.description',
+  },
+  inherent: {
+    label: 'MOFAN.DisciplineTrait.inherent.label',
+    description: 'MOFAN.DisciplineTrait.inherent.description',
+  },
+  magic: {
+    label: 'MOFAN.DisciplineTrait.magic.label',
+    description: 'MOFAN.DisciplineTrait.magic.description',
+  },
+  marksmanship: {
+    label: 'MOFAN.DisciplineTrait.marksmanship.label',
+    description: 'MOFAN.DisciplineTrait.marksmanship.description',
+  },
+  martial: {
+    label: 'MOFAN.DisciplineTrait.martial.label',
+    description: 'MOFAN.DisciplineTrait.martial.description',
+  },
+  preparation: {
+    label: 'MOFAN.DisciplineTrait.preparation.label',
+    description: 'MOFAN.DisciplineTrait.preparation.description',
+  },
+  skilled: {
+    label: 'MOFAN.DisciplineTrait.skilled.label',
+    description: 'MOFAN.DisciplineTrait.skilled.description',
+  },
+};
+
+/**
+ * Feature trait/property definitions.
+ * @type {Object<string, {label: string, description: string}>}
+ */
+MOFAN.featureTraits = {
+  combat: {
+    label: 'MOFAN.FeatureTrait.combat.label',
+    description: 'MOFAN.FeatureTrait.combat.description',
+  },
+  cooperate: {
+    label: 'MOFAN.FeatureTrait.cooperate.label',
+    description: 'MOFAN.FeatureTrait.cooperate.description',
+  },
+  defensive: {
+    label: 'MOFAN.FeatureTrait.defensive.label',
+    description: 'MOFAN.FeatureTrait.defensive.description',
+  },
+  detect: {
+    label: 'MOFAN.FeatureTrait.detect.label',
+    description: 'MOFAN.FeatureTrait.detect.description',
+  },
+  healing: {
+    label: 'MOFAN.FeatureTrait.healing.label',
+    description: 'MOFAN.FeatureTrait.healing.description',
+  },
+  magic: {
+    label: 'MOFAN.FeatureTrait.magic.label',
+    description: 'MOFAN.FeatureTrait.magic.description',
+  },
+  manipulate: {
+    label: 'MOFAN.FeatureTrait.manipulate.label',
+    description: 'MOFAN.FeatureTrait.manipulate.description',
+  },
+  melee: {
+    label: 'MOFAN.FeatureTrait.melee.label',
+    description: 'MOFAN.FeatureTrait.melee.description',
+  },
+  movement: {
+    label: 'MOFAN.FeatureTrait.movement.label',
+    description: 'MOFAN.FeatureTrait.movement.description',
+  },
+  psionic: {
+    label: 'MOFAN.FeatureTrait.psionic.label',
+    description: 'MOFAN.FeatureTrait.psionic.description',
+  },
+  preparation: {
+    label: 'MOFAN.FeatureTrait.preparation.label',
+    description: 'MOFAN.FeatureTrait.preparation.description',
+  },
+  ranged: {
+    label: 'MOFAN.FeatureTrait.ranged.label',
+    description: 'MOFAN.FeatureTrait.ranged.description',
+  },
+  resist: {
+    label: 'MOFAN.FeatureTrait.resist.label',
+    description: 'MOFAN.FeatureTrait.resist.description',
+  },
+  tactical: {
+    label: 'MOFAN.FeatureTrait.tactical.label',
+    description: 'MOFAN.FeatureTrait.tactical.description',
+  },
+  technology: {
+    label: 'MOFAN.FeatureTrait.technology.label',
+    description: 'MOFAN.FeatureTrait.technology.description',
+  },
+};

@@ -1,4 +1,8 @@
 import MofanActorBase from './base-actor.mjs';
+import {
+  calculateDisciplinePointsSpent,
+  calculateDisciplinePointsTotal,
+} from '../helpers/disciplines.mjs';
 
 export default class MofanCharacter extends MofanActorBase {
   static LOCALIZATION_PREFIXES = [
@@ -67,6 +71,17 @@ export default class MofanCharacter extends MofanActorBase {
       this.skills[key].label =
         game.i18n.localize(CONFIG.MOFAN.skills[key].label.long) ?? key;
     }
+
+    const actor = this.parent;
+    const total = calculateDisciplinePointsTotal(
+      this.attributes.level.value ?? 1
+    );
+    const spent = actor ? calculateDisciplinePointsSpent(actor) : 0;
+    this.disciplinePoints = {
+      total,
+      spent,
+      available: total - spent,
+    };
   }
 
   getRollData() {

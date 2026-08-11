@@ -1,3 +1,5 @@
+import { calculateDisciplineHealthBonus } from '../helpers/disciplines.mjs';
+
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
@@ -26,8 +28,10 @@ export class MofanActor extends Actor {
    * is queried and has a roll executed directly from it).
    */
   prepareDerivedData() {
-    const actorData = this;
-    const flags = actorData.flags.mofanvtt || {};
+    const bonus = calculateDisciplineHealthBonus(this);
+    this.system.health.disciplineBonus = bonus;
+    const baseMax = this._source.system.health?.max ?? 0;
+    this.system.health.max = baseMax + bonus;
   }
 
   /**

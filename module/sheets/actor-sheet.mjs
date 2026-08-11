@@ -1,5 +1,11 @@
 import MofanItemLootable from '../data/base-item-lootable.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
+import {
+  checkDisciplinePrerequisites,
+  getDisciplinePoints,
+  removeFeaturesForDiscipline,
+  syncActorDisciplineFeatures,
+} from '../helpers/disciplines.mjs';
 
 const { api, sheets } = foundry.applications;
 
@@ -29,6 +35,8 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
       deleteDoc: this._deleteDoc,
       toggleEffect: this._toggleEffect,
       roll: this._onRoll,
+      increaseDisciplineLevel: this._increaseDisciplineLevel,
+      decreaseDisciplineLevel: this._decreaseDisciplineLevel,
     },
     // Custom property that's merged into `this.options`
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
@@ -46,8 +54,8 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
       // Foundry-provided generic template
       template: 'templates/generic/tab-navigation.hbs',
     },
-    features: {
-      template: 'systems/mofan-vtt/templates/actor/features.hbs',
+    character: {
+      template: 'systems/mofan-vtt/templates/actor/character.hbs',
     },
     biography: {
       template: 'systems/mofan-vtt/templates/actor/biography.hbs',
@@ -67,7 +75,7 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
   _configureRenderOptions(options) {
     super._configureRenderOptions(options);
     // Not all parts always render
-    options.parts = ['header', 'tabs', 'features'];
+    options.parts = ['header', 'tabs', 'character'];
     // Don't show the other tabs if only limited view
     if (this.document.limited) return;
     // Control which parts show based on document subtype
@@ -104,6 +112,10 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
       // Necessary for formInput and formFields helpers
       fields: this.document.schema.fields,
       systemFields: this.document.system.schema.fields,
+      isCharacter: this.actor.type === 'character',
+      disciplinePoints: getDisciplinePoints(this.actor),
+      healthMaxBase: this.actor._source.system.health?.max ?? 0,
+      healthDisciplineBonus: this.actor.system.health?.disciplineBonus ?? 0,
     };
 
     // Offloading context prep to a helper function
@@ -115,7 +127,7 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
   /** @override */
   async _preparePartContext(partId, context) {
     switch (partId) {
-      case 'features':
+      case 'character':
       case 'spells':
       case 'inventory':
         context.tab = context.tabs[partId];
@@ -159,7 +171,7 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
     // If you have sub-tabs this is necessary to change
     const tabGroup = 'primary';
     // Default tab for first time it's rendered this session
-    if (!this.tabGroups[tabGroup]) this.tabGroups[tabGroup] = 'features';
+    if (!this.tabGroups[tabGroup]) this.tabGroups[tabGroup] = 'character';
     return parts.reduce((tabs, partId) => {
       const tab = {
         cssClass: '',
@@ -179,9 +191,9 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
           tab.id = 'biography';
           tab.label += 'Biography';
           break;
-        case 'features':
-          tab.id = 'features';
-          tab.label += 'Features';
+        case 'character':
+          tab.id = 'character';
+          tab.label += 'Character';
           break;
         case 'inventory':
           tab.id = 'inventory';
@@ -208,7 +220,8 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
    * @param {object} context The context object to mutate
    */
   _prepareItems(context) {
-    const features = [];
+    const disciplines = [];
+    const featuresByParent = new Map();
     const spells = {
       0: [],
       1: [],
@@ -230,8 +243,12 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
       if (i.system instanceof MofanItemLootable) {
         const bucket = sectionsByType[i.type];
         if (bucket) bucket.push(i);
+      } else if (i.type === 'discipline') {
+        disciplines.push(i);
       } else if (i.type === 'feature') {
-        features.push(i);
+        const parent = i.system.parentDiscipline || '';
+        if (!featuresByParent.has(parent)) featuresByParent.set(parent, []);
+        featuresByParent.get(parent).push(i);
       } else if (i.type === 'spell') {
         if (i.system.spellLevel != undefined) {
           spells[i.system.spellLevel].push(i);
@@ -252,7 +269,22 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
         ),
       })
     );
-    context.features = features.sort((a, b) => (a.sort || 0) - (b.sort || 0));
+    context.disciplines = disciplines
+      .sort((a, b) => (a.sort || 0) - (b.sort || 0))
+      .map((discipline) => {
+        const sourceUuid = discipline.system.sourceUuid || '';
+        const features = (featuresByParent.get(sourceUuid) ?? []).sort(
+          (a, b) => (a.sort || 0) - (b.sort || 0)
+        );
+        return {
+          _id: discipline.id,
+          name: discipline.name,
+          img: discipline.img,
+          sort: discipline.sort,
+          system: discipline.system,
+          features,
+        };
+      });
     context.spells = spells;
   }
 
@@ -329,6 +361,12 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
    */
   static async _deleteDoc(event, target) {
     const doc = this._getEmbeddedDocument(target);
+    if (doc?.documentName === 'Item' && doc.type === 'discipline') {
+      const sourceUuid = doc.system.sourceUuid;
+      await doc.delete();
+      if (sourceUuid) await removeFeaturesForDiscipline(this.actor, sourceUuid);
+      return;
+    }
     await doc.delete();
   }
 
@@ -361,8 +399,34 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
       foundry.utils.setProperty(docData, dataKey, value);
     }
 
+    if (docData.type === 'discipline') {
+      return this._acquireDiscipline(docData);
+    }
+
     // Finally, create the embedded document!
     await docCls.create(docData, { parent: this.actor });
+  }
+
+  /**
+   * @this MofanActorSheet
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target
+   */
+  static async _increaseDisciplineLevel(event, target) {
+    const item = this._getEmbeddedDocument(target);
+    if (!item || item.type !== 'discipline') return;
+    await this._changeDisciplineLevel(item, 1);
+  }
+
+  /**
+   * @this MofanActorSheet
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target
+   */
+  static async _decreaseDisciplineLevel(event, target) {
+    const item = this._getEmbeddedDocument(target);
+    if (!item || item.type !== 'discipline') return;
+    await this._changeDisciplineLevel(item, -1);
   }
 
   /**
@@ -429,6 +493,134 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
           : this.actor.items.get(docRow?.dataset.parentId);
       return parent.effects.get(docRow?.dataset.effectId);
     } else return console.warn('Could not find document class');
+  }
+
+  /**
+   * Confirm dialog helper using DialogV2 when available.
+   * @param {string} title
+   * @param {string} content
+   * @returns {Promise<boolean>}
+   */
+  async _confirm(title, content) {
+    if (foundry.applications?.api?.DialogV2?.confirm) {
+      return foundry.applications.api.DialogV2.confirm({
+        window: { title },
+        content: `<p>${content}</p>`,
+      });
+    }
+    return Dialog.confirm({ title, content: `<p>${content}</p>` });
+  }
+
+  /**
+   * Acquire a discipline on this actor, with Character gating.
+   * @param {Item|object} itemOrData
+   * @returns {Promise<Item[]|false>}
+   */
+  async _acquireDiscipline(itemOrData) {
+    const isItem = itemOrData instanceof Item;
+    const data = isItem
+      ? itemOrData.toObject()
+      : foundry.utils.deepClone(itemOrData);
+    const sourceUuid = isItem
+      ? itemOrData.uuid
+      : data.system?.sourceUuid || data.uuid || '';
+
+    delete data._id;
+    delete data.folder;
+    delete data.sort;
+    delete data.ownership;
+    foundry.utils.setProperty(data, 'type', 'discipline');
+    foundry.utils.setProperty(data, 'system.level', 1);
+    foundry.utils.setProperty(data, 'system.sourceUuid', sourceUuid);
+
+    if (this.actor.type === 'character') {
+      const prereqCheck = checkDisciplinePrerequisites(this.actor, {
+        system: data.system,
+      });
+      if (!prereqCheck.ok) {
+        const list = prereqCheck.missing
+          .map((p) =>
+            game.i18n.format('MOFAN.Discipline.PrereqEntry', {
+              name: p.name,
+              level: p.level,
+            })
+          )
+          .join(', ');
+        ui.notifications.warn(
+          game.i18n.format('MOFAN.Discipline.PrereqFailed', { list })
+        );
+        return false;
+      }
+
+      const points = getDisciplinePoints(this.actor);
+      if (!points || points.available < 1) {
+        ui.notifications.warn(game.i18n.localize('MOFAN.Discipline.NoDP'));
+        return false;
+      }
+
+      const confirmed = await this._confirm(
+        game.i18n.localize('MOFAN.Discipline.SpendDPTitle'),
+        game.i18n.format('MOFAN.Discipline.SpendDPContent', {
+          name: data.name,
+        })
+      );
+      if (!confirmed) return false;
+    }
+
+    const created = await this.actor.createEmbeddedDocuments('Item', [data]);
+    const discipline = created[0];
+    if (discipline) await syncActorDisciplineFeatures(this.actor, discipline);
+    return created;
+  }
+
+  /**
+   * Change an owned discipline level by delta.
+   * @param {Item} discipline
+   * @param {number} delta
+   */
+  async _changeDisciplineLevel(discipline, delta) {
+    const current = Number(discipline.system.level) || 0;
+    const next = current + delta;
+    if (next < 0) return;
+
+    if (delta > 0 && this.actor.type === 'character') {
+      const points = getDisciplinePoints(this.actor);
+      if (!points || points.available < 1) {
+        ui.notifications.warn(game.i18n.localize('MOFAN.Discipline.NoDP'));
+        return;
+      }
+    }
+
+    if (delta < 0 && this.actor.type === 'character') {
+      const confirmed = await this._confirm(
+        game.i18n.localize('MOFAN.Discipline.RefundDPTitle'),
+        game.i18n.format('MOFAN.Discipline.RefundDPContent', {
+          name: discipline.name,
+        })
+      );
+      if (!confirmed) return;
+    }
+
+    await discipline.update({ 'system.level': next });
+    const refreshed = this.actor.items.get(discipline.id);
+    if (refreshed) await syncActorDisciplineFeatures(this.actor, refreshed);
+
+    if (next === 0) {
+      const remove = await this._confirm(
+        game.i18n.localize('MOFAN.Discipline.DeleteAtZeroTitle'),
+        game.i18n.format('MOFAN.Discipline.DeleteAtZeroContent', {
+          name: discipline.name,
+        })
+      );
+      if (remove) {
+        const sourceUuid =
+          refreshed?.system.sourceUuid ?? discipline.system.sourceUuid;
+        await (refreshed ?? discipline).delete();
+        if (sourceUuid) {
+          await removeFeaturesForDiscipline(this.actor, sourceUuid);
+        }
+      }
+    }
   }
 
   /***************
@@ -631,7 +823,7 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
     if (folder.type !== 'Item') return [];
     const droppedItemData = await Promise.all(
       folder.contents.map(async (item) => {
-        if (!(document instanceof Item)) item = await fromUuid(item.uuid);
+        if (!(item instanceof Item)) item = await fromUuid(item.uuid);
         return item;
       })
     );
@@ -647,8 +839,34 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
    * @private
    */
   async _onDropItemCreate(itemData, event) {
-    itemData = itemData instanceof Array ? itemData : [itemData];
-    return this.actor.createEmbeddedDocuments('Item', itemData);
+    const items = itemData instanceof Array ? itemData : [itemData];
+    const created = [];
+
+    for (const entry of items) {
+      const type = entry.type ?? entry.system?.type;
+      const isDiscipline =
+        (entry instanceof Item && entry.type === 'discipline') ||
+        type === 'discipline';
+
+      if (isDiscipline) {
+        const result = await this._acquireDiscipline(entry);
+        if (result) created.push(...result);
+        continue;
+      }
+
+      const data =
+        entry instanceof Item
+          ? entry.toObject()
+          : foundry.utils.deepClone(entry);
+      if (data.type === 'feature' && entry instanceof Item) {
+        foundry.utils.setProperty(data, 'system.sourceUuid', entry.uuid);
+      }
+      delete data._id;
+      const made = await this.actor.createEmbeddedDocuments('Item', [data]);
+      created.push(...made);
+    }
+
+    return created;
   }
 
   /**

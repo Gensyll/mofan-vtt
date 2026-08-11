@@ -164,7 +164,7 @@
 
   .inventory-section-title {
     margin: 0;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
   }
 
@@ -177,5 +177,129 @@
     .item-create {
       font-size: 12px;
     }
+  }
+}
+
+.trait-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px 8px;
+}
+
+.trait-option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.prerequisites-drop,
+.parent-discipline-drop {
+  margin-top: 8px;
+}
+
+.health-scaling-resource {
+  margin-top: 8px;
+}
+
+.health-scaling-input {
+  width: 4rem;
+  max-width: 4rem;
+}
+
+.prerequisite-list .item-prop input[type='number'] {
+  width: 3.5rem;
+}
+
+.discipline-section-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 8px 0 4px;
+  border-bottom: 1px solid $c-faint;
+}
+
+.discipline-section-header {
+  margin: 0;
+  border-bottom: none;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.discipline-section-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 4px;
+  padding-right: 2px;
+
+  .item-create {
+    font-size: 12px;
+  }
+}
+
+.discipline-points {
+  margin: 0;
+  flex: 0 0 auto;
+  font-size: 12px;
+  text-align: right;
+  white-space: nowrap;
+
+  .discipline-points-label {
+    font-weight: bold;
+    margin-right: 4px;
+  }
+}
+
+.discipline-level-controls {
+  flex: 0 0 90px;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+}
+
+.disciplines-list {
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.nested-feature {
+  padding-left: 2.5rem;
+  background: rgba(0, 0, 0, 0.02);
+  border-left: 2px solid $c-faint;
+  margin-left: 0.5rem;
+}
+
+.parent-discipline-row {
+  align-items: center;
+  gap: 8px;
+}
+
+.document-name-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.document-name {
+  flex: 0 0 50%;
+  max-width: 50%;
+  text-align: left;
+
+  input {
+    width: 100%;
+    text-align: left;
+  }
+}
+
+.document-species {
+  flex: 1;
+  text-align: left;
+
+  input {
+    width: 100%;
+    text-align: left;
   }
 }
