@@ -5,8 +5,11 @@ export { default as MofanNPC } from './actor-npc.mjs';
 
 // Export Items
 export { default as MofanItemBase } from './base-item.mjs';
+export { default as MofanFeatureBase } from './base-item-feature.mjs';
 export { default as MofanGear } from './item-gear.mjs';
 export { default as MofanFeature } from './item-feature.mjs';
+export { default as MofanInnateFeature } from './item-innate-feature.mjs';
+export { default as MofanSpecies } from './item-species.mjs';
 export { default as MofanDiscipline } from './item-discipline.mjs';
 export { default as MofanSpell } from './item-spell.mjs';
 export { default as MofanLoot } from './item-loot.mjs';

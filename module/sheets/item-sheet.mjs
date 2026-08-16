@@ -1,5 +1,9 @@
 import MofanItemLootable from '../data/base-item-lootable.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
+import {
+  constrainVerticalResize,
+  measureSheetChrome,
+} from '../helpers/window-resize.mjs';
 
 const { api, sheets } = foundry.applications;
 
@@ -16,8 +20,13 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
   }
 
   /** @override */
+  static #DEFAULT_MIN_HEIGHT = 380;
+
   static DEFAULT_OPTIONS = {
     classes: ['mofan-vtt', 'item'],
+    window: {
+      resizable: true,
+    },
     position: {
       width: 550,
       height: 450,
@@ -30,7 +39,9 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
       toggleEffect: this._toggleEffect,
       openPrerequisite: this._openUuidDocument,
       openParentDiscipline: this._openUuidDocument,
+      openInnateFeature: this._openUuidDocument,
       removePrerequisite: this._removePrerequisite,
+      removeInnateFeature: this._removeInnateFeature,
       clearParentDiscipline: this._clearParentDiscipline,
     },
     form: {
@@ -57,6 +68,14 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
     attributesFeature: {
       template:
         'systems/mofan-vtt/templates/item/attribute-parts/feature.hbs',
+    },
+    attributesInnateFeature: {
+      template:
+        'systems/mofan-vtt/templates/item/attribute-parts/innate-feature.hbs',
+    },
+    attributesSpecies: {
+      template:
+        'systems/mofan-vtt/templates/item/attribute-parts/species.hbs',
     },
     attributesDiscipline: {
       template:
@@ -131,6 +150,25 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
         this.item.system.traits
       );
       context.parentDiscipline = await this._resolveParentDiscipline();
+    } else if (this.item.type === 'innateFeature') {
+      context.traitOptions = this._prepareTraitOptions(
+        CONFIG.MOFAN.featureTraits,
+        this.item.system.traits
+      );
+    } else if (this.item.type === 'species') {
+      context.abilityOptions = Object.fromEntries(
+        Object.entries(CONFIG.MOFAN.abilities).map(([key, data]) => [
+          key,
+          game.i18n.localize(data.label),
+        ])
+      );
+      context.speciesSizeOptions = Object.fromEntries(
+        Object.entries(CONFIG.MOFAN.speciesSizes).map(([key, labelKey]) => [
+          key,
+          game.i18n.localize(labelKey),
+        ])
+      );
+      context.innateFeatures = this.item.system.innateFeatures ?? [];
     }
 
     return context;
@@ -171,6 +209,8 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
   async _preparePartContext(partId, context) {
     switch (partId) {
       case 'attributesFeature':
+      case 'attributesInnateFeature':
+      case 'attributesSpecies':
       case 'attributesDiscipline':
       case 'attributesGear':
       case 'attributesSpell':
@@ -234,6 +274,8 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
           tab.label += 'Description';
           break;
         case 'attributesFeature':
+        case 'attributesInnateFeature':
+        case 'attributesSpecies':
         case 'attributesDiscipline':
         case 'attributesGear':
         case 'attributesSpell':
@@ -264,6 +306,33 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
     // You may want to add other special handling here
     // Foundry comes with a large number of utility classes, e.g. SearchFilter
     // That you may want to implement yourself.
+  }
+
+  /**
+   * Vertical-only resize: lock width and keep header + tabs visible.
+   * @param {object} position
+   * @returns {object}
+   * @protected
+   * @override
+   */
+  _updatePosition(position) {
+    return super._updatePosition(
+      constrainVerticalResize(
+        position,
+        this.options.position?.width ?? 550,
+        this.#getMinimumHeight()
+      )
+    );
+  }
+
+  /**
+   * @returns {number}
+   */
+  #getMinimumHeight() {
+    const el = this.element;
+    if (!el) return MofanItemSheet.#DEFAULT_MIN_HEIGHT;
+    const chrome = measureSheetChrome(el, 120);
+    return Math.max(MofanItemSheet.#DEFAULT_MIN_HEIGHT, Math.ceil(chrome));
   }
 
   /**************
@@ -418,6 +487,24 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
   }
 
   /**
+   * Remove an innate Feature entry by index.
+   *
+   * @this MofanItemSheet
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target
+   */
+  static async _removeInnateFeature(event, target) {
+    if (!this.isEditable) return;
+    const index = Number(target.dataset.featureIndex);
+    if (Number.isNaN(index)) return;
+    const innateFeatures = foundry.utils.deepClone(
+      this.item.system.innateFeatures ?? []
+    );
+    innateFeatures.splice(index, 1);
+    await this.item.update({ 'system.innateFeatures': innateFeatures });
+  }
+
+  /**
    * Sanitize trait checkboxes before DocumentSheetV2 validates submit data.
    * Trait checkboxes are nameless (data-trait-checkbox) so we inject the
    * selected values into FormDataExtended. Must use the flat key
@@ -426,7 +513,7 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
    * @override
    */
   _prepareSubmitData(event, form, formData) {
-    if (['discipline', 'feature'].includes(this.document.type)) {
+    if (['discipline', 'feature', 'innateFeature'].includes(this.document.type)) {
       const traits = Array.from(
         form.querySelectorAll(
           'input[type="checkbox"][data-trait-checkbox]:checked'
@@ -652,6 +739,30 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
         return false;
       }
       await this.item.update({ 'system.parentDiscipline': dropped.uuid });
+      return true;
+    }
+
+    if (this.item.type === 'species') {
+      if (dropped.type !== 'innateFeature') {
+        ui.notifications.warn(
+          game.i18n.localize('MOFAN.Item.Species.InvalidInnateDrop')
+        );
+        return false;
+      }
+      const innateFeatures = foundry.utils.deepClone(
+        this.item.system.innateFeatures ?? []
+      );
+      if (innateFeatures.some((f) => f.uuid === dropped.uuid)) {
+        ui.notifications.warn(
+          game.i18n.localize('MOFAN.Item.Species.DuplicateInnateDrop')
+        );
+        return false;
+      }
+      innateFeatures.push({
+        uuid: dropped.uuid,
+        name: dropped.name,
+      });
+      await this.item.update({ 'system.innateFeatures': innateFeatures });
       return true;
     }
 

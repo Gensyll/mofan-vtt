@@ -21,6 +21,12 @@
         "feature": {
             "htmlFields": ["description"]
         },
+        "innateFeature": {
+            "htmlFields": ["description"]
+        },
+        "species": {
+            "htmlFields": ["description"]
+        },
         "discipline": {
             "htmlFields": ["description"]
         },

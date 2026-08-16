@@ -6,6 +6,14 @@ import {
   removeFeaturesForDiscipline,
   syncActorDisciplineFeatures,
 } from '../helpers/disciplines.mjs';
+import {
+  getOwnedSpecies,
+  syncActorSpeciesFeatures,
+} from '../helpers/species.mjs';
+import {
+  constrainVerticalResize,
+  measureSheetChrome,
+} from '../helpers/window-resize.mjs';
 
 const { api, sheets } = foundry.applications;
 
@@ -21,12 +29,18 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
     this.#dragDrop = this.#createDragDropHandlers();
   }
 
+  /** Fallback if the skills column cannot be measured yet. */
+  static #DEFAULT_MIN_HEIGHT = 720;
+
   /** @override */
   static DEFAULT_OPTIONS = {
     classes: ['mofan-vtt', 'actor'],
+    window: {
+      resizable: true,
+    },
     position: {
       width: 600,
-      height: 650,
+      height: 750,
     },
     actions: {
       onEditImage: this._onEditImage,
@@ -37,6 +51,7 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
       roll: this._onRoll,
       increaseDisciplineLevel: this._increaseDisciplineLevel,
       decreaseDisciplineLevel: this._decreaseDisciplineLevel,
+      clearSpecies: this._clearSpecies,
     },
     // Custom property that's merged into `this.options`
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
@@ -114,9 +129,26 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
       systemFields: this.document.system.schema.fields,
       isCharacter: this.actor.type === 'character',
       disciplinePoints: getDisciplinePoints(this.actor),
-      healthMaxBase: this.actor._source.system.health?.max ?? 0,
+      healthBase: this.actor.system.health?.base ?? CONFIG.MOFAN.healthBase,
+      healthSpeciesBonus: this.actor.system.health?.speciesBonus ?? 0,
+      healthFortitude: this.actor.system.health?.fortitude ?? 0,
       healthDisciplineBonus: this.actor.system.health?.disciplineBonus ?? 0,
     };
+
+    const ownedSpecies = getOwnedSpecies(this.actor);
+    if (ownedSpecies) {
+      const sizeKey = ownedSpecies.system.size;
+      const sizeLabelKey = CONFIG.MOFAN.speciesSizes[sizeKey];
+      context.ownedSpecies = {
+        _id: ownedSpecies.id,
+        name: ownedSpecies.name,
+        img: ownedSpecies.img,
+        size: sizeKey,
+        sizeLabel: sizeLabelKey ? game.i18n.localize(sizeLabelKey) : sizeKey,
+      };
+    } else {
+      context.ownedSpecies = null;
+    }
 
     // Offloading context prep to a helper function
     this._prepareItems(context);
@@ -221,6 +253,7 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
    */
   _prepareItems(context) {
     const disciplines = [];
+    const innateFeatures = [];
     const featuresByParent = new Map();
     const spells = {
       0: [],
@@ -245,6 +278,8 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
         if (bucket) bucket.push(i);
       } else if (i.type === 'discipline') {
         disciplines.push(i);
+      } else if (i.type === 'innateFeature') {
+        innateFeatures.push(i);
       } else if (i.type === 'feature') {
         const parent = i.system.parentDiscipline || '';
         if (!featuresByParent.has(parent)) featuresByParent.set(parent, []);
@@ -285,6 +320,9 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
           features,
         };
       });
+    context.innateFeatures = innateFeatures.sort(
+      (a, b) => (a.sort || 0) - (b.sort || 0)
+    );
     context.spells = spells;
   }
 
@@ -299,9 +337,58 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
   _onRender(context, options) {
     this.#dragDrop.forEach((d) => d.bind(this.element));
     this.#disableOverrides();
+    this.#cacheSkillsMinHeight();
     // You may want to add other special handling here
     // Foundry comes with a large number of utility classes, e.g. SearchFilter
     // That you may want to implement yourself.
+  }
+
+  /**
+   * Keep the sheet from shrinking shorter than the header + full skills list.
+   * @param {object} position
+   * @returns {object}
+   * @protected
+   * @override
+   */
+  _updatePosition(position) {
+    return super._updatePosition(
+      constrainVerticalResize(
+        position,
+        this.options.position?.width ?? 600,
+        this.#getMinimumHeight()
+      )
+    );
+  }
+
+  /**
+   * @returns {number}
+   */
+  #getMinimumHeight() {
+    const el = this.element;
+    if (!el) return MofanActorSheet.#DEFAULT_MIN_HEIGHT;
+
+    this.#cacheSkillsMinHeight();
+
+    const grid = el.querySelector('.tab.character > .grid');
+    let gridMargin = 0;
+    if (grid) {
+      const cs = getComputedStyle(grid);
+      gridMargin =
+        (parseFloat(cs.marginTop) || 0) + (parseFloat(cs.marginBottom) || 0);
+    }
+
+    const chrome = measureSheetChrome(el, gridMargin + 24);
+    const skills = this.#skillsMinHeight || 360;
+    return Math.max(MofanActorSheet.#DEFAULT_MIN_HEIGHT, Math.ceil(chrome + skills));
+  }
+
+  #cacheSkillsMinHeight() {
+    const skills = this.element?.querySelector(
+      '.tab.character .sidebar .abilities'
+    );
+    if (!skills) return;
+    const height = skills.scrollHeight || skills.offsetHeight;
+    if (height > 0) this.#skillsMinHeight = height;
   }
 
   /**************
@@ -371,6 +458,26 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
   }
 
   /**
+   * Remove the owned Species (cleanup of innate Features happens in Item._onDelete).
+   *
+   * @this MofanActorSheet
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target
+   */
+  static async _clearSpecies(event, target) {
+    if (!this.isEditable) return;
+    const species = getOwnedSpecies(this.actor);
+    if (!species) return;
+    const confirmed = await this._confirm(
+      game.i18n.localize('MOFAN.Actor.SpeciesClearTitle'),
+      game.i18n.format('MOFAN.Actor.SpeciesClearContent', {
+        name: species.name,
+      })
+    );
+    if (confirmed) await species.delete();
+  }
+
+  /**
    * Handle creating a new Owned Item or ActiveEffect for the actor using initial data defined in the HTML dataset
    *
    * @this MofanActorSheet
@@ -401,6 +508,9 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
 
     if (docData.type === 'discipline') {
       return this._acquireDiscipline(docData);
+    }
+    if (docData.type === 'species') {
+      return this._acquireSpecies(docData);
     }
 
     // Finally, create the embedded document!
@@ -483,7 +593,8 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
    * @returns {Item | ActiveEffect} The embedded Item or ActiveEffect
    */
   _getEmbeddedDocument(target) {
-    const docRow = target.closest('li[data-document-class]');
+    const docRow = target.closest('[data-document-class]');
+    if (!docRow) return console.warn('Could not find document class');
     if (docRow.dataset.documentClass === 'Item') {
       return this.actor.items.get(docRow.dataset.itemId);
     } else if (docRow.dataset.documentClass === 'ActiveEffect') {
@@ -570,6 +681,49 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
     const created = await this.actor.createEmbeddedDocuments('Item', [data]);
     const discipline = created[0];
     if (discipline) await syncActorDisciplineFeatures(this.actor, discipline);
+    return created;
+  }
+
+  /**
+   * Acquire a Species on this actor, replacing any existing one.
+   * @param {Item|object} itemOrData
+   * @returns {Promise<Item[]|false>}
+   */
+  async _acquireSpecies(itemOrData) {
+    const isItem = itemOrData instanceof Item;
+    const data = isItem
+      ? itemOrData.toObject()
+      : foundry.utils.deepClone(itemOrData);
+    const sourceUuid = isItem
+      ? itemOrData.uuid
+      : data.system?.sourceUuid || data.uuid || '';
+
+    delete data._id;
+    delete data.folder;
+    delete data.sort;
+    delete data.ownership;
+    foundry.utils.setProperty(data, 'type', 'species');
+    foundry.utils.setProperty(data, 'system.sourceUuid', sourceUuid);
+
+    const existing = getOwnedSpecies(this.actor);
+    if (existing) {
+      const confirmed = await this._confirm(
+        game.i18n.localize('MOFAN.Actor.SpeciesReplaceTitle'),
+        game.i18n.format('MOFAN.Actor.SpeciesReplaceContent', {
+          old: existing.name,
+          name: data.name,
+        })
+      );
+      if (!confirmed) return false;
+      await existing.delete();
+    }
+
+    const created = await this.actor.createEmbeddedDocuments('Item', [data]);
+    const species = created[0];
+    if (species) {
+      await this.actor.update({ 'system.species': species.name });
+      await syncActorSpeciesFeatures(this.actor, species);
+    }
     return created;
   }
 
@@ -854,6 +1008,20 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
         continue;
       }
 
+      const isSpecies =
+        (entry instanceof Item && entry.type === 'species') ||
+        type === 'species';
+      if (isSpecies) {
+        const result = await this._acquireSpecies(entry);
+        if (result) created.push(...result);
+        continue;
+      }
+
+      const isInnateFeature =
+        (entry instanceof Item && entry.type === 'innateFeature') ||
+        type === 'innateFeature';
+      if (isInnateFeature) continue;
+
       const data =
         entry instanceof Item
           ? entry.toObject()
@@ -921,6 +1089,9 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
   // This is marked as private because there's no real need
   // for subclasses or external hooks to mess with it directly
   #dragDrop;
+
+  /** Cached skills-column height used as part of the vertical resize minimum. */
+  #skillsMinHeight = 0;
 
   /**
    * Create drag-and-drop workflow handlers for this Application

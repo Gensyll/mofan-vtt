@@ -3,6 +3,7 @@ import {
   calculateDisciplinePointsSpent,
   calculateDisciplinePointsTotal,
 } from '../helpers/disciplines.mjs';
+import { getSpeciesAbilityModifiers } from '../helpers/species.mjs';
 
 export default class MofanCharacter extends MofanActorBase {
   static LOCALIZATION_PREFIXES = [
@@ -54,10 +55,14 @@ export default class MofanCharacter extends MofanActorBase {
   }
 
   prepareDerivedData() {
+    const speciesMods = getSpeciesAbilityModifiers(this.parent);
+
     // Loop through ability scores, and add their modifiers to our sheet output.
     for (const key in this.abilities) {
+      const speciesBonus = speciesMods[key] ?? 0;
+      this.abilities[key].speciesBonus = speciesBonus;
       // Calculate the modifier according to Mofan rules (score = modifier)
-      this.abilities[key].mod = this.abilities[key].value
+      this.abilities[key].mod = this.abilities[key].value + speciesBonus;
       // Handle ability label localization.
       this.abilities[key].label =
         game.i18n.localize(CONFIG.MOFAN.abilities[key].label.long) ?? key;

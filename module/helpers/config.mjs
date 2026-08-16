@@ -111,6 +111,30 @@ MOFAN.skills = {
 MOFAN.lootableInventoryTypes = ['gear', 'loot'];
 
 /**
+ * Item types that spend AP when used from an actor.
+ * @type {string[]}
+ */
+MOFAN.usableFeatureTypes = ['feature', 'innateFeature'];
+
+/**
+ * Constant term in actor max HP: 10 + species + Fortitude + disciplines.
+ * @type {number}
+ */
+MOFAN.healthBase = 10;
+
+/**
+ * Size choices for Species items. Independent of lootable item sizes.
+ * @type {Object<string, string>}
+ */
+MOFAN.speciesSizes = {
+  tiny: 'MOFAN.Item.Species.Size.tiny',
+  small: 'MOFAN.Item.Species.Size.small',
+  medium: 'MOFAN.Item.Species.Size.medium',
+  large: 'MOFAN.Item.Species.Size.large',
+  huge: 'MOFAN.Item.Species.Size.huge',
+};
+
+/**
  * Discipline trait/property definitions.
  * @type {Object<string, {label: string, description: string}>}
  */

@@ -1,4 +1,5 @@
 import MofanActorBase from './base-actor.mjs';
+import { getSpeciesAbilityModifiers } from '../helpers/species.mjs';
 
 export default class MofanNPC extends MofanActorBase {
   static LOCALIZATION_PREFIXES = [
@@ -50,8 +51,11 @@ export default class MofanNPC extends MofanActorBase {
   prepareDerivedData() {
     this.xp = this.cr * this.cr * 100;
 
+    const speciesMods = getSpeciesAbilityModifiers(this.parent);
     for (const key in this.abilities) {
-      this.abilities[key].mod = this.abilities[key].value;
+      const speciesBonus = speciesMods[key] ?? 0;
+      this.abilities[key].speciesBonus = speciesBonus;
+      this.abilities[key].mod = this.abilities[key].value + speciesBonus;
       this.abilities[key].label =
         game.i18n.localize(CONFIG.MOFAN.abilities[key].label.long) ?? key;
     }

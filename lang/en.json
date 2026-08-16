@@ -39,12 +39,21 @@
         "Spent": "spent",
         "Available": "Available"
       },
-      "HealthCurrent": "Curr",
-      "HealthMax": "Max",
-      "HealthEffectiveMax": "Effective Max",
+      "HealthCurrent": "Current",
+      "HealthMax": "Maximum",
       "HealthBase": "Base",
+      "HealthSpeciesBonus": "Species",
+      "HealthFortitude": "FOR",
       "HealthDisciplineBonus": "Discipline HP Bonus",
       "HealthDisciplineBonusAbbr": "DB",
+      "InnateFeatures": "Innate Features",
+      "SpeciesDrop": "Drop a Species",
+      "SpeciesClear": "Remove species",
+      "SpeciesClearTitle": "Remove Species",
+      "SpeciesClearContent": "Remove <strong>{name}</strong> from this actor? Innate Features from this Species will be removed.",
+      "SpeciesReplaceTitle": "Replace Species",
+      "SpeciesReplaceContent": "Replace <strong>{old}</strong> with <strong>{name}</strong>? Innate Features from the current Species will be removed.",
+      "InvalidSpeciesDrop": "Only Species items can be dropped here.",
       "base": {
         "FIELDS": {
           "biography": {"label": "Biography"},
@@ -119,6 +128,31 @@
         },
         "ParentDrop": "Drop a Discipline here to set the parent",
         "ClearParent": "Clear parent discipline"
+      },
+      "InnateFeature": {
+        "FIELDS": {}
+      },
+      "Species": {
+        "FIELDS": {
+          "statBonuses": {"label": "Stat Bonuses"},
+          "statBonus": {"label": "Stat Bonus"},
+          "statFlaw": {"label": "Stat Flaw"},
+          "size": {"label": "Size"},
+          "hpBonus": {"label": "HP Bonus"},
+          "innateFeatures": {"label": "Innate Features"},
+          "sourceUuid": {"label": "Source UUID"}
+        },
+        "Size": {
+          "tiny": "Tiny",
+          "small": "Small",
+          "medium": "Medium",
+          "large": "Large",
+          "huge": "Huge"
+        },
+        "InnateFeaturesDrop": "Drop an Innate Feature here to add it",
+        "RemoveInnateFeature": "Remove innate feature",
+        "InvalidInnateDrop": "Only Innate Feature items can be added to a Species.",
+        "DuplicateInnateDrop": "That Innate Feature is already on this Species."
       },
       "Gear": {
         "FIELDS": {
@@ -284,6 +318,8 @@
     "Item": {
       "gear": "Gear",
       "feature": "Feature",
+      "innateFeature": "Innate Feature",
+      "species": "Species",
       "discipline": "Discipline",
       "spell": "Spell",
       "loot": "Loot"

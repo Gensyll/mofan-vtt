@@ -1,4 +1,8 @@
 import { calculateDisciplineHealthBonus } from '../helpers/disciplines.mjs';
+import {
+  getSpeciesAbilityModifiers,
+  getSpeciesHpBonus,
+} from '../helpers/species.mjs';
 
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
@@ -28,10 +32,21 @@ export class MofanActor extends Actor {
    * is queried and has a roll executed directly from it).
    */
   prepareDerivedData() {
-    const bonus = calculateDisciplineHealthBonus(this);
-    this.system.health.disciplineBonus = bonus;
-    const baseMax = this._source.system.health?.max ?? 0;
-    this.system.health.max = baseMax + bonus;
+    const healthBase = CONFIG.MOFAN.healthBase ?? 10;
+    const speciesBonus = getSpeciesHpBonus(this);
+    const assignedFor = Number(this._source.system.abilities?.for?.value) || 0;
+    const speciesFor = getSpeciesAbilityModifiers(this).for ?? 0;
+    const fortitude = assignedFor + speciesFor;
+    const disciplineBonus = calculateDisciplineHealthBonus(this);
+
+    this.system.health.base = healthBase;
+    this.system.health.speciesBonus = speciesBonus;
+    this.system.health.fortitude = fortitude;
+    this.system.health.disciplineBonus = disciplineBonus;
+    this.system.health.max = Math.max(
+      0,
+      healthBase + speciesBonus + fortitude + disciplineBonus
+    );
   }
 
   /**

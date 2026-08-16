@@ -1,0 +1,38 @@
+{{! Innate Feature Attributes Tab }}
+<section
+  class='tab attributes {{tab.cssClass}}'
+  data-group='primary'
+  data-tab='attributes'
+>
+  <div class='resources grid grid-2col'>
+    <div class='resource'>
+      <label class='resource-label'>{{localize 'MOFAN.Item.Feature.FIELDS.apCost.label'}}</label>
+      <input
+        type='number'
+        name='system.apCost'
+        value='{{system.apCost}}'
+        data-dtype='Number'
+        min='0'
+        {{#unless editable}}disabled{{/unless}}
+      />
+    </div>
+  </div>
+
+  <fieldset class='trait-list'>
+    <legend>{{localize 'MOFAN.Item.Feature.FIELDS.traits.label'}}</legend>
+    <div class='trait-grid'>
+      {{#each traitOptions as |trait|}}
+        <label class='trait-option' title='{{trait.description}}'>
+          <input
+            type='checkbox'
+            data-trait-checkbox='true'
+            value='{{trait.key}}'
+            {{checked trait.selected}}
+            {{#unless @root.editable}}disabled{{/unless}}
+          />
+          <span>{{trait.label}}</span>
+        </label>
+      {{/each}}
+    </div>
+  </fieldset>
+</section>
