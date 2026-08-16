@@ -1,3 +1,8 @@
+import {
+  removeFeaturesForSpecies,
+  syncActorSpeciesFeatures,
+} from '../helpers/species.mjs';
+
 /**
  * Extend the basic Item with some very simple modifications.
  * @extends {Item}
@@ -10,6 +15,40 @@ export class MofanItem extends Item {
     // As with the actor class, items are documents that can have their data
     // preparation methods overridden (such as prepareBaseData()).
     super.prepareData();
+  }
+
+  /**
+   * When an owned Species is deleted, drop its innate Features and clear the header field.
+   * @override
+   */
+  async _onDelete(options, userId) {
+    if (this.type === 'species' && this.actor && !this.actor._speciesCleanup) {
+      this.actor._speciesCleanup = true;
+      try {
+        await removeFeaturesForSpecies(this.actor);
+        if (this.actor.system.species) {
+          await this.actor.update({ 'system.species': '' });
+        }
+      } finally {
+        delete this.actor._speciesCleanup;
+      }
+    }
+    return super._onDelete(options, userId);
+  }
+
+  /**
+   * Re-sync innate Features when an owned Species list changes.
+   * @override
+   */
+  async _onUpdate(changed, options, userId) {
+    if (
+      this.type === 'species' &&
+      this.actor &&
+      foundry.utils.hasProperty(changed, 'system.innateFeatures')
+    ) {
+      await syncActorSpeciesFeatures(this.actor, this);
+    }
+    return super._onUpdate(changed, options, userId);
   }
 
   /**
@@ -34,7 +73,8 @@ export class MofanItem extends Item {
    * @returns {Promise<boolean>} true if the roll/use may continue
    */
   async _spendFeatureActionPoints() {
-    if (this.type !== 'feature' || !this.actor) return true;
+    if (!CONFIG.MOFAN.usableFeatureTypes.includes(this.type) || !this.actor)
+      return true;
     const cost = Number(this.system.apCost) || 0;
     if (cost <= 0) return true;
 

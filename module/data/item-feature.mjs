@@ -1,9 +1,8 @@
-import MofanItemBase from './base-item.mjs';
+import MofanFeatureBase from './base-item-feature.mjs';
 
-export default class MofanFeature extends MofanItemBase {
+export default class MofanFeature extends MofanFeatureBase {
   static LOCALIZATION_PREFIXES = [
-    'MOFAN.Item.base',
-    'MOFAN.Item.Feature',
+    ...super.LOCALIZATION_PREFIXES,
   ];
 
   /** @type {string[]} */
@@ -19,35 +18,12 @@ export default class MofanFeature extends MofanItemBase {
       initial: '',
     });
 
-    schema.traits = new fields.SetField(
-      new fields.StringField({
-        required: true,
-        blank: false,
-        choices: () => Object.keys(CONFIG.MOFAN.featureTraits),
-      }),
-      { required: true, nullable: false }
-    );
-
-    schema.apCost = new fields.NumberField({
-      required: true,
-      nullable: false,
-      integer: true,
-      initial: 0,
-      min: 0,
-    });
-
     schema.unlockLevel = new fields.NumberField({
       required: true,
       nullable: false,
       integer: true,
       initial: 1,
       min: 1,
-    });
-
-    schema.sourceUuid = new fields.StringField({
-      required: true,
-      blank: true,
-      initial: '',
     });
 
     return schema;

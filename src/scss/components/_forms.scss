@@ -3,7 +3,7 @@
 }
 
 .sheet-header {
-  flex: 0 auto;
+  flex: 0 0 auto;
   overflow: visible;
   display: flex;
   flex-direction: row;
@@ -29,7 +29,39 @@
 }
 
 .sheet-tabs {
-  flex: 0;
+  flex: 0 0 auto;
+}
+
+.tab.active {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.tab.character.active {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.tab.character.active > .grid {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+  align-items: stretch;
+}
+
+.tab.character .sidebar {
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.tab.character .main {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .sheet-body,

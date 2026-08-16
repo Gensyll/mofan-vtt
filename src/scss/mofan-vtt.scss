@@ -21,7 +21,30 @@
 
   // Item sheets use a fixed Application height; allow the body to scroll
   // when Attributes content (e.g. prerequisites) grows past that height.
+  &.item {
+    min-width: 550px;
+    max-width: 550px;
+
+    .document-name {
+      flex: 0 0 80%;
+      max-width: 80%;
+    }
+  }
+
   &.item .window-content {
     overflow-y: auto;
+  }
+
+  // Actor sheets keep header + tabs fixed and let the active tab fill
+  // the remaining window so inner lists can scroll instead of clipping.
+  &.actor {
+    min-width: 600px;
+    max-width: 600px;
+  }
+
+  &.actor .window-content {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
 }

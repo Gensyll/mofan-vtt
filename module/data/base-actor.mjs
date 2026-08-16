@@ -11,10 +11,6 @@ export default class MofanActorBase extends foundry.abstract
       value: new fields.NumberField({
         ...requiredInteger,
         initial: 10,
-        min: 0,
-        set(value){
-          return Math.max(0, value);
-        }
       }),
       max: new fields.NumberField({ ...requiredInteger, initial: 10 }),
     });

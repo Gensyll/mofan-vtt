@@ -1,0 +1,77 @@
+{{! Species Attributes Tab }}
+<section
+  class='tab attributes {{tab.cssClass}}'
+  data-group='primary'
+  data-tab='attributes'
+>
+  <div class='species-attributes'>
+    <div class='species-stat-row'>
+      <div class='resource'>
+        <label class='resource-label'>{{localize 'MOFAN.Item.Species.FIELDS.statBonus.label'}}</label>
+        <select name='system.statBonuses.0' {{#unless editable}}disabled{{/unless}}>
+          {{selectOptions abilityOptions selected=(lookup system.statBonuses 0)}}
+        </select>
+      </div>
+      <div class='resource'>
+        <label class='resource-label'>{{localize 'MOFAN.Item.Species.FIELDS.statBonus.label'}}</label>
+        <select name='system.statBonuses.1' {{#unless editable}}disabled{{/unless}}>
+          {{selectOptions abilityOptions selected=(lookup system.statBonuses 1)}}
+        </select>
+      </div>
+      <div class='resource'>
+        <label class='resource-label'>{{localize 'MOFAN.Item.Species.FIELDS.statFlaw.label'}}</label>
+        <select name='system.statFlaw' {{#unless editable}}disabled{{/unless}}>
+          {{selectOptions abilityOptions selected=system.statFlaw}}
+        </select>
+      </div>
+    </div>
+    <div class='species-secondary-fields'>
+      <div class='resource'>
+        <label class='resource-label'>{{localize 'MOFAN.Item.Species.FIELDS.size.label'}}</label>
+        <select name='system.size' {{#unless editable}}disabled{{/unless}}>
+          {{selectOptions speciesSizeOptions selected=system.size}}
+        </select>
+      </div>
+      <div class='resource'>
+        <label class='resource-label'>{{localize 'MOFAN.Item.Species.FIELDS.hpBonus.label'}}</label>
+        <input
+          type='number'
+          name='system.hpBonus'
+          value='{{system.hpBonus}}'
+          data-dtype='Number'
+          {{#unless editable}}disabled{{/unless}}
+        />
+      </div>
+    </div>
+  </div>
+
+  <fieldset class='innate-features-drop' data-drop-zone='innateFeatures'>
+    <legend>{{localize 'MOFAN.Item.Species.FIELDS.innateFeatures.label'}}</legend>
+    <p class='hint'>{{localize 'MOFAN.Item.Species.InnateFeaturesDrop'}}</p>
+    <ol class='items-list innate-feature-list'>
+      {{#each innateFeatures as |feature index|}}
+        <li class='item flexrow innate-feature' data-feature-index='{{index}}'>
+          <div class='item-name'>
+            <a data-action='openInnateFeature' data-uuid='{{feature.uuid}}'>
+              {{feature.name}}
+            </a>
+          </div>
+          <div class='item-controls'>
+            {{#if @root.editable}}
+              <a
+                class='item-control'
+                data-action='removeInnateFeature'
+                data-feature-index='{{index}}'
+                title='{{localize "MOFAN.Item.Species.RemoveInnateFeature"}}'
+              >
+                <i class='fas fa-trash'></i>
+              </a>
+            {{/if}}
+          </div>
+          <input type='hidden' name='system.innateFeatures.{{index}}.uuid' value='{{feature.uuid}}' />
+          <input type='hidden' name='system.innateFeatures.{{index}}.name' value='{{feature.name}}' />
+        </li>
+      {{/each}}
+    </ol>
+  </fieldset>
+</section>

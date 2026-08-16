@@ -60,6 +60,8 @@ const config$actors = {
 const config$items = {
   gear: models.MofanGear,
   feature: models.MofanFeature,
+  innateFeature: models.MofanInnateFeature,
+  species: models.MofanSpecies,
   discipline: models.MofanDiscipline,
   spell: models.MofanSpell,
   loot: models.MofanLoot,

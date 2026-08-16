@@ -57,7 +57,8 @@
   min-width: 0;
 }
 
-.health-triple {
+.health-triple,
+.health-pair {
   justify-content: center;
   align-items: flex-end;
   flex-wrap: nowrap;
@@ -96,21 +97,55 @@
   text-align: center;
 }
 
-.health-discipline-bonus {
+input.health-eff-max {
+  font-weight: bold;
+}
+
+.health-discipline-bonus,
+.health-breakdown {
   margin-top: 2px;
   font-size: 11px;
   line-height: 1.2;
   text-align: center;
   white-space: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  flex-wrap: nowrap;
+}
+
+.health-breakdown-label {
+  flex: 0 0 auto;
+}
+
+// Beat Foundry `.application input { width: 100%; height: var(--input-height) }`.
+input.tiny-mod-box {
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  width: 2rem;
+  min-width: 2rem;
+  max-width: 2rem;
+  height: 1.15rem;
+  min-height: 1.15rem;
+  margin: 0;
+  padding: 0 2px;
+  font-size: 10px;
+  line-height: 1.15rem;
+  text-align: center;
 }
 
 .ability {
   margin-bottom: 2px;
+  flex-wrap: wrap;
 }
 
 .ability-score,
 .ability-mod {
-  flex: 0 0 44px;
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  width: 44px;
+  min-width: 44px;
+  max-width: 44px;
 }
 
 .sheet-header {
@@ -119,13 +154,23 @@
   }
 
   .abilities .ability {
-    justify-content: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1px;
 
     .resource-label {
       flex: 0 0 auto;
     }
 
     .ability-score {
+      flex: 0 0 auto;
+      width: 44px;
+      min-width: 44px;
+      max-width: 44px;
+      height: auto;
+      min-height: 0;
       text-align: center;
     }
   }

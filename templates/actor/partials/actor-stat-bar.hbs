@@ -17,6 +17,14 @@
                 class="ability-score"
                 data-dtype='Number'
             />
+            <input
+                type='text'
+                class='species-ability-bonus tiny-mod-box'
+                value='{{numberFormat ability.speciesBonus decimals=0 sign=true}}'
+                title='{{localize "MOFAN.Actor.HealthSpeciesBonus"}}'
+                disabled
+                tabindex='-1'
+            />
         </div>
     {{/each}}
 </div>

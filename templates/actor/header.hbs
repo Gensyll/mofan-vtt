@@ -19,18 +19,40 @@
           placeholder='Name'
         />
       </div>
-      <div class='document-species'>
-        <input
-          name='system.species'
-          type='text'
-          value='{{system.species}}'
-          placeholder='{{localize "MOFAN.Actor.base.FIELDS.species.label"}}'
-        />
+      <div class='document-species species-drop'>
+        {{#if ownedSpecies}}
+          <div
+            class='species-drop-filled flexrow'
+            data-item-id='{{ownedSpecies._id}}'
+            data-document-class='Item'
+          >
+            <a data-action='viewDoc' title='{{ownedSpecies.name}}'>
+              {{ownedSpecies.name}}
+            </a>
+            {{#if ownedSpecies.sizeLabel}}
+              <span class='species-sep' aria-hidden='true'>|</span>
+              <span class='species-size hint'>{{ownedSpecies.sizeLabel}}</span>
+            {{/if}}
+            {{#if @root.editable}}
+              <a
+                class='item-control'
+                data-action='clearSpecies'
+                title='{{localize "MOFAN.Actor.SpeciesClear"}}'
+              >
+                <i class='fas fa-times'></i>
+              </a>
+            {{/if}}
+          </div>
+        {{else}}
+          <span class='hint species-drop-empty'>
+            {{localize 'MOFAN.Actor.SpeciesDrop'}}
+          </span>
+        {{/if}}
       </div>
     </div>
     <div class='resources header-resources grid grid-2col'>
       <div class='resource health-resource flex-group-center'>
-        <div class='resource-content health-triple flexrow flex-center'>
+        <div class='resource-content health-pair flexrow flex-center'>
           <div class='health-field'>
             <label class='resource-label' for='system.health.value'>
               {{localize 'MOFAN.Actor.HealthCurrent'}}
@@ -44,35 +66,42 @@
             />
           </div>
           <div class='health-field'>
-            <label
-              class='resource-label'
-              title='{{localize "MOFAN.Actor.HealthEffectiveMax"}}'
-            >
+            <label class='resource-label'>
               {{localize 'MOFAN.Actor.HealthMax'}}
             </label>
-            <span class='resource-value health-eff-max'>
-              {{system.health.max}}
-            </span>
-          </div>
-          <div class='health-field'>
-            <label
-              class='resource-label'
-              for='system.health.max'
-              title='{{localize "MOFAN.Actor.base.FIELDS.health.max.label"}}'
-            >
-              {{localize 'MOFAN.Actor.HealthBase'}}
-            </label>
             <input
-              class='resource-value health-base-max'
+              class='resource-value health-eff-max'
               type='text'
-              name='system.health.max'
-              value='{{healthMaxBase}}'
-              data-dtype='Number'
+              value='{{system.health.max}}'
+              disabled
             />
           </div>
         </div>
-        <div class='health-discipline-bonus hint'>
-          {{localize 'MOFAN.Actor.HealthDisciplineBonus'}}: +{{healthDisciplineBonus}}
+        <div class='health-breakdown flexrow flex-center'>
+          <span class='health-breakdown-label'>{{localize 'MOFAN.Actor.HealthSpeciesBonus'}}</span>
+          <input
+            type='text'
+            class='tiny-mod-box'
+            value='{{numberFormat healthSpeciesBonus decimals=0 sign=true}}'
+            disabled
+            tabindex='-1'
+          />
+          <span class='health-breakdown-label'>{{localize 'MOFAN.Actor.HealthFortitude'}}</span>
+          <input
+            type='text'
+            class='tiny-mod-box'
+            value='{{numberFormat healthFortitude decimals=0 sign=true}}'
+            disabled
+            tabindex='-1'
+          />
+          <span class='health-breakdown-label'>{{localize 'MOFAN.Actor.HealthDisciplineBonusAbbr'}}</span>
+          <input
+            type='text'
+            class='tiny-mod-box'
+            value='{{numberFormat healthDisciplineBonus decimals=0 sign=true}}'
+            disabled
+            tabindex='-1'
+          />
         </div>
       </div>
 

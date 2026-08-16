@@ -224,14 +224,31 @@
 }
 
 /* Styles limited to mofan-vtt sheets */
+.mofan-vtt.item {
+  min-width: 550px;
+  max-width: 550px;
+}
+.mofan-vtt.item .document-name {
+  flex: 0 0 80%;
+  max-width: 80%;
+}
 .mofan-vtt.item .window-content {
   overflow-y: auto;
+}
+.mofan-vtt.actor {
+  min-width: 600px;
+  max-width: 600px;
+}
+.mofan-vtt.actor .window-content {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 .mofan-vtt .item-form {
   font-family: "Roboto", sans-serif;
 }
 .mofan-vtt .sheet-header {
-  flex: 0 auto;
+  flex: 0 0 auto;
   overflow: visible;
   display: flex;
   flex-direction: row;
@@ -253,7 +270,34 @@
   margin-top: 4px;
 }
 .mofan-vtt .sheet-tabs {
-  flex: 0;
+  flex: 0 0 auto;
+}
+.mofan-vtt .tab.active {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+}
+.mofan-vtt .tab.character.active {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.mofan-vtt .tab.character.active > .grid {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+  align-items: stretch;
+}
+.mofan-vtt .tab.character .sidebar {
+  min-height: 0;
+  overflow-y: auto;
+}
+.mofan-vtt .tab.character .main {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
 }
 .mofan-vtt .sheet-body,
 .mofan-vtt .sheet-body .tab,
@@ -321,7 +365,8 @@
 .mofan-vtt .health-resource {
   min-width: 0;
 }
-.mofan-vtt .health-triple {
+.mofan-vtt .health-triple,
+.mofan-vtt .health-pair {
   justify-content: center;
   align-items: flex-end;
   flex-wrap: nowrap;
@@ -329,7 +374,8 @@
   width: auto;
   margin: 0 auto;
 }
-.mofan-vtt .health-triple > * {
+.mofan-vtt .health-triple > *,
+.mofan-vtt .health-pair > * {
   flex: 0 0 auto;
 }
 .mofan-vtt .health-field {
@@ -353,30 +399,70 @@
   font-weight: bold;
   text-align: center;
 }
-.mofan-vtt .health-discipline-bonus {
+.mofan-vtt input.health-eff-max {
+  font-weight: bold;
+}
+.mofan-vtt .health-discipline-bonus,
+.mofan-vtt .health-breakdown {
   margin-top: 2px;
   font-size: 11px;
   line-height: 1.2;
   text-align: center;
   white-space: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  flex-wrap: nowrap;
+}
+.mofan-vtt .health-breakdown-label {
+  flex: 0 0 auto;
+}
+.mofan-vtt input.tiny-mod-box {
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  width: 2rem;
+  min-width: 2rem;
+  max-width: 2rem;
+  height: 1.15rem;
+  min-height: 1.15rem;
+  margin: 0;
+  padding: 0 2px;
+  font-size: 10px;
+  line-height: 1.15rem;
+  text-align: center;
 }
 .mofan-vtt .ability {
   margin-bottom: 2px;
+  flex-wrap: wrap;
 }
 .mofan-vtt .ability-score,
 .mofan-vtt .ability-mod {
-  flex: 0 0 44px;
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  width: 44px;
+  min-width: 44px;
+  max-width: 44px;
 }
 .mofan-vtt .sheet-header .resource-label {
   text-align: center;
 }
 .mofan-vtt .sheet-header .abilities .ability {
-  justify-content: center;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1px;
 }
 .mofan-vtt .sheet-header .abilities .ability .resource-label {
   flex: 0 0 auto;
 }
 .mofan-vtt .sheet-header .abilities .ability .ability-score {
+  flex: 0 0 auto;
+  width: 44px;
+  min-width: 44px;
+  max-width: 44px;
+  height: auto;
+  min-height: 0;
   text-align: center;
 }
 .mofan-vtt .items-header {
@@ -652,7 +738,8 @@
   font-size: 12px;
 }
 .mofan-vtt .prerequisites-drop,
-.mofan-vtt .parent-discipline-drop {
+.mofan-vtt .parent-discipline-drop,
+.mofan-vtt .innate-features-drop {
   margin-top: 8px;
 }
 .mofan-vtt .health-scaling-resource {
@@ -682,6 +769,7 @@
 .mofan-vtt .discipline-section-footer {
   display: flex;
   justify-content: flex-end;
+  flex: 0 0 auto;
   margin-top: 4px;
   padding-right: 2px;
 }
@@ -705,9 +793,17 @@
   align-items: center;
   gap: 6px;
 }
-.mofan-vtt .disciplines-list {
-  max-height: 260px;
+.mofan-vtt .character-features-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
   overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 2px;
+}
+.mofan-vtt .disciplines-list,
+.mofan-vtt .innate-features-list {
+  max-height: none;
+  overflow: visible;
 }
 .mofan-vtt .nested-feature {
   padding-left: 2.5rem;
@@ -738,8 +834,68 @@
 .mofan-vtt .document-species {
   flex: 1;
   text-align: left;
+  min-height: 26px;
+  padding: 2px 6px;
+  border: 1px dashed #c9c7b8;
+  display: flex;
+  align-items: center;
 }
 .mofan-vtt .document-species input {
   width: 100%;
   text-align: left;
+}
+.mofan-vtt .species-drop-filled {
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+.mofan-vtt .species-drop-filled .item-control {
+  flex: 0 0 auto;
+  margin-left: auto;
+}
+.mofan-vtt .species-drop-empty {
+  width: 100%;
+}
+.mofan-vtt .species-sep {
+  flex: 0 0 auto;
+  opacity: 0.45;
+  padding: 0 2px;
+  user-select: none;
+}
+.mofan-vtt .species-size {
+  flex: 0 0 auto;
+}
+.mofan-vtt .innate-features-drop,
+.mofan-vtt .innate-features-list {
+  margin-top: 4px;
+}
+.mofan-vtt .species-attributes {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  margin: 10px 0;
+}
+.mofan-vtt .species-attributes .resource {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2px;
+  min-width: 0;
+}
+.mofan-vtt .species-attributes .resource-label {
+  text-align: left;
+}
+.mofan-vtt .species-attributes select,
+.mofan-vtt .species-attributes input[type=number] {
+  width: 100%;
+  min-height: 26px;
+  box-sizing: border-box;
+}
+.mofan-vtt .species-stat-row,
+.mofan-vtt .species-secondary-fields {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  width: 100%;
 }

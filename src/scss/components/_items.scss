@@ -194,7 +194,8 @@
 }
 
 .prerequisites-drop,
-.parent-discipline-drop {
+.parent-discipline-drop,
+.innate-features-drop {
   margin-top: 8px;
 }
 
@@ -230,6 +231,7 @@
 .discipline-section-footer {
   display: flex;
   justify-content: flex-end;
+  flex: 0 0 auto;
   margin-top: 4px;
   padding-right: 2px;
 
@@ -258,9 +260,18 @@
   gap: 6px;
 }
 
-.disciplines-list {
-  max-height: 260px;
+.character-features-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
   overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 2px;
+}
+
+.disciplines-list,
+.innate-features-list {
+  max-height: none;
+  overflow: visible;
 }
 
 .nested-feature {
@@ -297,9 +308,80 @@
 .document-species {
   flex: 1;
   text-align: left;
+  min-height: 26px;
+  padding: 2px 6px;
+  border: 1px dashed $c-faint;
+  display: flex;
+  align-items: center;
 
   input {
     width: 100%;
     text-align: left;
   }
+}
+
+.species-drop-filled {
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+
+  .item-control {
+    flex: 0 0 auto;
+    margin-left: auto;
+  }
+}
+
+.species-drop-empty {
+  width: 100%;
+}
+
+.species-sep {
+  flex: 0 0 auto;
+  opacity: 0.45;
+  padding: 0 2px;
+  user-select: none;
+}
+
+.species-size {
+  flex: 0 0 auto;
+}
+
+.innate-features-drop,
+.innate-features-list {
+  margin-top: 4px;
+}
+
+.species-attributes {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  margin: 10px 0;
+
+  .resource {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .resource-label {
+    text-align: left;
+  }
+
+  select,
+  input[type='number'] {
+    width: 100%;
+    min-height: 26px;
+    box-sizing: border-box;
+  }
+}
+
+.species-stat-row,
+.species-secondary-fields {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  width: 100%;
 }
