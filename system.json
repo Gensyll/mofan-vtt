@@ -73,8 +73,48 @@
       "path": "lang/en.json"
     }
   ],
-  "packs": [],
-  "packFolders": [],
+  "packs": [
+    {
+      "name": "disciplines",
+      "label": "MOFAN.Compendium.Disciplines",
+      "path": "./packs/disciplines",
+      "type": "Item",
+      "system": "mofan-vtt",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "features",
+      "label": "MOFAN.Compendium.Features",
+      "path": "./packs/features",
+      "type": "Item",
+      "system": "mofan-vtt",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "species",
+      "label": "MOFAN.Compendium.Species",
+      "path": "./packs/species",
+      "type": "Item",
+      "system": "mofan-vtt",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    }
+  ],
+  "packFolders": [
+    {
+      "name": "MoFan",
+      "sorting": "a",
+      "packs": ["disciplines", "features", "species"]
+    }
+  ],
   "socket": false,
   "manifest": "https://raw.githubusercontent.com/Gensyll/mofan-vtt/master/system.json",
   "download": "https://github.com/Gensyll/mofan-vtt/archive/refs/heads/master.zip",

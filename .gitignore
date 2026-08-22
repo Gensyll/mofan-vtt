@@ -12,5 +12,13 @@ jsconfig.json
 foundry
 foundry-config.yaml
 
+# Generated LevelDB pack data (recreate with npm run pack)
+packs/**/CURRENT
+packs/**/*.mdb
+packs/**/LOCK
+packs/**/LOG*
+packs/**/MANIFEST-*
+packs/**/*.log
+
 # Boilerplate
 build/
