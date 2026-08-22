@@ -1,0 +1,23 @@
+{
+  "type": "Item",
+  "folder": null,
+  "name": "Innate Features",
+  "color": null,
+  "sorting": "a",
+  "_id": "z3YnPTaqQbUrTqmd",
+  "description": "",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "mofan-vtt",
+    "systemVersion": "0.2.0",
+    "createdTime": 1787374370421,
+    "modifiedTime": 1787374370421,
+    "lastModifiedBy": "LktWwO8XRnTEZHDd"
+  },
+  "_key": "!folders!z3YnPTaqQbUrTqmd"
+}

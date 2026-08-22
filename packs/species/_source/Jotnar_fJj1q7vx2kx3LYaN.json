@@ -1,0 +1,47 @@
+{
+  "name": "Jotnar",
+  "type": "species",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "<p><span style=\"font-size:10pt;font-family:Arial;font-style:normal\" data-sheets-root=\"1\">All descendants of Giants retain their strength and pride. Generations strong, Jotnar only get stronger with age.</span></p>",
+    "statBonuses": [
+      "for",
+      "for"
+    ],
+    "statFlaw": "awr",
+    "size": "large",
+    "hpBonus": 10,
+    "innateFeatures": [
+      {
+        "uuid": "Item.G33j7qLpeqkR6YxA",
+        "name": "Large & In Charge"
+      },
+      {
+        "uuid": "Item.1GMcQgTYzpad4ro2",
+        "name": "Elementally Infused"
+      }
+    ],
+    "sourceUuid": ""
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0,
+    "LktWwO8XRnTEZHDd": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "mofan-vtt",
+    "systemVersion": "0.2.0",
+    "createdTime": 1787375655810,
+    "modifiedTime": 1787375655810,
+    "lastModifiedBy": "LktWwO8XRnTEZHDd"
+  },
+  "_id": "fJj1q7vx2kx3LYaN",
+  "sort": 0,
+  "_key": "!items!fJj1q7vx2kx3LYaN"
+}
