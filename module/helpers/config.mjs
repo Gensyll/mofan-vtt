@@ -45,64 +45,77 @@ MOFAN.skills = {
   arc: {
     label: 'MOFAN.Skill.Arcana.long',
     abbreviation: 'MOFAN.Skill.Arcana.abbr',
-    parent_ability1: MOFAN.abilities.cha,
-    parent_ability2: MOFAN.abilities.kno,
+    parent_ability1: 'cha',
+    parent_ability2: 'kno',
   },
   ath: {
     label: 'MOFAN.Skill.Athletics.long',
     abbreviation: 'MOFAN.Skill.Athletics.abbr',
-    parent_ability1: MOFAN.abilities.dex,
-    parent_ability2: MOFAN.abilities.for,
+    parent_ability1: 'dex',
+    parent_ability2: 'for',
   },
   dec: {
     label: 'MOFAN.Skill.Deception.long',
     abbreviation: 'MOFAN.Skill.Deception.abbr',
-    parent_ability1: MOFAN.abilities.cha,
-    parent_ability2: MOFAN.abilities.dex,
+    parent_ability1: 'cha',
+    parent_ability2: 'dex',
   },
   drv: {
     label: 'MOFAN.Skill.Driving.long',
     abbreviation: 'MOFAN.Skill.Driving.abbr',
-    parent_ability1: MOFAN.abilities.for,
-    parent_ability2: MOFAN.abilities.awr,
+    parent_ability1: 'for',
+    parent_ability2: 'awr',
   },
   emp: {
     label: 'MOFAN.Skill.Empathy.long',
     abbreviation: 'MOFAN.Skill.Empathy.abbr',
-    parent_ability1: MOFAN.abilities.cha,
-    parent_ability2: MOFAN.abilities.awr,
+    parent_ability1: 'cha',
+    parent_ability2: 'awr',
   },
   inv: {
     label: 'MOFAN.Skill.Investigation.long',
     abbreviation: 'MOFAN.Skill.Investigation.abbr',
-    parent_ability1: MOFAN.abilities.kno,
-    parent_ability2: MOFAN.abilities.awr,
+    parent_ability1: 'kno',
+    parent_ability2: 'awr',
   },
   per: {
     label: 'MOFAN.Skill.Persuation.long',
     abbreviation: 'MOFAN.Skill.Persuation.abbr',
-    parent_ability1: MOFAN.abilities.cha,
-    parent_ability2: MOFAN.abilities.for,
+    parent_ability1: 'cha',
+    parent_ability2: 'for',
   },
   tac: {
     label: 'MOFAN.Skill.Tactics.long',
     abbreviation: 'MOFAN.Skill.Tactics.abbr',
-    parent_ability1: MOFAN.abilities.for,
-    parent_ability2: MOFAN.abilities.kno,
+    parent_ability1: 'for',
+    parent_ability2: 'kno',
   },
   tec: {
     label: 'MOFAN.Skill.Technology.long',
     abbreviation: 'MOFAN.Skill.Technology.abbr',
-    parent_ability1: MOFAN.abilities.dex,
-    parent_ability2: MOFAN.abilities.kno,
+    parent_ability1: 'dex',
+    parent_ability2: 'kno',
   },
   thv: {
     label: 'MOFAN.Skill.Thievery.long',
     abbreviation: 'MOFAN.Skill.Thievery.abbr',
-    parent_ability1: MOFAN.abilities.dex,
-    parent_ability2: MOFAN.abilities.awr,
+    parent_ability1: 'dex',
+    parent_ability2: 'awr',
   },
 };
+
+/**
+ * Skill training ranks. Index equals both the persisted training value and the bonus.
+ * @type {Array<{label: string, bonus: number, icon: string}>}
+ */
+MOFAN.skillTraining = [
+  { label: 'MOFAN.SkillTraining.untrained', bonus: 0, icon: 'far fa-circle' },
+  { label: 'MOFAN.SkillTraining.basic', bonus: 1, icon: 'fas fa-circle-half-stroke' },
+  { label: 'MOFAN.SkillTraining.advanced', bonus: 2, icon: 'far fa-circle-check' },
+  { label: 'MOFAN.SkillTraining.expert', bonus: 3, icon: 'fas fa-check' },
+  { label: 'MOFAN.SkillTraining.professional', bonus: 4, icon: 'fas fa-check-double' },
+  { label: 'MOFAN.SkillTraining.legendary', bonus: 5, icon: 'fas fa-star' },
+];
 
 /**
  * Item types (document.type) that extend MofanItemLootable, in display order on the actor Inventory tab.

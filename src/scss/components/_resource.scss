@@ -148,6 +148,102 @@ input.tiny-mod-box {
   max-width: 44px;
 }
 
+.skills-section {
+  .discipline-section-heading {
+    margin-top: 0;
+  }
+}
+
+.skills-list {
+  gap: 0;
+  padding: 0;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.skill-row {
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 4px;
+  min-height: 1.2rem;
+  padding: 1px 2px 1px 0;
+}
+
+// Beat Foundry `.application button { width: 100%; height: var(--button-size) }`.
+button.skill-training,
+.skill-training {
+  display: inline-flex;
+  flex: 0 0 1rem;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 1rem;
+  min-width: 1rem;
+  max-width: 1rem;
+  height: 1rem;
+  min-height: 1rem;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: $c-dark;
+  cursor: pointer;
+  line-height: 1;
+  opacity: 0.85;
+
+  i {
+    font-size: 0.7rem;
+    width: 1em;
+    text-align: center;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+span.skill-training {
+  cursor: default;
+}
+
+.skill-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.skill-stats {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 3px;
+  margin-left: auto;
+}
+
+.skill-parents,
+.skill-mod {
+  flex: 0 0 auto;
+  font-size: 10px;
+  font-weight: normal;
+  white-space: nowrap;
+}
+
+.skill-parents {
+  opacity: 0.65;
+  text-align: right;
+}
+
+.skill-mod {
+  min-width: 2.25em;
+  text-align: right;
+  opacity: 0.8;
+}
+
 .sheet-header {
   .resource-label {
     text-align: center;

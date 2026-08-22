@@ -1,4 +1,5 @@
 import MofanActorBase from './base-actor.mjs';
+import { defineSkillSchema, prepareSkills } from '../helpers/skills.mjs';
 import { getSpeciesAbilityModifiers } from '../helpers/species.mjs';
 
 export default class MofanNPC extends MofanActorBase {
@@ -32,18 +33,7 @@ export default class MofanNPC extends MofanActorBase {
       }, {})
     );
 
-    schema.skills = new fields.SchemaField(
-      Object.keys(CONFIG.MOFAN.skills).reduce((obj, skill) => {
-        obj[skill] = new fields.SchemaField({
-          value: new fields.NumberField({
-            ...requiredInteger,
-            initial: 0,
-            min: -15,
-          }),
-        });
-        return obj;
-      }, {})
-    );
+    schema.skills = defineSkillSchema();
 
     return schema;
   }
@@ -60,11 +50,7 @@ export default class MofanNPC extends MofanActorBase {
         game.i18n.localize(CONFIG.MOFAN.abilities[key].label.long) ?? key;
     }
 
-    for (const key in this.skills) {
-      this.skills[key].mod = this.skills[key].value;
-      this.skills[key].label =
-        game.i18n.localize(CONFIG.MOFAN.skills[key].label.long) ?? key;
-    }
+    prepareSkills(this);
   }
 
   getRollData() {

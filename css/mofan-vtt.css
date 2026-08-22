@@ -226,7 +226,6 @@
 /* Styles limited to mofan-vtt sheets */
 .mofan-vtt.item {
   min-width: 550px;
-  max-width: 550px;
 }
 .mofan-vtt.item .document-name {
   flex: 0 0 80%;
@@ -237,7 +236,6 @@
 }
 .mofan-vtt.actor {
   min-width: 600px;
-  max-width: 600px;
 }
 .mofan-vtt.actor .window-content {
   overflow: hidden;
@@ -442,6 +440,89 @@
   width: 44px;
   min-width: 44px;
   max-width: 44px;
+}
+.mofan-vtt .skills-section .discipline-section-heading {
+  margin-top: 0;
+}
+.mofan-vtt .skills-list {
+  gap: 0;
+  padding: 0;
+  font-size: 12px;
+  line-height: 1.2;
+}
+.mofan-vtt .skill-row {
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 4px;
+  min-height: 1.2rem;
+  padding: 1px 2px 1px 0;
+}
+.mofan-vtt button.skill-training,
+.mofan-vtt .skill-training {
+  display: inline-flex;
+  flex: 0 0 1rem;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 1rem;
+  min-width: 1rem;
+  max-width: 1rem;
+  height: 1rem;
+  min-height: 1rem;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--mofan-vtt-c-dark);
+  cursor: pointer;
+  line-height: 1;
+  opacity: 0.85;
+}
+.mofan-vtt button.skill-training i,
+.mofan-vtt .skill-training i {
+  font-size: 0.7rem;
+  width: 1em;
+  text-align: center;
+}
+.mofan-vtt button.skill-training:hover,
+.mofan-vtt .skill-training:hover {
+  opacity: 1;
+}
+.mofan-vtt span.skill-training {
+  cursor: default;
+}
+.mofan-vtt .skill-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: left;
+  white-space: nowrap;
+}
+.mofan-vtt .skill-stats {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 3px;
+  margin-left: auto;
+}
+.mofan-vtt .skill-parents,
+.mofan-vtt .skill-mod {
+  flex: 0 0 auto;
+  font-size: 10px;
+  font-weight: normal;
+  white-space: nowrap;
+}
+.mofan-vtt .skill-parents {
+  opacity: 0.65;
+  text-align: right;
+}
+.mofan-vtt .skill-mod {
+  min-width: 2.25em;
+  text-align: right;
+  opacity: 0.8;
 }
 .mofan-vtt .sheet-header .resource-label {
   text-align: center;

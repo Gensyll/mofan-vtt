@@ -1,30 +1,46 @@
-{{!Skill div segment for character sheet features side bar}}
-<div class='abilities flexcol'>
+{{!Skill list for the character sheet sidebar}}
+<div class='skills-section'>
+        <div class='discipline-section-heading'>
+          <h3 class='discipline-section-header'>{{localize 'MOFAN.Actor.Skills'}}</h3>
+        </div>
+        <div class='skills-list flexcol'>
         {{#each system.skills as |skill key|}}
-          <div class='ability flexrow flex-group-center'>
+          <div class='skill-row flexrow'>
+            {{#if @root.editable}}
+            <button
+              type="button"
+              class="skill-training"
+              data-action="cycleSkillTraining"
+              data-skill="{{key}}"
+              title="{{skill.trainingLabel}}"
+            >
+              <i class="{{skill.trainingIcon}}"></i>
+            </button>
+            {{else}}
+            <span class="skill-training" title="{{skill.trainingLabel}}">
+              <i class="{{skill.trainingIcon}}"></i>
+            </span>
+            {{/if}}
             {{#with (lookup @root.config.skills key)}}
             <label
-              class="resource-label rollable flexlarge align-left"
+              class="resource-label rollable skill-name"
               data-action="roll"
               data-roll="d10+@skills.{{key}}.mod"
               data-label="{{localize label}}"
             >{{localize label}}</label>
             {{/with}}
-            <input
-              type='text'
-              name='system.skills.{{key}}.value'
-              value='{{skill.value}}'
-              class="ability-score"
-              data-dtype='Number'
-            />
-            <span
-              class="ability-mod rollable"
-              data-action="roll"
-              data-roll="d10+@skills.{{key}}.mod"
-            {{#with (lookup @root.config.skills key)}}
-              data-label="{{localize label}}"
-            {{/with}}
-            >{{numberFormat skill.mod decimals=0 sign=true}}</span>
+            <span class="skill-stats">
+              <span class="skill-parents">{{skill.parentAbbr}}</span>
+              <span
+                class="skill-mod rollable"
+                data-action="roll"
+                data-roll="d10+@skills.{{key}}.mod"
+              {{#with (lookup @root.config.skills key)}}
+                data-label="{{localize label}}"
+              {{/with}}
+              >({{numberFormat skill.mod decimals=0 sign=true}})</span>
+            </span>
           </div>
         {{/each}}
+        </div>
       </div>

@@ -1,17 +1,19 @@
 /**
- * Shared vertical-only resize helpers for Mofan application windows.
+ * Shared resize helpers for Mofan application windows.
  */
 
 /**
- * Lock width and clamp height to a minimum.
+ * Clamp width and height to minima; allow growing past them.
  * @param {object} position
- * @param {number} width
+ * @param {number} minWidth
  * @param {number} minHeight
  * @returns {object}
  */
-export function constrainVerticalResize(position, width, minHeight) {
+export function constrainSheetResize(position, minWidth, minHeight) {
   if (!position) return position;
-  position.width = width;
+  if (Number.isFinite(position.width) && position.width < minWidth) {
+    position.width = minWidth;
+  }
   if (Number.isFinite(position.height) && position.height < minHeight) {
     position.height = minHeight;
   }
