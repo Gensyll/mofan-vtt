@@ -6,12 +6,13 @@ import {
   removeFeaturesForDiscipline,
   syncActorDisciplineFeatures,
 } from '../helpers/disciplines.mjs';
+import { adjustSkillTraining } from '../helpers/skills.mjs';
 import {
   getOwnedSpecies,
   syncActorSpeciesFeatures,
 } from '../helpers/species.mjs';
 import {
-  constrainVerticalResize,
+  constrainSheetResize,
   measureSheetChrome,
 } from '../helpers/window-resize.mjs';
 
@@ -51,6 +52,7 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
       roll: this._onRoll,
       increaseDisciplineLevel: this._increaseDisciplineLevel,
       decreaseDisciplineLevel: this._decreaseDisciplineLevel,
+      cycleSkillTraining: this._cycleSkillTraining,
       clearSpecies: this._clearSpecies,
     },
     // Custom property that's merged into `this.options`
@@ -338,13 +340,12 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
     this.#dragDrop.forEach((d) => d.bind(this.element));
     this.#disableOverrides();
     this.#cacheSkillsMinHeight();
-    // You may want to add other special handling here
-    // Foundry comes with a large number of utility classes, e.g. SearchFilter
-    // That you may want to implement yourself.
+    this.#bindSkillTrainingContextMenu();
   }
 
   /**
-   * Keep the sheet from shrinking shorter than the header + full skills list.
+   * Allow horizontal and vertical resize, but not below the default width
+   * or shorter than the header + full skills list.
    * @param {object} position
    * @returns {object}
    * @protected
@@ -352,7 +353,7 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
    */
   _updatePosition(position) {
     return super._updatePosition(
-      constrainVerticalResize(
+      constrainSheetResize(
         position,
         this.options.position?.width ?? 600,
         this.#getMinimumHeight()
@@ -384,11 +385,30 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
 
   #cacheSkillsMinHeight() {
     const skills = this.element?.querySelector(
-      '.tab.character .sidebar .abilities'
+      '.tab.character .sidebar .skills-section'
     );
     if (!skills) return;
     const height = skills.scrollHeight || skills.offsetHeight;
     if (height > 0) this.#skillsMinHeight = height;
+  }
+
+  #bindSkillTrainingContextMenu() {
+    if (this.#skillTrainingContextBound || !this.element) return;
+    this.element.addEventListener(
+      'contextmenu',
+      this.#onSkillTrainingContextMenu.bind(this)
+    );
+    this.#skillTrainingContextBound = true;
+  }
+
+  /**
+   * Right-click a training icon to decrease rank (no wrap).
+   * @param {PointerEvent} event
+   */
+  #onSkillTrainingContextMenu(event) {
+    const target = event.target.closest('[data-action="cycleSkillTraining"]');
+    if (!target || !this.element.contains(target)) return;
+    MofanActorSheet._cycleSkillTraining.call(this, event, target);
   }
 
   /**************
@@ -537,6 +557,28 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
     const item = this._getEmbeddedDocument(target);
     if (!item || item.type !== 'discipline') return;
     await this._changeDisciplineLevel(item, -1);
+  }
+
+  /**
+   * Cycle a skill's training rank. Left-click increases (stops at Legendary);
+   * right-click decreases (stops at Untrained).
+   *
+   * @this MofanActorSheet
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target
+   */
+  static async _cycleSkillTraining(event, target) {
+    event.preventDefault();
+    if (!this.isEditable) return;
+    const skill = target.dataset.skill;
+    if (!skill || !(skill in this.actor.system.skills)) return;
+    const current = this.actor.system.skills[skill].training ?? 0;
+    const delta = event.button === 2 ? -1 : 1;
+    const next = adjustSkillTraining(current, delta);
+    if (next === current) return;
+    await this.actor.update({
+      [`system.skills.${skill}.training`]: next,
+    });
   }
 
   /**
@@ -1092,6 +1134,9 @@ export class MofanActorSheet extends api.HandlebarsApplicationMixin(
 
   /** Cached skills-column height used as part of the vertical resize minimum. */
   #skillsMinHeight = 0;
+
+  /** True after the right-click training listener is attached to this window. */
+  #skillTrainingContextBound = false;
 
   /**
    * Create drag-and-drop workflow handlers for this Application

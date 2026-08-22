@@ -1,7 +1,7 @@
 import MofanItemLootable from '../data/base-item-lootable.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import {
-  constrainVerticalResize,
+  constrainSheetResize,
   measureSheetChrome,
 } from '../helpers/window-resize.mjs';
 
@@ -309,7 +309,8 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
   }
 
   /**
-   * Vertical-only resize: lock width and keep header + tabs visible.
+   * Allow horizontal and vertical resize, but not below the default width
+   * or shorter than header + tabs.
    * @param {object} position
    * @returns {object}
    * @protected
@@ -317,7 +318,7 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
    */
   _updatePosition(position) {
     return super._updatePosition(
-      constrainVerticalResize(
+      constrainSheetResize(
         position,
         this.options.position?.width ?? 550,
         this.#getMinimumHeight()
