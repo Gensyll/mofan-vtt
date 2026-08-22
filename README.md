@@ -10,6 +10,27 @@
 >
 >-jyka
 
+## Compendium Packs
+
+System content lives in three Item packs under a **MoFan** folder in the Compendium sidebar:
+
+- **Disciplines** (`discipline` items)
+- **Features** (`feature` and `innateFeature` items)
+- **Species** (`species` items)
+
+JSON under `packs/<name>/_source/` is the source of truth in git. Compiled LevelDB in `packs/<name>/` is generated for Foundry and is not committed.
+
+After `npm install`:
+
+1. `npm run pack` — compile JSON into LevelDB so Foundry can load the packs
+2. Reload the world
+3. Author in Foundry (unlock the pack, create or edit items), then `npm run unpack` to write JSON back
+4. Or edit JSON in `_source` and run `npm run pack` again
+
+When linking a species innate Feature or a Feature's parent Discipline, use the packed UUID: `Compendium.mofan-vtt.<pack>.Item.<id>`.
+
+Edits made only inside Foundry to system packs are overwritten when the system updates. Keep changes in the JSON sources. See the [Content Packaging Guide](https://foundryvtt.com/article/packaging-guide/).
+
 ### Getting Help
 
 Check out the [Official Foundry VTT Discord](https://discord.gg/foundryvtt)! The #system-development channel has helpful pins and is a good place to ask questions about any part of the foundry application.

@@ -4,7 +4,9 @@
   "description": "CSS compiler for the Mofan system",
   "scripts": {
     "build": "sass src/scss/mofan-vtt.scss css/mofan-vtt.css --style=expanded --no-source-map",
-    "watch": "sass src/scss/mofan-vtt.scss css/mofan-vtt.css --style=expanded --source-map --watch"
+    "watch": "sass src/scss/mofan-vtt.scss css/mofan-vtt.css --style=expanded --source-map --watch",
+    "pack": "node tools/packs.mjs pack",
+    "unpack": "node tools/packs.mjs unpack"
   },
   "browserslist": [
     "last 3 versions"
@@ -13,6 +15,7 @@
   "license": "MIT",
   "private": true,
   "devDependencies": {
+    "@foundryvtt/foundryvtt-cli": "^3.0.4",
     "sass": "^1.53.0"
   }
 }

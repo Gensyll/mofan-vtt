@@ -27,6 +27,11 @@
       "professional": "Professional",
       "legendary": "Legendary"
     },
+    "Compendium": {
+      "Disciplines": "Disciplines",
+      "Features": "Features",
+      "Species": "Species"
+    },
     "SheetLabels": {
       "Actor": "Mofan Actor Sheet",
       "Item": "Mofan Item Sheet"
