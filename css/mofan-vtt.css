@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 :root {
   --mofan-vtt-c-dark: #191813;
@@ -1056,20 +1057,53 @@
 .mofan-weapon-card details {
   margin: 0;
 }
-.mofan-weapon-card summary.card-header {
+.mofan-weapon-card .card-header {
   display: flex;
   align-items: center;
   gap: 8px;
   margin-bottom: 6px;
+}
+.mofan-weapon-card summary.card-header {
   cursor: pointer;
   list-style: none;
 }
 .mofan-weapon-card summary.card-header::-webkit-details-marker, .mofan-weapon-card summary.card-header::marker {
   display: none;
 }
+.mofan-weapon-card .card-title {
+  flex: 1;
+  min-width: 0;
+}
 .mofan-weapon-card .card-title .hint {
   font-size: 12px;
   opacity: 0.8;
+}
+.mofan-weapon-card .card-expand-hint {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2em;
+  margin-left: auto;
+  font-size: 11px;
+  opacity: 0.65;
+  white-space: nowrap;
+}
+.mofan-weapon-card .card-expand-hint .when-open {
+  display: none;
+}
+.mofan-weapon-card .card-expand-hint::after {
+  content: "▾";
+  font-size: 10px;
+  line-height: 1;
+}
+.mofan-weapon-card details[open] .card-expand-hint .when-closed {
+  display: none;
+}
+.mofan-weapon-card details[open] .card-expand-hint .when-open {
+  display: inline;
+}
+.mofan-weapon-card details[open] .card-expand-hint::after {
+  content: "▴";
 }
 .mofan-weapon-card .card-details {
   margin: 4px 0 8px;

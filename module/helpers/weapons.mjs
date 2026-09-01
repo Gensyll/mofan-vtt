@@ -135,6 +135,10 @@ export async function postWeaponChatCard(item) {
     ? game.i18n.localize(CONFIG.MOFAN.weaponCategories[categoryKey] ?? categoryKey)
     : '';
 
+  const properties = getSelectedWeaponProperties(item);
+  const hasDetails =
+    Boolean(item.system.description?.trim()) || properties.length > 0;
+
   const content = await renderTemplate(
     'systems/mofan-vtt/templates/chat/weapon-card.hbs',
     {
@@ -144,7 +148,8 @@ export async function postWeaponChatCard(item) {
       range: item.system.range,
       rangeUnit: game.i18n.localize('MOFAN.Item.Weapon.RangeUnit'),
       damageDie: item.system.damageDie,
-      properties: getSelectedWeaponProperties(item),
+      properties,
+      hasDetails,
     }
   );
 

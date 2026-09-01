@@ -247,6 +247,8 @@
       "SituationalPlaceholder": "e.g. 1d4",
       "RollMode": "Roll Mode",
       "Roll": "Roll",
+      "ShowMore": "Show more",
+      "ShowLess": "Show less",
       "NoActor": "This weapon must be owned by an actor to roll.",
       "MissingItem": "Could not find that weapon.",
       "InvalidFormula": "That roll formula is invalid."
@@ -362,11 +364,11 @@
     "WeaponProperty": {
       "agile": {
         "label": "Agile",
-        "description": "You may use your Dexterity for this weapon."
+        "description": "You use your Dexterity for this weapon."
       },
       "sturdy": {
         "label": "Sturdy",
-        "description": "You may use your Fortitude for this weapon."
+        "description": "You use your Fortitude for this weapon."
       },
       "hidden": {
         "label": "Hidden",

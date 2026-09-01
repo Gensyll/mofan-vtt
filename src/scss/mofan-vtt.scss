@@ -52,11 +52,14 @@
     margin: 0;
   }
 
-  summary.card-header {
+  .card-header {
     display: flex;
     align-items: center;
     gap: 8px;
     margin-bottom: 6px;
+  }
+
+  summary.card-header {
     cursor: pointer;
     list-style: none;
 
@@ -66,9 +69,49 @@
     }
   }
 
+  .card-title {
+    flex: 1;
+    min-width: 0;
+  }
+
   .card-title .hint {
     font-size: 12px;
     opacity: 0.8;
+  }
+
+  .card-expand-hint {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2em;
+    margin-left: auto;
+    font-size: 11px;
+    opacity: 0.65;
+    white-space: nowrap;
+
+    .when-open {
+      display: none;
+    }
+
+    &::after {
+      content: '▾';
+      font-size: 10px;
+      line-height: 1;
+    }
+  }
+
+  details[open] .card-expand-hint {
+    .when-closed {
+      display: none;
+    }
+
+    .when-open {
+      display: inline;
+    }
+
+    &::after {
+      content: '▴';
+    }
   }
 
   .card-details {
