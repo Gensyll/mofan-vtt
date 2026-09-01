@@ -59,6 +59,7 @@ const config$actors = {
 
 const config$items = {
   gear: models.MofanGear,
+  weapon: models.MofanWeapon,
   feature: models.MofanFeature,
   innateFeature: models.MofanInnateFeature,
   species: models.MofanSpecies,

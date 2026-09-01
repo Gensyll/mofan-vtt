@@ -48,7 +48,7 @@
     }
   },
   "Item": {
-    "types": ["gear", "feature", "innateFeature", "species", "discipline", "spell", "loot"],
+    "types": ["gear", "weapon", "feature", "innateFeature", "species", "discipline", "spell", "loot"],
     "htmlFields": ["description"],
     "templates": {
       "base": {

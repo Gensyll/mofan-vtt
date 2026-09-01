@@ -33,6 +33,9 @@
         "gear": {
             "htmlFields": ["description"]
         },
+        "weapon": {
+            "htmlFields": ["description"]
+        },
         "spell": {
             "htmlFields": ["description"]
         },

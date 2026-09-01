@@ -1,0 +1,153 @@
+{{! Weapon Attributes Tab }}
+<section
+  class='tab attributes {{tab.cssClass}}'
+  data-group='primary'
+  data-tab='attributes'
+>
+  <div class='resources grid grid-2col'>
+    <div class='resource'>
+      <label class='resource-label'>{{localize 'MOFAN.Item.Weapon.FIELDS.apCost.label'}}</label>
+      <input
+        type='number'
+        name='system.apCost'
+        value='{{system.apCost}}'
+        data-dtype='Number'
+        min='0'
+        {{#unless editable}}disabled{{/unless}}
+      />
+    </div>
+    <div class='resource'>
+      <label class='resource-label'>{{localize 'MOFAN.Item.Weapon.FIELDS.damageDie.label'}}</label>
+      <input
+        type='text'
+        name='system.damageDie'
+        value='{{system.damageDie}}'
+        {{#unless editable}}disabled{{/unless}}
+      />
+    </div>
+  </div>
+
+  <div class='resources grid grid-2col'>
+    <div class='weapon-type-column'>
+      <div class='resource'>
+        <label class='resource-label'>{{localize 'MOFAN.Item.Weapon.FIELDS.category.label'}}</label>
+        <select name='system.category' {{#unless editable}}disabled{{/unless}}>
+          {{selectOptions categoryOptions selected=system.category}}
+        </select>
+      </div>
+      <div class='weapon-combat-row'>
+        <div class='resource'>
+          <label class='resource-label'>{{localize 'MOFAN.Item.Weapon.FIELDS.reloadCost.label'}}</label>
+          <input
+            class='weapon-reload-input'
+            type='number'
+            name='system.reloadCost'
+            value='{{system.reloadCost}}'
+            data-dtype='Number'
+            min='0'
+            {{#unless editable}}disabled{{/unless}}
+          />
+        </div>
+        <div class='resource'>
+          <label class='resource-label'>{{localize 'MOFAN.Item.Weapon.FIELDS.range.label'}}</label>
+          <div class='range-field'>
+            <input
+              type='number'
+              name='system.range'
+              value='{{system.range}}'
+              data-dtype='Number'
+              min='0'
+              {{#unless editable}}disabled{{/unless}}
+            />
+            <span class='hint'>{{localize 'MOFAN.Item.Weapon.RangeUnit'}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class='resource'>
+      <label class='resource-label'>{{localize 'MOFAN.Item.Weapon.WeaponQuality'}}</label>
+      <select
+        name='weaponRequired'
+        data-weapon-required='true'
+        {{#unless editable}}disabled{{/unless}}
+      >
+        {{#each requiredProperties as |prop|}}
+          <option
+            value='{{prop.key}}'
+            title='{{prop.description}}'
+            {{#if prop.selected}}selected{{/if}}
+          >
+            {{prop.label}}
+          </option>
+        {{/each}}
+      </select>
+    </div>
+  </div>
+
+  <fieldset class='trait-list'>
+    <legend>{{localize 'MOFAN.Item.Weapon.OptionalProperties'}}</legend>
+    <div class='trait-grid'>
+      {{#each optionalProperties as |prop|}}
+        <label class='trait-option' title='{{prop.description}}'>
+          <input
+            type='checkbox'
+            data-trait-checkbox='true'
+            value='{{prop.key}}'
+            {{checked prop.selected}}
+            {{#unless @root.editable}}disabled{{/unless}}
+          />
+          <span>{{prop.label}}</span>
+        </label>
+      {{/each}}
+    </div>
+  </fieldset>
+
+  <fieldset class='wielding-requirements-drop' data-drop-zone='wieldingRequirements'>
+    <legend>{{localize 'MOFAN.Item.Weapon.FIELDS.wieldingRequirements.label'}}</legend>
+    <p class='hint'>{{localize 'MOFAN.Item.Weapon.WieldingDrop'}}</p>
+    <ol class='items-list prerequisite-list'>
+      {{#each wieldingRequirements as |req index|}}
+        <li class='item flexrow prerequisite' data-wielding-index='{{index}}'>
+          <div class='item-name'>
+            <a data-action='openWieldingRequirement' data-uuid='{{req.uuid}}'>
+              {{req.name}}
+            </a>
+          </div>
+          <div class='item-prop'>
+            {{#if (eq req.type 'discipline')}}
+              <label>
+                {{localize 'MOFAN.Item.Weapon.WieldingLevel'}}
+                <input
+                  type='number'
+                  name='system.wieldingRequirements.{{index}}.level'
+                  value='{{req.level}}'
+                  data-dtype='Number'
+                  min='1'
+                  {{#unless @root.editable}}disabled{{/unless}}
+                />
+              </label>
+            {{/if}}
+            <input type='hidden' name='system.wieldingRequirements.{{index}}.uuid' value='{{req.uuid}}' />
+            <input type='hidden' name='system.wieldingRequirements.{{index}}.name' value='{{req.name}}' />
+            <input type='hidden' name='system.wieldingRequirements.{{index}}.type' value='{{req.type}}' />
+            {{#unless (eq req.type 'discipline')}}
+              <input type='hidden' name='system.wieldingRequirements.{{index}}.level' value='{{req.level}}' />
+            {{/unless}}
+          </div>
+          <div class='item-controls'>
+            {{#if @root.editable}}
+              <a
+                class='item-control'
+                data-action='removeWieldingRequirement'
+                data-wielding-index='{{index}}'
+                title='{{localize "MOFAN.Item.Weapon.RemoveWielding"}}'
+              >
+                <i class='fas fa-trash'></i>
+              </a>
+            {{/if}}
+          </div>
+        </li>
+      {{/each}}
+    </ol>
+  </fieldset>
+</section>

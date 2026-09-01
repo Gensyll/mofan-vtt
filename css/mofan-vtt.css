@@ -726,7 +726,8 @@
 }
 .mofan-vtt .prerequisites-drop,
 .mofan-vtt .parent-discipline-drop,
-.mofan-vtt .innate-features-drop {
+.mofan-vtt .innate-features-drop,
+.mofan-vtt .wielding-requirements-drop {
   margin-top: 8px;
 }
 .mofan-vtt .health-scaling-resource {
@@ -735,6 +736,40 @@
 .mofan-vtt .health-scaling-input {
   width: 4rem;
   max-width: 4rem;
+}
+.mofan-vtt .range-field {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  align-items: center;
+  justify-content: flex-start;
+}
+.mofan-vtt .range-field input {
+  width: 3.5rem;
+  max-width: 3.5rem;
+  flex: 0 0 3.5rem;
+}
+.mofan-vtt .weapon-type-column {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.mofan-vtt .weapon-combat-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  align-items: start;
+}
+.mofan-vtt .weapon-combat-row .resource {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+}
+.mofan-vtt .weapon-reload-input {
+  width: 3.5rem;
+  max-width: 3.5rem;
 }
 .mofan-vtt .prerequisite-list .item-prop input[type=number] {
   width: 3.5rem;

@@ -180,6 +180,30 @@
           "rollMod": {"label": "Roll Modifier"}
         }
       },
+      "Weapon": {
+        "FIELDS": {
+          "category": {"label": "Weapon Type"},
+          "apCost": {"label": "AP Cost"},
+          "damageDie": {"label": "Damage Roll"},
+          "reloadCost": {"label": "Reload Cost"},
+          "range": {"label": "Range"},
+          "properties": {"label": "Properties"},
+          "wieldingRequirements": {"label": "Wield Requirements"},
+          "formula": {"label": "Formula"}
+        },
+        "Category": {
+          "melee": "Melee",
+          "ranged": "Ranged"
+        },
+        "WeaponQuality": "Weapon Quality",
+        "OptionalProperties": "Weapon Properties",
+        "RangeUnit": "u",
+        "WieldingDrop": "Drop a Discipline or Feature here to add a wield requirement",
+        "WieldingLevel": "Required Level",
+        "RemoveWielding": "Remove wield requirement",
+        "InvalidWieldingDrop": "Only Discipline and Feature items can be wield requirements.",
+        "DuplicateWieldingDrop": "That requirement is already on this weapon."
+      },
       "Spell": {
         "FIELDS": {
           "level": {"label": "Spell Level"}
@@ -320,6 +344,104 @@
         "description": "Requires above Basic training in the skill or weapon to use the Feature."
       }
     },
+    "WeaponProperty": {
+      "agile": {
+        "label": "Agile",
+        "description": "You may use your Dexterity for this weapon."
+      },
+      "sturdy": {
+        "label": "Sturdy",
+        "description": "You may use your Fortitude for this weapon."
+      },
+      "hidden": {
+        "label": "Hidden",
+        "description": "This weapon is easier to hide. May only be taken on Small or smaller weapons. Gain a +1 CB to hide the weapon. Gain a +2 CB if the weapon is Tiny."
+      },
+      "reinforced": {
+        "label": "Reinforced",
+        "description": "If this weapon is used with a Defensive feature, add one DR to yourself temporarily, for the use of blocking an additional point of damage."
+      },
+      "throwing": {
+        "label": "Throwing",
+        "description": "This weapon's range is triple the base of its size."
+      },
+      "illusory": {
+        "label": "Illusory",
+        "description": "This weapon does not appear as such. Gain +2 CB to Deception checks involving it. Foes will not be able to tell it is a weapon unless they physically or magically inspect it, at which point the illusion fades."
+      },
+      "serrated": {
+        "label": "Serrated",
+        "description": "This weapon inflicts Bleeding on an attack roll of 9-10."
+      },
+      "weighted": {
+        "label": "Weighted",
+        "description": "Critical hits with this weapon also inflict Stunned."
+      },
+      "scoped": {
+        "label": "Scoped",
+        "description": "Increase the base effective range of this weapon by 5 units, before adding any other modifiers."
+      },
+      "close": {
+        "label": "Close",
+        "description": "This weapon ignores the penalty for making attacks within 1 unit of an enemy."
+      },
+      "reliable": {
+        "label": "Reliable",
+        "description": "This weapon only takes 1 AP to unjam, instead of the usual 2 AP. (Jamming occurs when a 1 is rolled on the ranged attack.)"
+      },
+      "unstable": {
+        "label": "Unstable",
+        "description": "This weapon does an extra 2 Damage on each hit, but it breaks when it would usually jam. Additionally this weapon jams on a roll of 1 or 2. It becomes unusable and must be fixed for 200 NAD."
+      },
+      "wardshield": {
+        "label": "Wardshield",
+        "description": "This weapon has a ward attached to the front of it. This can be broken, but while active, grants +2 Damage Resistance (DR) against Magical attacks. Can be broken by attacks with Spellbreaker, an attack that is <= 5 + Armour of the target, or by a Nullify Sigil."
+      },
+      "piercing": {
+        "label": "Piercing",
+        "description": "This weapon does one quarter of damage rolled or 1d6 Damage (whichever is more) to an enemy behind the one you initially hit, so long as the Attack still passes their Armour. This can be used to attack an enemy behind cover, so long as it is thinner than 10 cm."
+      },
+      "extendedMagazine": {
+        "label": "Extended Magazine",
+        "description": "Increase the magazine capacity of ranged weapons with this trait by 2."
+      },
+      "impervious": {
+        "label": "Impervious",
+        "description": "This weapon takes reduced damage from attacks or defenses that would break or reduce its condition."
+      },
+      "phasing": {
+        "label": "Phasing",
+        "description": "This weapon can ignore DR once per turn, up to 3 or the Stat being used to attack with. For example, if your Dexterity Stat is +2, you may ignore 2 points of an enemy's total DR to your attack. This Feature has no effect if your Stat is negative."
+      },
+      "returning": {
+        "label": "Returning",
+        "description": "This weapon returns to the wielder if it is dropped or disarmed, within 5 units. This can only happen once per turn, and only happens if the wielder is conscious. The item cannot return in such a way if an enemy or obstacle is between the item and the player."
+      },
+      "splitting": {
+        "label": "Splitting",
+        "description": "This weapon can split into two smaller versions of itself, reducing its size by two stages. This cannot be used on Tiny or Small weapons."
+      },
+      "amphibious": {
+        "label": "Amphibious",
+        "description": "This weapon functions submerged without any penalty."
+      },
+      "oiled": {
+        "label": "Oiled",
+        "description": "This weapon suffers less of the total penalty from any self-imposed reductions To Hit. Reduce the total penalty by 1 (minimum -1)."
+      },
+      "heirloom": {
+        "label": "Heirloom",
+        "description": "This weapon is worth more than the usual value (120% usual value), and grants you a +1 circumstance bonus to the Attack Roll against enemies with an eye for wealth or knowledge of history. (This feature can only be selected when initially creating the weapon.)"
+      },
+      "spellbreaker": {
+        "label": "Spellbreaker",
+        "description": "This weapon shatters Wards on a hit, causing the caster to succeed on a Knowledge check DC equal to 8 or the damage rolled, whichever is higher."
+      },
+      "magitech": {
+        "label": "Magitech",
+        "description": "This weapon can have its damage dice allocated into elemental damage, instead of its normal damage type (Ex. 2d6 Piercing -> 1d6 Piercing and 1d6 Fire)."
+      }
+    },
     "Effect": {
       "Source": "Source",
       "Toggle": "Toggle Effect",
@@ -335,6 +457,7 @@
     },
     "Item": {
       "gear": "Gear",
+      "weapon": "Weapon",
       "feature": "Feature",
       "innateFeature": "Innate Feature",
       "species": "Species",

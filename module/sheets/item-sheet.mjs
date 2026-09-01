@@ -40,8 +40,10 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
       openPrerequisite: this._openUuidDocument,
       openParentDiscipline: this._openUuidDocument,
       openInnateFeature: this._openUuidDocument,
+      openWieldingRequirement: this._openUuidDocument,
       removePrerequisite: this._removePrerequisite,
       removeInnateFeature: this._removeInnateFeature,
+      removeWieldingRequirement: this._removeWieldingRequirement,
       clearParentDiscipline: this._clearParentDiscipline,
     },
     form: {
@@ -83,6 +85,9 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
     },
     attributesGear: {
       template: 'systems/mofan-vtt/templates/item/attribute-parts/gear.hbs',
+    },
+    attributesWeapon: {
+      template: 'systems/mofan-vtt/templates/item/attribute-parts/weapon.hbs',
     },
     attributesSpell: {
       template: 'systems/mofan-vtt/templates/item/attribute-parts/spell.hbs',
@@ -169,6 +174,20 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
         ])
       );
       context.innateFeatures = this.item.system.innateFeatures ?? [];
+    } else if (this.item.type === 'weapon') {
+      context.categoryOptions = Object.fromEntries(
+        Object.entries(CONFIG.MOFAN.weaponCategories).map(([key, labelKey]) => [
+          key,
+          game.i18n.localize(labelKey),
+        ])
+      );
+      const propertyGroups = this._prepareWeaponPropertyGroups(
+        this.item.system.properties,
+        this.item.system.category
+      );
+      context.requiredProperties = propertyGroups.required;
+      context.optionalProperties = propertyGroups.optional;
+      context.wieldingRequirements = this.item.system.wieldingRequirements ?? [];
     }
 
     return context;
@@ -188,6 +207,34 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
       description: game.i18n.localize(data.description),
       selected: selectedSet.has(key),
     }));
+  }
+
+  /**
+   * @param {Set<string>|string[]} selected
+   * @param {string} category
+   * @returns {{required: object[], optional: object[]}}
+   */
+  _prepareWeaponPropertyGroups(selected, category) {
+    const selectedSet =
+      selected instanceof Set ? selected : new Set(selected ?? []);
+    const hasRequired =
+      selectedSet.has('agile') || selectedSet.has('sturdy');
+    const groups = { required: [], optional: [] };
+
+    for (const [key, data] of Object.entries(CONFIG.MOFAN.weaponProperties)) {
+      if (data.category !== 'any' && data.category !== category) continue;
+      const option = {
+        key,
+        label: game.i18n.localize(data.label),
+        description: game.i18n.localize(data.description),
+        selected:
+          selectedSet.has(key) ||
+          (data.group === 'required' && !hasRequired && key === 'agile'),
+      };
+      groups[data.group]?.push(option);
+    }
+
+    return groups;
   }
 
   /**
@@ -213,6 +260,7 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
       case 'attributesSpecies':
       case 'attributesDiscipline':
       case 'attributesGear':
+      case 'attributesWeapon':
       case 'attributesSpell':
       case 'attributesLoot':
         // Necessary for preserving active tab on re-render
@@ -278,6 +326,7 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
         case 'attributesSpecies':
         case 'attributesDiscipline':
         case 'attributesGear':
+        case 'attributesWeapon':
         case 'attributesSpell':
         case 'attributesLoot':
           tab.id = 'attributes';
@@ -506,6 +555,24 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
   }
 
   /**
+   * Remove a wielding requirement entry by index.
+   *
+   * @this MofanItemSheet
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target
+   */
+  static async _removeWieldingRequirement(event, target) {
+    if (!this.isEditable) return;
+    const index = Number(target.dataset.wieldingIndex);
+    if (Number.isNaN(index)) return;
+    const wieldingRequirements = foundry.utils.deepClone(
+      this.item.system.wieldingRequirements ?? []
+    );
+    wieldingRequirements.splice(index, 1);
+    await this.item.update({ 'system.wieldingRequirements': wieldingRequirements });
+  }
+
+  /**
    * Sanitize trait checkboxes before DocumentSheetV2 validates submit data.
    * Trait checkboxes are nameless (data-trait-checkbox) so we inject the
    * selected values into FormDataExtended. Must use the flat key
@@ -527,6 +594,22 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
       // here or expandObject will drop system.apCost / system.unlockLevel.
       if (formData.object?.system) delete formData.object.system;
       formData.object['system.traits'] = traits;
+    }
+
+    if (this.document.type === 'weapon') {
+      const required =
+        form.querySelector('[data-weapon-required]')?.value || 'agile';
+      const optional = Array.from(
+        form.querySelectorAll(
+          'input[type="checkbox"][data-trait-checkbox]:checked'
+        )
+      )
+        .map((el) => el.value)
+        .filter((value) => typeof value === 'string' && value.length > 0);
+
+      if (formData.object?.system) delete formData.object.system;
+      delete formData.object.weaponRequired;
+      formData.object['system.properties'] = [required, ...optional];
     }
     return super._prepareSubmitData(event, form, formData);
   }
@@ -764,6 +847,35 @@ export class MofanItemSheet extends api.HandlebarsApplicationMixin(
         name: dropped.name,
       });
       await this.item.update({ 'system.innateFeatures': innateFeatures });
+      return true;
+    }
+
+    if (this.item.type === 'weapon') {
+      const allowedTypes = ['discipline', 'feature', 'innateFeature'];
+      if (!allowedTypes.includes(dropped.type)) {
+        ui.notifications.warn(
+          game.i18n.localize('MOFAN.Item.Weapon.InvalidWieldingDrop')
+        );
+        return false;
+      }
+      const wieldingRequirements = foundry.utils.deepClone(
+        this.item.system.wieldingRequirements ?? []
+      );
+      if (wieldingRequirements.some((req) => req.uuid === dropped.uuid)) {
+        ui.notifications.warn(
+          game.i18n.localize('MOFAN.Item.Weapon.DuplicateWieldingDrop')
+        );
+        return false;
+      }
+      wieldingRequirements.push({
+        uuid: dropped.uuid,
+        name: dropped.name,
+        type: dropped.type,
+        level: 1,
+      });
+      await this.item.update({
+        'system.wieldingRequirements': wieldingRequirements,
+      });
       return true;
     }
 
