@@ -223,7 +223,8 @@
   }
 }
 
-.weapon-type-column {
+.weapon-type-column,
+.weapon-quality-column {
   display: flex;
   flex-direction: column;
   gap: 6px;

@@ -1,0 +1,44 @@
+<div class='mofan-weapon-card'>
+  <details>
+    <summary class='card-header'>
+      <img src='{{item.img}}' alt='{{item.name}}' width='36' height='36' />
+      <div class='card-title'>
+        <strong>{{item.name}}</strong>
+        <div class='hint'>
+          {{categoryLabel}}{{#if range}} · {{range}}{{localize 'MOFAN.Item.Weapon.RangeUnit'}}{{/if}}{{#if damageDie}} · {{damageDie}}{{/if}}
+        </div>
+      </div>
+    </summary>
+    <div class='card-details'>
+      {{#if description}}
+        <div class='card-description'>{{{description}}}</div>
+      {{/if}}
+      {{#if properties.length}}
+        <ul class='card-properties'>
+          {{#each properties as |prop|}}
+            <li>
+              <strong>{{prop.label}}</strong>
+              <div class='hint'>{{prop.description}}</div>
+            </li>
+          {{/each}}
+        </ul>
+      {{/if}}
+    </div>
+  </details>
+  <div class='card-buttons'>
+    <button
+      type='button'
+      data-mofan-weapon-action='weaponAttack'
+      data-uuid='{{item.uuid}}'
+    >
+      {{localize 'MOFAN.Weapon.Attack'}}
+    </button>
+    <button
+      type='button'
+      data-mofan-weapon-action='weaponDamage'
+      data-uuid='{{item.uuid}}'
+    >
+      {{localize 'MOFAN.Weapon.Damage'}}
+    </button>
+  </div>
+</div>

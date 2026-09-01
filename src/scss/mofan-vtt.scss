@@ -46,3 +46,88 @@
     flex-direction: column;
   }
 }
+
+.mofan-weapon-card {
+  details {
+    margin: 0;
+  }
+
+  summary.card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    cursor: pointer;
+    list-style: none;
+
+    &::-webkit-details-marker,
+    &::marker {
+      display: none;
+    }
+  }
+
+  .card-title .hint {
+    font-size: 12px;
+    opacity: 0.8;
+  }
+
+  .card-details {
+    margin: 4px 0 8px;
+  }
+
+  .card-description {
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+
+  .card-properties {
+    margin: 0;
+    padding-left: 1.1em;
+    font-size: 13px;
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    .hint {
+      font-size: 12px;
+      opacity: 0.85;
+      font-weight: normal;
+    }
+  }
+
+  .card-buttons {
+    display: flex;
+    gap: 8px;
+
+    button {
+      flex: 1;
+    }
+  }
+}
+
+.mofan-weapon-roll {
+  --form-label-width: 12.5em;
+
+  .form-group {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 8px;
+
+    > label {
+      flex: 0 0 12.5em;
+      width: 12.5em;
+      min-width: 12.5em;
+      white-space: nowrap;
+    }
+
+    > input,
+    > select {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+  }
+}

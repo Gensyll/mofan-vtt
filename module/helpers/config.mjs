@@ -143,6 +143,12 @@ MOFAN.healthBase = 10;
 MOFAN.movementBase = 5;
 
 /**
+ * Base die for weapon attack rolls.
+ * @type {string}
+ */
+MOFAN.attackDie = '1d10';
+
+/**
  * Size choices for Species items. Independent of lootable item sizes.
  * @type {Object<string, string>}
  */

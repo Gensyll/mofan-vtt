@@ -1,4 +1,5 @@
 import MofanItemLootable from './base-item-lootable.mjs';
+import { getWeaponAttackAbility } from '../helpers/weapons.mjs';
 
 export default class MofanWeapon extends MofanItemLootable {
   static LOCALIZATION_PREFIXES = ['MOFAN.Item.base', 'MOFAN.Item.Weapon'];
@@ -22,6 +23,11 @@ export default class MofanWeapon extends MofanItemLootable {
       ...requiredInteger,
       initial: 1,
       min: 0,
+    });
+
+    schema.attackBonus = new fields.NumberField({
+      ...requiredInteger,
+      initial: 0,
     });
 
     schema.damageDie = new fields.StringField({
@@ -71,6 +77,10 @@ export default class MofanWeapon extends MofanItemLootable {
   }
 
   prepareDerivedData() {
-    this.formula = this.damageDie ?? '';
+    const die = CONFIG.MOFAN.attackDie ?? '1d10';
+    const ability = getWeaponAttackAbility(this);
+    const bonus = Number(this.attackBonus) || 0;
+    const bonusTerm = bonus < 0 ? `- ${Math.abs(bonus)}` : `+ ${bonus}`;
+    this.formula = `${die} + @${ability}.mod ${bonusTerm}`;
   }
 }

@@ -2,6 +2,7 @@ import {
   removeFeaturesForSpecies,
   syncActorSpeciesFeatures,
 } from '../helpers/species.mjs';
+import { postWeaponChatCard } from '../helpers/weapons.mjs';
 
 /**
  * Extend the basic Item with some very simple modifications.
@@ -120,6 +121,10 @@ export class MofanItem extends Item {
    * @private
    */
   async roll(event) {
+    if (this.type === 'weapon') {
+      return postWeaponChatCard(this);
+    }
+
     const item = this;
 
     if (!(await this._spendFeatureActionPoints())) return;

@@ -184,6 +184,7 @@
         "FIELDS": {
           "category": {"label": "Weapon Type"},
           "apCost": {"label": "AP Cost"},
+          "attackBonus": {"label": "Attack Bonus"},
           "damageDie": {"label": "Damage Roll"},
           "reloadCost": {"label": "Reload Cost"},
           "range": {"label": "Range"},
@@ -235,6 +236,20 @@
       "SpendAPTitle": "Spend Action Points",
       "SpendAPContent": "Spend {cost} Action Point(s) to use <strong>{name}</strong>?",
       "InsufficientAP": "Not enough Action Points (need {cost}, have {current})."
+    },
+    "Weapon": {
+      "Attack": "Attack",
+      "Damage": "Damage",
+      "AttackRoll": "{name} — Attack Roll",
+      "DamageRoll": "{name} — Damage Roll",
+      "Formula": "Formula",
+      "SituationalBonus": "Situational Bonus?",
+      "SituationalPlaceholder": "e.g. 1d4",
+      "RollMode": "Roll Mode",
+      "Roll": "Roll",
+      "NoActor": "This weapon must be owned by an actor to roll.",
+      "MissingItem": "Could not find that weapon.",
+      "InvalidFormula": "That roll formula is invalid."
     },
     "DisciplineTrait": {
       "basic": {

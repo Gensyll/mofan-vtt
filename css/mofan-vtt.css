@@ -749,7 +749,8 @@
   max-width: 3.5rem;
   flex: 0 0 3.5rem;
 }
-.mofan-vtt .weapon-type-column {
+.mofan-vtt .weapon-type-column,
+.mofan-vtt .weapon-quality-column {
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -1050,4 +1051,73 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+}
+
+.mofan-weapon-card details {
+  margin: 0;
+}
+.mofan-weapon-card summary.card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  list-style: none;
+}
+.mofan-weapon-card summary.card-header::-webkit-details-marker, .mofan-weapon-card summary.card-header::marker {
+  display: none;
+}
+.mofan-weapon-card .card-title .hint {
+  font-size: 12px;
+  opacity: 0.8;
+}
+.mofan-weapon-card .card-details {
+  margin: 4px 0 8px;
+}
+.mofan-weapon-card .card-description {
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+.mofan-weapon-card .card-properties {
+  margin: 0;
+  padding-left: 1.1em;
+  font-size: 13px;
+}
+.mofan-weapon-card .card-properties li {
+  margin-bottom: 6px;
+}
+.mofan-weapon-card .card-properties .hint {
+  font-size: 12px;
+  opacity: 0.85;
+  font-weight: normal;
+}
+.mofan-weapon-card .card-buttons {
+  display: flex;
+  gap: 8px;
+}
+.mofan-weapon-card .card-buttons button {
+  flex: 1;
+}
+
+.mofan-weapon-roll {
+  --form-label-width: 12.5em;
+}
+.mofan-weapon-roll .form-group {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 8px;
+}
+.mofan-weapon-roll .form-group > label {
+  flex: 0 0 12.5em;
+  width: 12.5em;
+  min-width: 12.5em;
+  white-space: nowrap;
+}
+.mofan-weapon-roll .form-group > input,
+.mofan-weapon-roll .form-group > select {
+  flex: 1 1 auto;
+  min-width: 0;
 }

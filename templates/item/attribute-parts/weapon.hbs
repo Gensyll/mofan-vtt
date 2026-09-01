@@ -64,23 +64,35 @@
         </div>
       </div>
     </div>
-    <div class='resource'>
-      <label class='resource-label'>{{localize 'MOFAN.Item.Weapon.WeaponQuality'}}</label>
-      <select
-        name='weaponRequired'
-        data-weapon-required='true'
-        {{#unless editable}}disabled{{/unless}}
-      >
-        {{#each requiredProperties as |prop|}}
-          <option
-            value='{{prop.key}}'
-            title='{{prop.description}}'
-            {{#if prop.selected}}selected{{/if}}
-          >
-            {{prop.label}}
-          </option>
-        {{/each}}
-      </select>
+    <div class='weapon-quality-column'>
+      <div class='resource'>
+        <label class='resource-label'>{{localize 'MOFAN.Item.Weapon.WeaponQuality'}}</label>
+        <select
+          name='weaponRequired'
+          data-weapon-required='true'
+          {{#unless editable}}disabled{{/unless}}
+        >
+          {{#each requiredProperties as |prop|}}
+            <option
+              value='{{prop.key}}'
+              title='{{prop.description}}'
+              {{#if prop.selected}}selected{{/if}}
+            >
+              {{prop.label}}
+            </option>
+          {{/each}}
+        </select>
+      </div>
+      <div class='resource'>
+        <label class='resource-label'>{{localize 'MOFAN.Item.Weapon.FIELDS.attackBonus.label'}}</label>
+        <input
+          type='number'
+          name='system.attackBonus'
+          value='{{system.attackBonus}}'
+          data-dtype='Number'
+          {{#unless editable}}disabled{{/unless}}
+        />
+      </div>
     </div>
   </div>
 
