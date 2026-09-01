@@ -18,6 +18,13 @@ export default class MofanActorBase extends foundry.abstract
       value: new fields.NumberField({ ...requiredInteger, initial: 5, min: 0 }),
       max: new fields.NumberField({ ...requiredInteger, initial: 5 }),
     });
+    schema.movement = new fields.SchemaField({
+      value: new fields.NumberField({
+        ...requiredInteger,
+        initial: 5,
+        min: 0,
+      }),
+    });
     schema.species = new fields.StringField({
       required: true,
       blank: true,

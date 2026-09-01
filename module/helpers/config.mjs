@@ -136,6 +136,13 @@ MOFAN.usableFeatureTypes = ['feature', 'innateFeature'];
 MOFAN.healthBase = 10;
 
 /**
+ * Default actor movement in grid squares. Features/Disciplines modify
+ * `system.movement.value` via Active Effects.
+ * @type {number}
+ */
+MOFAN.movementBase = 5;
+
+/**
  * Size choices for Species items. Independent of lootable item sizes.
  * @type {Object<string, string>}
  */

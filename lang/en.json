@@ -60,6 +60,7 @@
       "HealthFortitude": "FOR",
       "HealthDisciplineBonus": "Discipline HP Bonus",
       "HealthDisciplineBonusAbbr": "DB",
+      "Movement": "Movement",
       "InnateFeatures": "Innate Features",
       "SpeciesDrop": "Drop a Species",
       "SpeciesClear": "Remove species",
@@ -78,6 +79,9 @@
           "power": {
             "value": {"label": "Action Points"},
             "max": {"label": "Action Point Maximum"}
+          },
+          "movement": {
+            "value": {"label": "Movement"}
           },
           "species": {"label": "Species"}
         }
