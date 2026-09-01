@@ -33,6 +33,9 @@
         "gear": {
             "htmlFields": ["description"]
         },
+        "weapon": {
+            "htmlFields": ["description"]
+        },
         "spell": {
             "htmlFields": ["description"]
         },
@@ -123,7 +126,7 @@
     "type": 1,
     "distance": 5,
     "units": "u",
-    "diagonals": 0
+    "diagonals": 3
   },
   "primaryTokenAttribute": "health",
   "secondaryTokenAttribute": "power"

@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 :root {
   --mofan-vtt-c-dark: #191813;
@@ -224,24 +225,6 @@
 }
 
 /* Styles limited to mofan-vtt sheets */
-.mofan-vtt.item {
-  min-width: 550px;
-}
-.mofan-vtt.item .document-name {
-  flex: 0 0 80%;
-  max-width: 80%;
-}
-.mofan-vtt.item .window-content {
-  overflow-y: auto;
-}
-.mofan-vtt.actor {
-  min-width: 600px;
-}
-.mofan-vtt.actor .window-content {
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
 .mofan-vtt .item-form {
   font-family: "Roboto", sans-serif;
 }
@@ -255,10 +238,49 @@
   align-items: flex-start;
   margin-bottom: 10px;
 }
+.mofan-vtt .sheet-header .profile-column {
+  flex: 0 0 100px;
+  width: 100px;
+  margin-right: 10px;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+}
 .mofan-vtt .sheet-header .profile-img {
   flex: 0 0 100px;
   height: 100px;
-  margin-right: 10px;
+  width: 100px;
+}
+.mofan-vtt .sheet-header .profile-movement {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  width: 100%;
+  text-align: center;
+  gap: 0;
+}
+.mofan-vtt .sheet-header .profile-movement .resource-label {
+  display: block;
+  width: 100%;
+  flex: 0 0 auto;
+  font-size: 11px;
+  line-height: 1.1;
+  margin: 0;
+  padding-bottom: 3px;
+  border-bottom: 1px solid var(--mofan-vtt-c-faint);
+  text-align: center;
+}
+.mofan-vtt .sheet-header .profile-movement .movement-value {
+  display: block;
+  width: 100%;
+  flex: 0 0 auto;
+  margin-top: 4px;
+  font-size: 22px;
+  line-height: 1.1;
+  font-weight: 700;
+  text-align: center;
 }
 .mofan-vtt .sheet-header .header-fields {
   flex: 1;
@@ -345,20 +367,18 @@
   margin: 4px 0;
   gap: 8px;
 }
-.mofan-vtt .header-resources.grid,
-.mofan-vtt .header-resources.grid-2col {
+.mofan-vtt .header-resources.grid, .mofan-vtt .header-resources.grid-2col {
   margin: 4px 0;
 }
 .mofan-vtt .header-resources-right {
   margin: 0;
   gap: 8px;
   align-items: start;
-  grid-column: span 1 / span 1;
+  grid-column: span 1/span 1;
 }
-.mofan-vtt .header-resources-right.grid,
-.mofan-vtt .header-resources-right.grid-2col {
+.mofan-vtt .header-resources-right.grid, .mofan-vtt .header-resources-right.grid-2col {
   margin: 0;
-  grid-column: span 1 / span 1;
+  grid-column: span 1/span 1;
 }
 .mofan-vtt .health-resource {
   min-width: 0;
@@ -639,13 +659,12 @@
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: url("../assets/icons/dice/d10.svg") center / contain no-repeat;
+  background: url("../assets/icons/dice/d10.svg") center/contain no-repeat;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.15s ease;
 }
-.mofan-vtt .items-list .item .item-name .item-image .rollable:hover::after,
-.mofan-vtt .items-list .item .item-name .item-image .rollable:focus-visible::after {
+.mofan-vtt .items-list .item .item-name .item-image .rollable:hover::after, .mofan-vtt .items-list .item .item-name .item-image .rollable:focus-visible::after {
   opacity: 0.6;
 }
 .mofan-vtt .items-list .item-prop {
@@ -694,6 +713,216 @@
 }
 .mofan-vtt .inventory-section .inventory-section-footer .item-create {
   font-size: 12px;
+}
+.mofan-vtt .trait-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px 8px;
+}
+.mofan-vtt .trait-option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+.mofan-vtt .prerequisites-drop,
+.mofan-vtt .parent-discipline-drop,
+.mofan-vtt .innate-features-drop,
+.mofan-vtt .wielding-requirements-drop {
+  margin-top: 8px;
+}
+.mofan-vtt .health-scaling-resource {
+  margin-top: 8px;
+}
+.mofan-vtt .health-scaling-input {
+  width: 4rem;
+  max-width: 4rem;
+}
+.mofan-vtt .range-field {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  align-items: center;
+  justify-content: flex-start;
+}
+.mofan-vtt .range-field input {
+  width: 3.5rem;
+  max-width: 3.5rem;
+  flex: 0 0 3.5rem;
+}
+.mofan-vtt .weapon-type-column,
+.mofan-vtt .weapon-quality-column {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.mofan-vtt .weapon-combat-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  align-items: start;
+}
+.mofan-vtt .weapon-combat-row > .resource {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+}
+.mofan-vtt .weapon-reload-input,
+.mofan-vtt .weapon-compact-input {
+  width: 3.5rem;
+  max-width: 3.5rem;
+}
+.mofan-vtt .prerequisite-list .item-prop input[type=number] {
+  width: 3.5rem;
+}
+.mofan-vtt .discipline-section-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 8px 0 4px;
+  border-bottom: 1px solid var(--mofan-vtt-c-faint);
+}
+.mofan-vtt .discipline-section-header {
+  margin: 0;
+  border-bottom: none;
+  font-size: 17px;
+  font-weight: bold;
+}
+.mofan-vtt .discipline-section-footer {
+  display: flex;
+  justify-content: flex-end;
+  flex: 0 0 auto;
+  margin-top: 4px;
+  padding-right: 2px;
+}
+.mofan-vtt .discipline-section-footer .item-create {
+  font-size: 12px;
+}
+.mofan-vtt .discipline-points {
+  margin: 0;
+  flex: 0 0 auto;
+  font-size: 12px;
+  text-align: right;
+  white-space: nowrap;
+}
+.mofan-vtt .discipline-points .discipline-points-label {
+  font-weight: bold;
+  margin-right: 4px;
+}
+.mofan-vtt .discipline-level-controls {
+  flex: 0 0 90px;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+}
+.mofan-vtt .character-features-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 2px;
+}
+.mofan-vtt .disciplines-list,
+.mofan-vtt .innate-features-list {
+  max-height: none;
+  overflow: visible;
+}
+.mofan-vtt .nested-feature {
+  padding-left: 2.5rem;
+  background: rgba(0, 0, 0, 0.02);
+  border-left: 2px solid var(--mofan-vtt-c-faint);
+  margin-left: 0.5rem;
+}
+.mofan-vtt .parent-discipline-row {
+  align-items: center;
+  gap: 8px;
+}
+.mofan-vtt .document-name-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+.mofan-vtt .document-name {
+  flex: 0 0 50%;
+  max-width: 50%;
+  text-align: left;
+}
+.mofan-vtt .document-name input {
+  width: 100%;
+  text-align: left;
+}
+.mofan-vtt .document-species {
+  flex: 1;
+  text-align: left;
+  min-height: 26px;
+  padding: 2px 6px;
+  border: 1px dashed var(--mofan-vtt-c-faint);
+  display: flex;
+  align-items: center;
+}
+.mofan-vtt .document-species input {
+  width: 100%;
+  text-align: left;
+}
+.mofan-vtt .species-drop-filled {
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+.mofan-vtt .species-drop-filled .item-control {
+  flex: 0 0 auto;
+  margin-left: auto;
+}
+.mofan-vtt .species-drop-empty {
+  width: 100%;
+}
+.mofan-vtt .species-sep {
+  flex: 0 0 auto;
+  opacity: 0.45;
+  padding: 0 2px;
+  user-select: none;
+}
+.mofan-vtt .species-size {
+  flex: 0 0 auto;
+}
+.mofan-vtt .innate-features-drop,
+.mofan-vtt .innate-features-list {
+  margin-top: 4px;
+}
+.mofan-vtt .species-attributes {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  margin: 10px 0;
+}
+.mofan-vtt .species-attributes .resource {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2px;
+  min-width: 0;
+}
+.mofan-vtt .species-attributes .resource-label {
+  text-align: left;
+}
+.mofan-vtt .species-attributes select,
+.mofan-vtt .species-attributes input[type=number] {
+  width: 100%;
+  min-height: 26px;
+  box-sizing: border-box;
+}
+.mofan-vtt .species-stat-row,
+.mofan-vtt .species-secondary-fields {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  width: 100%;
 }
 .mofan-vtt .effects-header {
   height: 28px;
@@ -807,176 +1036,123 @@
 .mofan-vtt .effects .item .effect-controls {
   border: none;
 }
-.mofan-vtt .trait-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 4px 8px;
+.mofan-vtt.item {
+  min-width: 550px;
 }
-.mofan-vtt .trait-option {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px;
+.mofan-vtt.item .document-name {
+  flex: 0 0 80%;
+  max-width: 80%;
 }
-.mofan-vtt .prerequisites-drop,
-.mofan-vtt .parent-discipline-drop,
-.mofan-vtt .innate-features-drop {
-  margin-top: 8px;
-}
-.mofan-vtt .health-scaling-resource {
-  margin-top: 8px;
-}
-.mofan-vtt .health-scaling-input {
-  width: 4rem;
-  max-width: 4rem;
-}
-.mofan-vtt .prerequisite-list .item-prop input[type=number] {
-  width: 3.5rem;
-}
-.mofan-vtt .discipline-section-heading {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 8px;
-  margin: 8px 0 4px;
-  border-bottom: 1px solid #c9c7b8;
-}
-.mofan-vtt .discipline-section-header {
-  margin: 0;
-  border-bottom: none;
-  font-size: 17px;
-  font-weight: bold;
-}
-.mofan-vtt .discipline-section-footer {
-  display: flex;
-  justify-content: flex-end;
-  flex: 0 0 auto;
-  margin-top: 4px;
-  padding-right: 2px;
-}
-.mofan-vtt .discipline-section-footer .item-create {
-  font-size: 12px;
-}
-.mofan-vtt .discipline-points {
-  margin: 0;
-  flex: 0 0 auto;
-  font-size: 12px;
-  text-align: right;
-  white-space: nowrap;
-}
-.mofan-vtt .discipline-points .discipline-points-label {
-  font-weight: bold;
-  margin-right: 4px;
-}
-.mofan-vtt .discipline-level-controls {
-  flex: 0 0 90px;
-  justify-content: center;
-  align-items: center;
-  gap: 6px;
-}
-.mofan-vtt .character-features-scroll {
-  flex: 1 1 auto;
-  min-height: 0;
+.mofan-vtt.item .window-content {
   overflow-y: auto;
-  overflow-x: hidden;
-  padding-right: 2px;
 }
-.mofan-vtt .disciplines-list,
-.mofan-vtt .innate-features-list {
-  max-height: none;
-  overflow: visible;
+.mofan-vtt.actor {
+  min-width: 600px;
 }
-.mofan-vtt .nested-feature {
-  padding-left: 2.5rem;
-  background: rgba(0, 0, 0, 0.02);
-  border-left: 2px solid #c9c7b8;
-  margin-left: 0.5rem;
-}
-.mofan-vtt .parent-discipline-row {
-  align-items: center;
-  gap: 8px;
-}
-.mofan-vtt .document-name-row {
+.mofan-vtt.actor .window-content {
+  overflow: hidden;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+}
+
+.mofan-weapon-card details {
+  margin: 0;
+}
+.mofan-weapon-card .card-header {
+  display: flex;
   align-items: center;
   gap: 8px;
-  width: 100%;
+  margin-bottom: 6px;
 }
-.mofan-vtt .document-name {
-  flex: 0 0 50%;
-  max-width: 50%;
-  text-align: left;
+.mofan-weapon-card summary.card-header {
+  cursor: pointer;
+  list-style: none;
 }
-.mofan-vtt .document-name input {
-  width: 100%;
-  text-align: left;
+.mofan-weapon-card summary.card-header::-webkit-details-marker, .mofan-weapon-card summary.card-header::marker {
+  display: none;
 }
-.mofan-vtt .document-species {
+.mofan-weapon-card .card-title {
   flex: 1;
-  text-align: left;
-  min-height: 26px;
-  padding: 2px 6px;
-  border: 1px dashed #c9c7b8;
-  display: flex;
-  align-items: center;
-}
-.mofan-vtt .document-species input {
-  width: 100%;
-  text-align: left;
-}
-.mofan-vtt .species-drop-filled {
-  align-items: center;
-  gap: 6px;
-  width: 100%;
-}
-.mofan-vtt .species-drop-filled .item-control {
-  flex: 0 0 auto;
-  margin-left: auto;
-}
-.mofan-vtt .species-drop-empty {
-  width: 100%;
-}
-.mofan-vtt .species-sep {
-  flex: 0 0 auto;
-  opacity: 0.45;
-  padding: 0 2px;
-  user-select: none;
-}
-.mofan-vtt .species-size {
-  flex: 0 0 auto;
-}
-.mofan-vtt .innate-features-drop,
-.mofan-vtt .innate-features-list {
-  margin-top: 4px;
-}
-.mofan-vtt .species-attributes {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 8px;
-  margin: 10px 0;
-}
-.mofan-vtt .species-attributes .resource {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 2px;
   min-width: 0;
 }
-.mofan-vtt .species-attributes .resource-label {
-  text-align: left;
+.mofan-weapon-card .card-title .hint {
+  font-size: 12px;
+  opacity: 0.8;
 }
-.mofan-vtt .species-attributes select,
-.mofan-vtt .species-attributes input[type=number] {
-  width: 100%;
-  min-height: 26px;
-  box-sizing: border-box;
+.mofan-weapon-card .card-expand-hint {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2em;
+  margin-left: auto;
+  font-size: 11px;
+  opacity: 0.65;
+  white-space: nowrap;
 }
-.mofan-vtt .species-stat-row,
-.mofan-vtt .species-secondary-fields {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+.mofan-weapon-card .card-expand-hint .when-open {
+  display: none;
+}
+.mofan-weapon-card .card-expand-hint::after {
+  content: "▾";
+  font-size: 10px;
+  line-height: 1;
+}
+.mofan-weapon-card details[open] .card-expand-hint .when-closed {
+  display: none;
+}
+.mofan-weapon-card details[open] .card-expand-hint .when-open {
+  display: inline;
+}
+.mofan-weapon-card details[open] .card-expand-hint::after {
+  content: "▴";
+}
+.mofan-weapon-card .card-details {
+  margin: 4px 0 8px;
+}
+.mofan-weapon-card .card-description {
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+.mofan-weapon-card .card-properties {
+  margin: 0;
+  padding-left: 1.1em;
+  font-size: 13px;
+}
+.mofan-weapon-card .card-properties li {
+  margin-bottom: 6px;
+}
+.mofan-weapon-card .card-properties .hint {
+  font-size: 12px;
+  opacity: 0.85;
+  font-weight: normal;
+}
+.mofan-weapon-card .card-buttons {
+  display: flex;
   gap: 8px;
-  width: 100%;
+}
+.mofan-weapon-card .card-buttons button {
+  flex: 1;
+}
+
+.mofan-weapon-roll {
+  --form-label-width: 12.5em;
+}
+.mofan-weapon-roll .form-group {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 8px;
+}
+.mofan-weapon-roll .form-group > label {
+  flex: 0 0 12.5em;
+  width: 12.5em;
+  min-width: 12.5em;
+  white-space: nowrap;
+}
+.mofan-weapon-roll .form-group > input,
+.mofan-weapon-roll .form-group > select {
+  flex: 1 1 auto;
+  min-width: 0;
 }

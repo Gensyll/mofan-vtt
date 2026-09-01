@@ -195,7 +195,8 @@
 
 .prerequisites-drop,
 .parent-discipline-drop,
-.innate-features-drop {
+.innate-features-drop,
+.wielding-requirements-drop {
   margin-top: 8px;
 }
 
@@ -206,6 +207,48 @@
 .health-scaling-input {
   width: 4rem;
   max-width: 4rem;
+}
+
+.range-field {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  align-items: center;
+  justify-content: flex-start;
+
+  input {
+    width: 3.5rem;
+    max-width: 3.5rem;
+    flex: 0 0 3.5rem;
+  }
+}
+
+.weapon-type-column,
+.weapon-quality-column {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.weapon-combat-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  align-items: start;
+
+  > .resource {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
+  }
+}
+
+.weapon-reload-input,
+.weapon-compact-input {
+  width: 3.5rem;
+  max-width: 3.5rem;
 }
 
 .prerequisite-list .item-prop input[type='number'] {

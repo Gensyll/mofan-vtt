@@ -6,6 +6,7 @@ import { MofanActorSheet } from './sheets/actor-sheet.mjs';
 import { MofanItemSheet } from './sheets/item-sheet.mjs';
 // Import helper/utility classes and constants.
 import { MOFAN } from './helpers/config.mjs';
+import { onRenderWeaponChatCard } from './helpers/weapons.mjs';
 // Import DataModel classes
 import * as models from './data/_module.mjs';
 
@@ -59,6 +60,7 @@ const config$actors = {
 
 const config$items = {
   gear: models.MofanGear,
+  weapon: models.MofanWeapon,
   feature: models.MofanFeature,
   innateFeature: models.MofanInnateFeature,
   species: models.MofanSpecies,
@@ -135,6 +137,9 @@ Hooks.once('ready', function () {
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on('hotbarDrop', (bar, data, slot) => createDocMacro(data, slot));
 });
+
+Hooks.on('renderChatMessageHTML', onRenderWeaponChatCard);
+Hooks.on('renderChatMessage', onRenderWeaponChatCard);
 
 /* -------------------------------------------- */
 /*  Hotbar Macros                               */

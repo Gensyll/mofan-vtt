@@ -121,7 +121,7 @@ MOFAN.skillTraining = [
  * Item types (document.type) that extend MofanItemLootable, in display order on the actor Inventory tab.
  * @type {string[]}
  */
-MOFAN.lootableInventoryTypes = ['gear', 'loot'];
+MOFAN.lootableInventoryTypes = ['weapon', 'gear', 'loot'];
 
 /**
  * Item types that spend AP when used from an actor.
@@ -134,6 +134,19 @@ MOFAN.usableFeatureTypes = ['feature', 'innateFeature'];
  * @type {number}
  */
 MOFAN.healthBase = 10;
+
+/**
+ * Default actor movement in grid squares. Features/Disciplines modify
+ * `system.movement.value` via Active Effects.
+ * @type {number}
+ */
+MOFAN.movementBase = 5;
+
+/**
+ * Base die for weapon attack rolls.
+ * @type {string}
+ */
+MOFAN.attackDie = '1d10';
 
 /**
  * Size choices for Species items. Independent of lootable item sizes.
@@ -264,3 +277,166 @@ MOFAN.featureTraits = {
     description: 'MOFAN.FeatureTrait.technology.description',
   },
 };
+
+/**
+ * Weapon categories (melee vs ranged).
+ * @type {Object<string, string>}
+ */
+MOFAN.weaponCategories = {
+  melee: 'MOFAN.Item.Weapon.Category.melee',
+  ranged: 'MOFAN.Item.Weapon.Category.ranged',
+};
+
+/**
+ * Weapon property definitions.
+ * `group` is `required` (pick exactly one) or `optional`.
+ * `category` is `melee`, `ranged`, or `any`.
+ * @type {Object<string, {label: string, description: string, group: string, category: string}>}
+ */
+MOFAN.weaponProperties = {
+  agile: {
+    label: 'MOFAN.WeaponProperty.agile.label',
+    description: 'MOFAN.WeaponProperty.agile.description',
+    group: 'required',
+    category: 'any',
+  },
+  sturdy: {
+    label: 'MOFAN.WeaponProperty.sturdy.label',
+    description: 'MOFAN.WeaponProperty.sturdy.description',
+    group: 'required',
+    category: 'any',
+  },
+  hidden: {
+    label: 'MOFAN.WeaponProperty.hidden.label',
+    description: 'MOFAN.WeaponProperty.hidden.description',
+    group: 'optional',
+    category: 'melee',
+  },
+  reinforced: {
+    label: 'MOFAN.WeaponProperty.reinforced.label',
+    description: 'MOFAN.WeaponProperty.reinforced.description',
+    group: 'optional',
+    category: 'melee',
+  },
+  throwing: {
+    label: 'MOFAN.WeaponProperty.throwing.label',
+    description: 'MOFAN.WeaponProperty.throwing.description',
+    group: 'optional',
+    category: 'melee',
+  },
+  illusory: {
+    label: 'MOFAN.WeaponProperty.illusory.label',
+    description: 'MOFAN.WeaponProperty.illusory.description',
+    group: 'optional',
+    category: 'melee',
+  },
+  serrated: {
+    label: 'MOFAN.WeaponProperty.serrated.label',
+    description: 'MOFAN.WeaponProperty.serrated.description',
+    group: 'optional',
+    category: 'melee',
+  },
+  weighted: {
+    label: 'MOFAN.WeaponProperty.weighted.label',
+    description: 'MOFAN.WeaponProperty.weighted.description',
+    group: 'optional',
+    category: 'melee',
+  },
+  scoped: {
+    label: 'MOFAN.WeaponProperty.scoped.label',
+    description: 'MOFAN.WeaponProperty.scoped.description',
+    group: 'optional',
+    category: 'ranged',
+  },
+  close: {
+    label: 'MOFAN.WeaponProperty.close.label',
+    description: 'MOFAN.WeaponProperty.close.description',
+    group: 'optional',
+    category: 'ranged',
+  },
+  reliable: {
+    label: 'MOFAN.WeaponProperty.reliable.label',
+    description: 'MOFAN.WeaponProperty.reliable.description',
+    group: 'optional',
+    category: 'ranged',
+  },
+  unstable: {
+    label: 'MOFAN.WeaponProperty.unstable.label',
+    description: 'MOFAN.WeaponProperty.unstable.description',
+    group: 'optional',
+    category: 'ranged',
+  },
+  wardshield: {
+    label: 'MOFAN.WeaponProperty.wardshield.label',
+    description: 'MOFAN.WeaponProperty.wardshield.description',
+    group: 'optional',
+    category: 'ranged',
+  },
+  piercing: {
+    label: 'MOFAN.WeaponProperty.piercing.label',
+    description: 'MOFAN.WeaponProperty.piercing.description',
+    group: 'optional',
+    category: 'ranged',
+  },
+  extendedMagazine: {
+    label: 'MOFAN.WeaponProperty.extendedMagazine.label',
+    description: 'MOFAN.WeaponProperty.extendedMagazine.description',
+    group: 'optional',
+    category: 'ranged',
+  },
+  impervious: {
+    label: 'MOFAN.WeaponProperty.impervious.label',
+    description: 'MOFAN.WeaponProperty.impervious.description',
+    group: 'optional',
+    category: 'any',
+  },
+  phasing: {
+    label: 'MOFAN.WeaponProperty.phasing.label',
+    description: 'MOFAN.WeaponProperty.phasing.description',
+    group: 'optional',
+    category: 'any',
+  },
+  returning: {
+    label: 'MOFAN.WeaponProperty.returning.label',
+    description: 'MOFAN.WeaponProperty.returning.description',
+    group: 'optional',
+    category: 'any',
+  },
+  splitting: {
+    label: 'MOFAN.WeaponProperty.splitting.label',
+    description: 'MOFAN.WeaponProperty.splitting.description',
+    group: 'optional',
+    category: 'any',
+  },
+  amphibious: {
+    label: 'MOFAN.WeaponProperty.amphibious.label',
+    description: 'MOFAN.WeaponProperty.amphibious.description',
+    group: 'optional',
+    category: 'any',
+  },
+  oiled: {
+    label: 'MOFAN.WeaponProperty.oiled.label',
+    description: 'MOFAN.WeaponProperty.oiled.description',
+    group: 'optional',
+    category: 'any',
+  },
+  heirloom: {
+    label: 'MOFAN.WeaponProperty.heirloom.label',
+    description: 'MOFAN.WeaponProperty.heirloom.description',
+    group: 'optional',
+    category: 'any',
+  },
+  spellbreaker: {
+    label: 'MOFAN.WeaponProperty.spellbreaker.label',
+    description: 'MOFAN.WeaponProperty.spellbreaker.description',
+    group: 'optional',
+    category: 'any',
+  },
+  magitech: {
+    label: 'MOFAN.WeaponProperty.magitech.label',
+    description: 'MOFAN.WeaponProperty.magitech.description',
+    group: 'optional',
+    category: 'any',
+  },
+};
+

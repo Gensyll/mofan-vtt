@@ -1,0 +1,20 @@
+<div class='mofan-weapon-roll'>
+  <div class='form-group'>
+    <label>{{localize 'MOFAN.Weapon.Formula'}}</label>
+    <input type='text' value='{{displayFormula}}' disabled />
+  </div>
+  <div class='form-group'>
+    <label>{{localize 'MOFAN.Weapon.SituationalBonus'}}</label>
+    <input
+      type='text'
+      name='bonus'
+      placeholder='{{localize "MOFAN.Weapon.SituationalPlaceholder"}}'
+    />
+  </div>
+  <div class='form-group'>
+    <label>{{localize 'MOFAN.Weapon.RollMode'}}</label>
+    <select name='rollMode'>
+      {{selectOptions rollModes selected=rollMode}}
+    </select>
+  </div>
+</div>

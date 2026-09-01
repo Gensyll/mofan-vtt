@@ -12,10 +12,53 @@
   align-items: flex-start;
   margin-bottom: 10px;
 
+  .profile-column {
+    flex: 0 0 100px;
+    width: 100px;
+    margin-right: 10px;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+  }
+
   .profile-img {
     flex: 0 0 100px;
     height: 100px;
-    margin-right: 10px;
+    width: 100px;
+  }
+
+  .profile-movement {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    width: 100%;
+    text-align: center;
+    gap: 0;
+
+    .resource-label {
+      display: block;
+      width: 100%;
+      flex: 0 0 auto;
+      font-size: 11px;
+      line-height: 1.1;
+      margin: 0;
+      padding-bottom: 3px;
+      border-bottom: 1px solid $c-faint;
+      text-align: center;
+    }
+
+    .movement-value {
+      display: block;
+      width: 100%;
+      flex: 0 0 auto;
+      margin-top: 4px;
+      font-size: 22px;
+      line-height: 1.1;
+      font-weight: 700;
+      text-align: center;
+    }
   }
 
   .header-fields {
