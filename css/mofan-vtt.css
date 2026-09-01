@@ -763,13 +763,14 @@
   gap: 8px;
   align-items: start;
 }
-.mofan-vtt .weapon-combat-row .resource {
+.mofan-vtt .weapon-combat-row > .resource {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   min-width: 0;
 }
-.mofan-vtt .weapon-reload-input {
+.mofan-vtt .weapon-reload-input,
+.mofan-vtt .weapon-compact-input {
   width: 3.5rem;
   max-width: 3.5rem;
 }
